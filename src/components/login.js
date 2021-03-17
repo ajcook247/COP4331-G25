@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {LoginWrapper,LoginHeader,LoginFooter,Input,Button,ButtonGroup,ForgetPasswordButton,LoginInputGroup,WrongPasswordMsg,PasswordInput} from './style';
 import Register from './register';
 import ForgetPassword from './resetPassword';
+import storage from '../tokenStorage';
 
 
 
@@ -18,6 +19,7 @@ class Login extends Component{
             showForgetPassword:false,
             loggedIn:false
         }
+
         this.handleRegisterClick = this.handleRegisterClick.bind(this);
         this.CloseRegisterButton = this.CloseRegisterButton.bind(this);
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
@@ -25,7 +27,8 @@ class Login extends Component{
         this.handleLoginClick = this.handleLoginClick.bind(this);
         this.handleKeypress = this.handleKeypress.bind(this);
         this.handleForgetPassword = this.handleForgetPassword.bind(this);
-        this.closeForgetPasswordButton = this.closeForgetPasswordButton.bind(this)
+        this.closeForgetPasswordButton = this.closeForgetPasswordButton.bind(this);
+        this.newRegisterLogin = this.newRegisterLogin.bind(this);
     }
 
 
@@ -35,7 +38,7 @@ class Login extends Component{
                 <LoginHeader><h1>WELCOME TO OUR WEBSITE!</h1></LoginHeader>
                 <LoginWrapper>
                     
-                <Register showRegister={this.state.showRegister} closeRegisterButton={this.CloseRegisterButton} />
+                <Register showRegister={this.state.showRegister} closeRegisterButton={this.CloseRegisterButton} registerSucceed={this.handleLoginClick} newRegisterLogin={this.newRegisterLogin}/>
                 <ForgetPassword showForgetPassword={this.state.showForgetPassword} closeForgetPasswordButton={this.closeForgetPasswordButton} />
                     <LoginInputGroup>
                     <Input placeholder='Username' onChange={this.handleUsernameChange} onKeyPress={this.handleKeypress} />
@@ -115,6 +118,7 @@ class Login extends Component{
                 
                 
             }else{
+                storage.storeToken(res);
                 this.props.changeToLoggedIn(this.state.username);
             }
 
@@ -143,6 +147,13 @@ class Login extends Component{
     closeForgetPasswordButton(){
         this.setState({
             showForgetPassword:false
+        })
+    }
+
+    newRegisterLogin(username, password){
+        this.setState({
+            username:username,
+            password:password,
         })
     }
 
