@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import { Text, View, StyleSheet, Modal, Image } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+//import { LinearGradient } from 'expo-linear-gradient';
 
 
 import { Button, Avatar, Input } from 'react-native-elements';
@@ -8,17 +8,31 @@ import IconFA from 'react-native-vector-icons/FontAwesome';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Login_Container, Register_Container, Register_Text, Welcome_Message } from './style';
+import RegisterPage from './Register';
 
 
 class LoginPage extends Component
 {
+
+    constructor(props){
+        super(props);
+
+        this.state={
+            username:'',
+            password:'',
+            showRegister:false
+        }
+
+        this.handleRegisterClick = this.handleRegisterClick.bind(this);
+    }
+
 
     // fontFamily:'sans-serif-light'
     render(){
         return (
             <View>
                 <Welcome_Message> 
-                    <Text style={{fontSize: 20}}>Welcome to WebsiteName</Text>
+                    <Text style={{fontSize: 20}}>Welcome to B-Dreamy</Text>
                 </Welcome_Message>
 
                 <Login_Container>
@@ -72,16 +86,18 @@ class LoginPage extends Component
                     <Register_Text> 
                         <Text style={{fontSize: 20}}>Don't have an account?</Text>
                     </Register_Text>
-                    <Button
-                        title="Sign Up"
-                        titleStyle={{fontSize: 20}}
-                        containerStyle={{width: 150, marginTop:10}}
-                        type="clear"
-                    />
+                    <RegisterPage showRegister={this.state.showRegister}/>
                 </Register_Container>
             </View>
         );
     }
+
+    handleRegisterClick(){
+        this.setState({
+            showRegister:true
+        })
+    }
+
 }
 
 export default LoginPage;
@@ -161,6 +177,9 @@ function LoginPage()
     </View>
   )
 };
+
+
+export default LoginPage;
 
 */
 
