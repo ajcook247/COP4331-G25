@@ -13,12 +13,12 @@ import { Login_Container, Register_Container, Register_Text, Welcome_Message } f
 class LoginPage extends Component
 {
 
-
+    // fontFamily:'sans-serif-light'
     render(){
         return (
             <View>
                 <Welcome_Message> 
-                    <Text style={{fontSize: 20, fontFamily:'sans-serif-light'}}>Welcome to WebsiteName</Text>
+                    <Text style={{fontSize: 20}}>Welcome to WebsiteName</Text>
                 </Welcome_Message>
 
                 <Login_Container>
@@ -30,7 +30,7 @@ class LoginPage extends Component
                         placeholder='Email'
                         placeholderTextColor='#000'
                         textAlign="left"
-                        style={{fontSize: 20, fontFamily:'sans-serif-light'}}
+                        style={{fontSize: 20}}
                         leftIcon={
                             <IconMCI
                                 name='email'
@@ -45,7 +45,7 @@ class LoginPage extends Component
                         placeholder='Password'
                         placeholderTextColor='#000'
                         textAlign="left"
-                        style={{fontSize: 20, fontFamily:'sans-serif-light'}}
+                        style={{fontSize: 20}}
                         leftIcon={
                             <IconFA
                                 name='lock'
@@ -57,13 +57,12 @@ class LoginPage extends Component
                     />
                     <Button
                         title="Sign In"
-                        titleStyle={{fontSize: 20, fontFamily:'sans-serif-light'}}
+                        titleStyle={{fontSize: 20}}
                         containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
-                        raised
                     />
                     <Button
                         title="Forgot password?"
-                        titleStyle={{fontSize: 20, fontFamily:'sans-serif-light'}}
+                        titleStyle={{fontSize: 20}}
                         containerStyle={{width: 180, marginTop:30}}
                         type="clear"
                     />
@@ -71,11 +70,11 @@ class LoginPage extends Component
 
                 <Register_Container>
                     <Register_Text> 
-                        <Text style={{fontSize: 20, fontFamily:'sans-serif-light'}}>Don't have an account?</Text>
+                        <Text style={{fontSize: 20}}>Don't have an account?</Text>
                     </Register_Text>
                     <Button
                         title="Sign Up"
-                        titleStyle={{fontSize: 20, fontFamily:'sans-serif-light'}}
+                        titleStyle={{fontSize: 20}}
                         containerStyle={{width: 150, marginTop:10}}
                         type="clear"
                     />
