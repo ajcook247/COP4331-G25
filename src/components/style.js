@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import backgroundImg from '../static/background.png'
 
 export const LoginHeader = styled.div`
-  margin-left:300px;
+  margin-left:520px;
   margin-top:1 0px;
   color: #c9d0d4; 
   font-size: 26px; 
@@ -20,6 +20,8 @@ export const LoginWrapper = styled.div`
   background:#C4C4C4;
   box-shadow:0 0 8px rgba(0,0,0 .1);
   border-radius:20px;
+  background-image: linear-gradient(#C4C4C4, #9198e5);
+
   
 
 `;
@@ -119,6 +121,8 @@ export const RegisterWrapper = styled.div`
     box-shadow:0 0 8px rgba(0,0,0 .1);
     padding-bottom:130px;
     border-radius:15px;
+    background-image: linear-gradient(#C4C4C4, white);
+
   
 `;
 
@@ -148,6 +152,9 @@ text-align:center;
     box-shadow:0 0 8px rgba(0,0,0 .1);
     padding-bottom:130px;
     border-radius:10px;
+    background-image: linear-gradient(#C4C4C4, white);
+
+
 
 
 `
@@ -159,17 +166,20 @@ export const ForgetPasswordCloseButton = styled.div`
       background: red;
       color: white;
       float:right;
+      cursor:pointer;
         
 `;
 
 
 
 export const BackgroundBody = styled.div`
-    
     background:black;
+    
     
     width: 100%;
     height: 100%;
+    background-image: linear-gradient(black, #9198e5);
+
 `
 
 
@@ -179,3 +189,107 @@ export const WrongPasswordMsg = styled.div`
 `
 
 
+
+export const MainPageNavWrapper = styled.div`    
+      position: absolute;
+      width: 350px;
+      height: 100%;
+      left: 0px;
+      top: 0px;
+      border-color:#C4C4C4;
+      border-style: solid;
+      background-image: linear-gradient(#C4C4C4, #9198e5);
+      
+`
+
+
+export const LogoutButton = styled.button`   
+      float:right;
+      background: #C4C4C4;
+      border-color:red;
+      border-style: solid;
+      color:red;
+      
+`
+
+export const TodoListOrder = styled.div`   
+      position:
+      list-style-type: none;
+      padding: 0px;
+      margin-left: 45px;
+      font-size:25px;
+      cursor:pointer;
+      
+`
+
+
+export const TodoItemWrapper = styled.div`   
+
+      position: absolute;
+      width: 995px;
+      height: 100%;
+      right: 0px;
+      top:  0px;
+      background-image: linear-gradient(#C4C4C4, #9198e5);
+
+      
+      
+`
+
+
+export const TodoListOrderMainPage = styled.div`   
+      width:700px;
+      height:100px;
+      list-style-type: none;
+      padding: 0px;
+      margin-left: 175px;
+      font-size:25px;
+      background:#C4C4C4;
+      border:solid;
+      border-radius:10px;
+      background-image: linear-gradient(#C4C4C4, white);
+      
+`
+
+
+
+
+export const TodoItem = styled.p`   
+   padding:10px;
+   position:relative;
+      
+      
+`
+
+
+
+export const DeleteItemIcon = styled.span`   
+
+      position:absolute;
+      right:0;
+      cursor:pointer;
+
+      
+`
+
+
+export const NewTodoListEnter = styled.input.attrs({
+      placeholder: "Add your own Todo-List! "
+
+    })`
+         width:240px;
+         height:40px;
+         background:white;  
+         border-radius:10px; 
+
+
+`
+
+
+
+export const CurrentTodoListHeader = styled.h1`
+      text-align:center;
+      
+
+
+`
