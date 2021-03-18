@@ -35,7 +35,7 @@ class Login extends Component{
     render(){
         return (
             <div>
-                <LoginHeader><h1>WELCOME TO OUR WEBSITE!</h1></LoginHeader>
+                <LoginHeader><h1>B-DREAMY!</h1></LoginHeader>
                 <LoginWrapper>
                     
                 <Register showRegister={this.state.showRegister} closeRegisterButton={this.CloseRegisterButton} registerSucceed={this.handleLoginClick} newRegisterLogin={this.newRegisterLogin}/>
