@@ -10,7 +10,7 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Login_Container, Register_Container, Register_Text, Welcome_Message } from './style';
 import RegisterPage from './Register';
 
-
+//hello
 class LoginPage extends Component
 {
 
