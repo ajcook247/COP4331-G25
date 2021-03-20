@@ -19,16 +19,25 @@ class LoginPage extends Component
         super(props);
 
         this.state={
-            username:'',
+            username:'', //OR EMAIL ??
             password:'',
-            showRegister:false
+            wrongCombination:false,
+            showRegister:false,
+            showForgetPassword:false,
+            loggedIn:false
         }
 
-        this.handleRegisterClick = this.handleRegisterClick.bind(this);
+        //this.handleRegisterClick = this.handleRegisterClick.bind(this);
+        
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleKeypress = this.handleKeypress.bind(this);
+        
     }
 
-    deviceWidth = Dimensions.get('window').width;
-    deviceHeight = Dimensions.get('window').height;
+    //deviceWidth = Dimensions.get('window').width;
+    //deviceHeight = Dimensions.get('window').height;
 
     // fontFamily:'sans-serif-light'
     render(){
@@ -44,6 +53,8 @@ class LoginPage extends Component
                         style={{width:70, height:70, marginTop: 20}}
                     />
                     <Input 
+                        //onChange={this.handleUsernameChange} 
+                        //onKeyPress={this.handleKeypress}
                         placeholder='Email'
                         placeholderTextColor='#000'
                         textAlign="left"
@@ -58,6 +69,8 @@ class LoginPage extends Component
                         containerStyle={{marginTop: 40, width: 300}}
                     />
                     <Input
+                        onChange={this.handlePasswordChange} 
+                        onKeyPress={this.handleKeypress}
                         secureTextEntry={true}
                         placeholder='Password'
                         placeholderTextColor='#000'
@@ -73,11 +86,14 @@ class LoginPage extends Component
                         containerStyle={{width: 300}}
                     />
                     <Button
+                        onClick={this.handleLoginClick}
                         title="Sign In"
                         titleStyle={{fontSize: 20}}
                         containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
                     />
+
                     <ResetPage/>
+
                 </Login_Container>
             
                 <Register_Container>
@@ -90,10 +106,72 @@ class LoginPage extends Component
         );
     }
 
-    handleRegisterClick(){
+    handleUsernameChange(e){
         this.setState({
-            showRegister:true
-        })
+            username:e.target.value,
+            wrongCombination:false
+        })   
+    }
+
+    handlePasswordChange(e){
+        this.setState({
+            wrongCombination:false,
+            password:e.target.value
+        })   
+    }  
+
+
+    async handleLoginClick()
+    {
+        if(!this.state.username)
+        {
+            return;
+        }
+        if(!this.state.password)
+        {
+            return;
+        }
+
+        try 
+        {
+            // Add API later
+            let response = await fetch('http://localhost:5000/api/login',{
+                method:'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({
+                    username:this.state.username,
+                    password:this.state.password
+                })
+                    
+            });
+            var res = JSON.parse(await response.text());
+            if( res.id <= 0 )
+            {
+                this.setState({
+                    wrongCombination:true
+                })  
+            }
+            else
+            {
+                storage.storeToken(res);
+                this.props.changeToLoggedIn(this.state.username);
+            }
+
+        }
+        catch(e)
+        {
+            console.log(e);
+            return;
+        }
+    }
+
+    handleKeypress(e){
+        if(e.key=='Enter'){
+            this.handleLoginClick();
+        }
     }
 
 }

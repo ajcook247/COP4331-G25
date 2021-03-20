@@ -32,9 +32,6 @@ class RegisterPage extends Component {
         this.resetForm = this.resetForm.bind(this);
     }
 
-    deviceWidth = Dimensions.get('window').width;
-    deviceHeight = Dimensions.get('window').height;
-
 
     render() {
         return (
@@ -127,6 +124,7 @@ class RegisterPage extends Component {
                             containerStyle={{width: 200, marginTop:30, borderRadius: 20}}
                             onPress={() => {
                                 this.handleRegisterSubmit
+                                //Alert.alert('passwords dont match')
                                 //this.closeModal();
                             }}
                             />
@@ -218,12 +216,12 @@ class RegisterPage extends Component {
           this.setState({
             passwordMatch:false,
           })
-          Alert.alert('passwords no match')
           return;
         }
         else
         {
             try {
+                Alert.alert('passwords dont match')
                 /* we will add register api*/ 
                 let response = await fetch('http://localhost:5000/api/register',{
                 method:'POST',
