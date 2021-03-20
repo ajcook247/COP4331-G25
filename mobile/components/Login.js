@@ -10,11 +10,11 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Login_Container, Register_Container, Register_Text, Welcome_Message } from './style';
 import RegisterPage from './Register';
 import ResetPage from './ResetPassword';
+import storage from '../tokenStorage';
 
 
 class LoginPage extends Component
 {
-
     constructor(props){
         super(props);
 
