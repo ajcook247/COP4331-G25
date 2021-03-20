@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Input,Button,RegisterWrapper,RegisterCloseButton,RegisterInputGroup} from './style';
+import {Input,Button,RegisterWrapper,RegisterCloseButton,RegisterInputGroup,PlusOutlined} from './style';
 
 
 
