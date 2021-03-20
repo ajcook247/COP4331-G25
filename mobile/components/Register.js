@@ -221,7 +221,6 @@ class RegisterPage extends Component {
         else
         {
             try {
-                Alert.alert('passwords dont match')
                 /* we will add register api*/ 
                 let response = await fetch('http://localhost:5000/api/register',{
                 method:'POST',
