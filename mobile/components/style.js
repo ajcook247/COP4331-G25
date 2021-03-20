@@ -18,3 +18,7 @@ export const Register_Text = styled.View`
     align-items: center;
     margin-top: 60px;
 `;
+
+export const Reset_Container = styled.View`
+    align-items: center;
+`;

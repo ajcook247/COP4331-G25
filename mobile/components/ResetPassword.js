@@ -8,11 +8,11 @@ import { Button, Avatar, Input, CheckBox } from 'react-native-elements';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Login_Container, Register_Container, Register_Text, Welcome_Message } from './style';
+import { Login_Container, Register_Container, Register_Text, Reset_Container, Welcome_Message } from './style';
 import { Alert } from 'react-native';
 
 
-class RegisterPage extends Component {
+class ResetPage extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -24,23 +24,14 @@ class RegisterPage extends Component {
           modalVisible: false,
         }
 
-        this.handleConfirmedChange = this.handleConfirmedChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
-        this.resetForm = this.resetForm.bind(this);
+
     }
-
-    deviceWidth = Dimensions.get('window').width;
-    deviceHeight = Dimensions.get('window').height;
-
 
     render() {
         return (
             <View>
                 <Modal
-                animationType="slide"
+                animationType="fade"
                 transparent={false}
                 visible={this.state.modalVisible}
                 >
@@ -48,7 +39,7 @@ class RegisterPage extends Component {
                 <View>
                     <View>
                         <LinearGradient colors={['pink', '#FFF']}>
-                        <Register_Container > 
+                        <Reset_Container> 
                              
                             <Avatar
                             rounded
@@ -57,7 +48,7 @@ class RegisterPage extends Component {
                             containerStyle={{marginTop: 60, marginBottom: 30}}
                             size="large"
                             />  
-                            <Text>Register for a new user below</Text>
+                            <Text>Reset your Password below</Text>
 
                             <Input 
                             onChange={this.handleEmailChange}
@@ -122,11 +113,10 @@ class RegisterPage extends Component {
                             containerStyle={{width: 300}}
                             />
                             <Button
-                            title="Create Account"
+                            title="Change Password"
                             titleStyle={{fontSize: 20}}
                             containerStyle={{width: 200, marginTop:30, borderRadius: 20}}
                             onPress={() => {
-                                this.handleRegisterSubmit
                                 //this.closeModal();
                             }}
                             />
@@ -139,16 +129,16 @@ class RegisterPage extends Component {
                                 this.closeModal();
                             }}
                             />
-                        </Register_Container>
+                        </Reset_Container>
                     </LinearGradient>
                     </View>
                 </View>
                 </Modal>
 
                 <Button
-                title="Sign Up"
+                title="Forgot Password?"
                 titleStyle={{fontSize: 20}}
-                containerStyle={{width: 150, marginTop:10}}
+                containerStyle={{width: 180, marginTop:30}}
                 type="clear"
                 onPress={() => {
                     this.setModalVisible();
@@ -169,112 +159,9 @@ class RegisterPage extends Component {
             modalVisible:false
         })
     }
-
-    handleEmailChange(e){
-        this.setState({
-            email:e.target.value,
-        })  
-    }
-  
-    handleUsernameChange(e){
-        this.setState({
-            username:e.target.value,
-        })   
-    }
-  
-    handlePasswordChange(e){
-        this.setState({
-            password:e.target.value,
-            passwordMatch:true,
-        })   
-    }
-  
-    handleConfirmedChange(e){
-        this.setState({
-            confirmed:e.target.value,
-            passwordMatch:true,
-        }) 
-    }
-
-    async handleRegisterSubmit(){
-        if(!this.state.username)
-        {
-            return;
-        }
-        if(!this.state.password)
-        {
-            return;
-        }
-        if(!this.state.confirmed)
-        {
-          return;
-        }
-        if(!this.state.email)
-        {
-          return;
-        }
-        if(this.state.confirmed != this.state.password)
-        {
-          this.setState({
-            passwordMatch:false,
-          })
-          Alert.alert('passwords no match')
-          return;
-        }
-        else
-        {
-            try {
-                /* we will add register api*/ 
-                let response = await fetch('http://localhost:5000/api/register',{
-                method:'POST',
-                    headers:{
-                        'Accept': 'application/json',
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify({
-                        username:this.state.username,
-                        password:this.state.password,
-                        email:this.state.email,
-                   })        
-                });
-                var res = JSON.parse(await response.text());
-                if( res.id <= 0 )
-                {
-                return;
-                }
-                else
-                {
-                this.props.newRegisterLogin(this.state.username,this.state.password);
-                this.resetForm();
-                this.props.registerSucceed();
-                }
-            }
-            catch(e)
-            {
-                console.log(e);
-                return;
-            }
-        }
-    }
-    resetForm(){
-        this.setState({
-          username:'',
-          password:'',
-          email:'',
-          confirmed:'',
-        })
-    }
-
-
 }
 
-export default RegisterPage;
+export default ResetPage;
 
 
-/*
-<CheckBox
-    checked={this.state.checked}
-    onPress={() => this.setState({ checked: !this.state.checked})}
-    title='Show passwords'
-/>
-*/
+
