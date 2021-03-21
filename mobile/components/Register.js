@@ -24,10 +24,10 @@ class RegisterPage extends Component {
           modalVisible: false,
         }
 
-        this.handleConfirmedChange = this.handleConfirmedChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
+        // this.handleConfirmedChange = this.handleConfirmedChange.bind(this);
+        // this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        // this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        // this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
         this.resetForm = this.resetForm.bind(this);
     }
@@ -57,7 +57,8 @@ class RegisterPage extends Component {
                             <Text>Register for a new user below</Text>
 
                             <Input 
-                            onChange={this.handleEmailChange}
+                            value={this.state.email} 
+                            onChangeText={(text) => this.setState({email: text})}
                             placeholder='Email'
                             placeholderTextColor='#000'
                             textAlign="left"
@@ -72,7 +73,8 @@ class RegisterPage extends Component {
                             containerStyle={{marginTop: 40, width: 300}}
                             />
                             <Input
-                            onChange={this.handleUsernameChange}
+                            value={this.state.username} 
+                            onChangeText={(text) => this.setState({username: text})}
                             placeholder='Username'
                             placeholderTextColor='#000'
                             textAlign="left"
@@ -87,7 +89,8 @@ class RegisterPage extends Component {
                             containerStyle={{width: 300}}
                             /> 
                             <Input
-                            onChange={this.handlePasswordChange}
+                            value={this.state.password} 
+                            onChangeText={(text) => this.setState({password: text})}
                             secureTextEntry={true}
                             placeholder='Password'
                             placeholderTextColor='#000'
@@ -103,7 +106,8 @@ class RegisterPage extends Component {
                             containerStyle={{width: 300}}
                             />
                             <Input
-                            onChange={this.handleConfirmedChange}
+                            value={this.state.confirmed} 
+                            onChangeText={(text) => this.setState({confirmed: text})}
                             secureTextEntry={true}
                             placeholder='Confirm Password'
                             placeholderTextColor='#000'
@@ -122,11 +126,7 @@ class RegisterPage extends Component {
                             title="Create Account"
                             titleStyle={{fontSize: 20}}
                             containerStyle={{width: 200, marginTop:30, borderRadius: 20}}
-                            onPress={() => {
-                                this.handleRegisterSubmit
-                                //Alert.alert('passwords dont match')
-                                //this.closeModal();
-                            }}
+                            onPress={this.handleRegisterSubmit}
                             />
                             <Button
                             title="Back to main page"
@@ -168,33 +168,38 @@ class RegisterPage extends Component {
         })
     }
 
-    handleEmailChange(e){
-        this.setState({
-            email:e.target.value,
-        })  
-    }
+    // handleEmailChange(e){
+    //     this.setState({
+    //         email:e.target.value,
+    //     })  
+    // }
   
-    handleUsernameChange(e){
-        this.setState({
-            username:e.target.value,
-        })   
-    }
+    // handleUsernameChange(e){
+    //     this.setState({
+    //         username:e.target.value,
+    //     })   
+    // }
   
-    handlePasswordChange(e){
-        this.setState({
-            password:e.target.value,
-            passwordMatch:true,
-        })   
-    }
+    // handlePasswordChange(e){
+    //     this.setState({
+    //         password:e.target.value,
+    //         passwordMatch:true,
+    //     })   
+    // }
   
-    handleConfirmedChange(e){
-        this.setState({
-            confirmed:e.target.value,
-            passwordMatch:true,
-        }) 
-    }
+    // handleConfirmedChange(e){
+    //     this.setState({
+    //         confirmed:e.target.value,
+    //         passwordMatch:true,
+    //     }) 
+    // }
 
-    async handleRegisterSubmit(){
+    async handleRegisterSubmit()
+    {
+        if(!this.state.email)
+        {
+          return;
+        }
         if(!this.state.username)
         {
             return;
@@ -207,15 +212,16 @@ class RegisterPage extends Component {
         {
           return;
         }
-        if(!this.state.email)
-        {
-          return;
-        }
         if(this.state.confirmed != this.state.password)
         {
-          this.setState({
-            passwordMatch:false,
-          })
+
+        //   this.setState({
+        //     passwordMatch:false,
+        //   })
+
+        //Alert.alert(this.state.email, this.state.username)
+        //Alert.alert(this.state.password, this.state.confirmed)
+        
           return;
         }
         else

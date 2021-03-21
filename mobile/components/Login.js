@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import { Text, View, StyleSheet, Modal, Image, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Modal, Image, Dimensions, Alert } from 'react-native';
 //import { LinearGradient } from 'expo-linear-gradient';
 
 
@@ -19,7 +19,7 @@ class LoginPage extends Component
         super(props);
 
         this.state={
-            username:'', //OR EMAIL ??
+            email:'', //OR EMAIL ??
             password:'',
             wrongCombination:false,
             showRegister:false,
@@ -29,8 +29,8 @@ class LoginPage extends Component
 
         //this.handleRegisterClick = this.handleRegisterClick.bind(this);
         
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        // this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        // this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleLoginClick = this.handleLoginClick.bind(this);
         this.handleKeypress = this.handleKeypress.bind(this);
         
@@ -53,8 +53,8 @@ class LoginPage extends Component
                         style={{width:70, height:70, marginTop: 20}}
                     />
                     <Input 
-                        //onChange={this.handleUsernameChange} 
-                        //onKeyPress={this.handleKeypress}
+                        value={this.state.email} 
+                        onChangeText={(text) => this.setState({email: text})}
                         placeholder='Email'
                         placeholderTextColor='#000'
                         textAlign="left"
@@ -69,8 +69,9 @@ class LoginPage extends Component
                         containerStyle={{marginTop: 40, width: 300}}
                     />
                     <Input
-                        onChange={this.handlePasswordChange} 
-                        onKeyPress={this.handleKeypress}
+                        value={this.state.password} 
+                        onChangeText={(text) => this.setState({password: text})}
+                        //onKeyPress={this.handleKeypress}
                         secureTextEntry={true}
                         placeholder='Password'
                         placeholderTextColor='#000'
@@ -86,7 +87,7 @@ class LoginPage extends Component
                         containerStyle={{width: 300}}
                     />
                     <Button
-                        onClick={this.handleLoginClick}
+                        onPress={this.handleLoginClick}
                         title="Sign In"
                         titleStyle={{fontSize: 20}}
                         containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
@@ -106,32 +107,34 @@ class LoginPage extends Component
         );
     }
 
-    handleUsernameChange(e){
-        this.setState({
-            username:e.target.value,
-            wrongCombination:false
-        })   
-    }
+    // handleUsernameChange(e){
+    //     this.setState({
+    //         username:e.target.value,
+    //         wrongCombination:false
+    //     })   
+    // }
 
-    handlePasswordChange(e){
-        this.setState({
-            wrongCombination:false,
-            password:e.target.value
-        })   
-    }  
+    // handlePasswordChange(e){
+    //     this.setState({
+    //         wrongCombination:false,
+    //         password:e.target.value
+    //     })   
+    // }  
 
 
     async handleLoginClick()
     {
-        if(!this.state.username)
+        if(!this.state.email)
         {
+            //Alert.alert(this.state.password)
             return;
         }
         if(!this.state.password)
         {
+            //Alert.alert(this.state.email)
             return;
         }
-
+        Alert.alert(this.state.email, this.state.password)
         try 
         {
             // Add API later
@@ -142,7 +145,7 @@ class LoginPage extends Component
                     'Content-Type':'application/json'
                 },
                 body: JSON.stringify({
-                    username:this.state.username,
+                    email:this.state.email,
                     password:this.state.password
                 })
                     
@@ -157,7 +160,7 @@ class LoginPage extends Component
             else
             {
                 storage.storeToken(res);
-                this.props.changeToLoggedIn(this.state.username);
+                this.props.changeToLoggedIn(this.state.email);
             }
 
         }
