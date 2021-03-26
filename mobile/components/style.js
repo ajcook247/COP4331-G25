@@ -22,3 +22,7 @@ export const Register_Text = styled.View`
 export const Reset_Container = styled.View`
     align-items: center;
 `;
+
+export const Navigation_Container = styled.View`
+    align-items: center;
+`;
