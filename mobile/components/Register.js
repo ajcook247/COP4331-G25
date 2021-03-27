@@ -219,8 +219,9 @@ class RegisterPage extends Component {
         //     passwordMatch:false,
         //   })
 
-        //Alert.alert(this.state.email, this.state.username)
-        //Alert.alert(this.state.password, this.state.confirmed)
+        //Alert.alert(this.state.email, this.state.username) // If all are filled, show email and username
+        
+        //Alert.alert(this.state.password, this.state.confirmed) // If all are filled, show password and confirmed
         
           return;
         }

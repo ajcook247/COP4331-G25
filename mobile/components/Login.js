@@ -126,15 +126,17 @@ class LoginPage extends Component
     {
         if(!this.state.email)
         {
-            //Alert.alert(this.state.password)
+            //Alert.alert(this.state.password) // If email not filled, show password
             return;
         }
         if(!this.state.password)
         {
-            //Alert.alert(this.state.email)
+            //Alert.alert(this.state.email) // If password not filled, show email
             return;
         }
-        Alert.alert(this.state.email, this.state.password)
+
+        //Alert.alert(this.state.email, this.state.password) // If both are filled, show both
+        
         try 
         {
             // Add API later
