@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import { Text, View, StyleSheet, Modal, Image, Dimensions, Alert } from 'react-native';
-//import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 import { Button, Avatar, Input } from 'react-native-elements';
@@ -11,6 +11,8 @@ import { Login_Container, Register_Container, Register_Text, Welcome_Message } f
 import RegisterPage from './Register';
 import ResetPage from './ResetPassword';
 import storage from '../tokenStorage';
+
+import App from './../'
 
 
 class LoginPage extends Component
@@ -42,67 +44,69 @@ class LoginPage extends Component
     // fontFamily:'sans-serif-light'
     render(){
         return (
-            <View>
-                <Welcome_Message> 
-                    <Text style={{fontSize: 20}}>Welcome to B-Dreamy</Text>
-                </Welcome_Message>
+            <View style={styles.container}>
+                <LinearGradient colors={['#96CAF7', '#FFF']}>
+                    <Welcome_Message> 
+                        <Text style={{fontSize: 20}}>Welcome to B-Dreamy</Text>
+                    </Welcome_Message>
 
-                <Login_Container>
-                    <Image
-                        source={require('../images/TodoTwo.png')}
-                        style={{width:70, height:70, marginTop: 20}}
-                    />
-                    <Input 
-                        value={this.state.email} 
-                        onChangeText={(text) => this.setState({email: text})}
-                        placeholder='Email'
-                        placeholderTextColor='#000'
-                        textAlign="left"
-                        style={{fontSize: 20}}
-                        leftIcon={
-                            <IconMCI
-                                name='email'
-                                size={24}
-                                color='black'
-                            />
-                        }
-                        containerStyle={{marginTop: 40, width: 300}}
-                    />
-                    <Input
-                        value={this.state.password} 
-                        onChangeText={(text) => this.setState({password: text})}
-                        //onKeyPress={this.handleKeypress}
-                        secureTextEntry={true}
-                        placeholder='Password'
-                        placeholderTextColor='#000'
-                        textAlign="left"
-                        style={{fontSize: 20}}
-                        leftIcon={
-                            <IconFA
-                                name='lock'
-                                size={24}
-                                color='black'
-                            />
-                        }
-                        containerStyle={{width: 300}}
-                    />
-                    <Button
-                        onPress={this.handleLoginClick}
-                        title="Sign In"
-                        titleStyle={{fontSize: 20}}
-                        containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
-                    />
+                    <Login_Container>
+                        <Image
+                            source={require('../images/TodoTwo.png')}
+                            style={{width:70, height:70, marginTop: 20}}
+                        />
+                        <Input 
+                            value={this.state.email} 
+                            onChangeText={(text) => this.setState({email: text})}
+                            placeholder='Email'
+                            placeholderTextColor='#000'
+                            textAlign="left"
+                            style={{fontSize: 20}}
+                            leftIcon={
+                                <IconMCI
+                                    name='email'
+                                    size={24}
+                                    color='black'
+                                />
+                            }
+                            containerStyle={{marginTop: 40, width: 300}}
+                        />
+                        <Input
+                            value={this.state.password} 
+                            onChangeText={(text) => this.setState({password: text})}
+                            //onKeyPress={this.handleKeypress}
+                            secureTextEntry={true}
+                            placeholder='Password'
+                            placeholderTextColor='#000'
+                            textAlign="left"
+                            style={{fontSize: 20}}
+                            leftIcon={
+                                <IconFA
+                                    name='lock'
+                                    size={24}
+                                    color='black'
+                                />
+                            }
+                            containerStyle={{width: 300}}
+                        />
+                        <Button
+                            onPress={this.handleLoginClick}
+                            title="Sign In"
+                            titleStyle={{fontSize: 20}}
+                            containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
+                        />
 
-                    <ResetPage/>
+                        <ResetPage/>
 
-                </Login_Container>
-            
-                <Register_Container>
-                    <Register_Text> 
-                        <Text style={{fontSize: 20}}>Don't have an account?</Text>
-                    </Register_Text>
-                    <RegisterPage style={{flex:1}}/>
-                </Register_Container>
+                    </Login_Container>
+                
+                    <Register_Container>
+                        <Register_Text> 
+                            <Text style={{fontSize: 20}}>Don't have an account?</Text>
+                        </Register_Text>
+                        <RegisterPage style={{flex:1}}/>
+                    </Register_Container>
+                </LinearGradient>
             </View>
         );
     }
@@ -122,8 +126,11 @@ class LoginPage extends Component
     // }  
 
 
-    async handleLoginClick()
+    async handleLoginClick(navigation)
     {
+
+        //navigation.navigate('Home');
+
         if(!this.state.email)
         {
             //Alert.alert(this.state.password) // If email not filled, show password
@@ -180,6 +187,14 @@ class LoginPage extends Component
     }
 
 }
+
+
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+  });
 
 export default LoginPage;
 
