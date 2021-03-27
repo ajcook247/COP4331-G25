@@ -51,7 +51,7 @@ exports.setApp = function(app, client)
         try
         {
             const result = db.collection('Users').insertOne(newUser);
-            newUser.save();
+            // newUser.save();
         }
         catch(e)
         {
