@@ -9,7 +9,8 @@ const TaskSchema = new Schema({
     },
     UserId:
     {
-        type: Int32
+        type: mongoose.Schema.Types.ObjectId, ref: 'User',
+        required:true
     },
     Name:
     {
@@ -36,4 +37,6 @@ const TaskSchema = new Schema({
         type: Boolean,
         required: true
     }
-})
+});
+
+module.exports = task = mongoose.model("Tasks", TaskSchema);
