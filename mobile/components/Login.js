@@ -1,18 +1,17 @@
 import React, {Component, useState} from 'react';
 import { Text, View, StyleSheet, Modal, Image, Dimensions, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
-
 import { Button, Avatar, Input } from 'react-native-elements';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Login_Container, Register_Container, Register_Text, Welcome_Message } from './style';
+
 import RegisterPage from './Register';
 import ResetPage from './ResetPassword';
 import storage from '../tokenStorage';
 
-import App from './../'
+//import App from './../'
 
 
 class LoginPage extends Component
@@ -21,28 +20,21 @@ class LoginPage extends Component
         super(props);
 
         this.state={
-            email:'', //OR EMAIL ??
+            email:'', //OR USERNAME ??
             password:'',
             wrongCombination:false,
             showRegister:false,
             showForgetPassword:false,
             loggedIn:false
         }
-
-        //this.handleRegisterClick = this.handleRegisterClick.bind(this);
         
-        // this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        // this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleLoginClick = this.handleLoginClick.bind(this);
         this.handleKeypress = this.handleKeypress.bind(this);
-        
     }
-
-    //deviceWidth = Dimensions.get('window').width;
-    //deviceHeight = Dimensions.get('window').height;
 
     // fontFamily:'sans-serif-light'
     render(){
+        // const {navigate} = this.props.navigation; // Where this would go if used on onPress
         return (
             <View style={styles.container}>
                 <LinearGradient 
@@ -94,12 +86,17 @@ class LoginPage extends Component
                         />
                         <Button
                             onPress={this.handleLoginClick}
+                            // onPress={() =>
+                            //     navigate('Home')
+                            //   }
                             title="Sign In"
                             titleStyle={{fontSize: 20}}
                             containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
                         />
 
-                        <ResetPage/>
+                        <ResetPage
+                        // Creates forgot password page
+                        />
 
                     </Login_Container>
                 
@@ -107,32 +104,24 @@ class LoginPage extends Component
                         <Register_Text> 
                             <Text style={{fontSize: 20}}>Don't have an account?</Text>
                         </Register_Text>
-                        <RegisterPage style={{flex:1}}/>
+
+                        <RegisterPage style={{flex:1}}
+                        // Creates register page
+                        />
+
                     </Register_Container>
                 </LinearGradient>
             </View>
         );
     }
 
-    // handleUsernameChange(e){
-    //     this.setState({
-    //         username:e.target.value,
-    //         wrongCombination:false
-    //     })   
-    // }
 
-    // handlePasswordChange(e){
-    //     this.setState({
-    //         wrongCombination:false,
-    //         password:e.target.value
-    //     })   
-    // }  
-
-
-    async handleLoginClick(navigation)
+    async handleLoginClick()
     {
+        // necessary anywhere we want to call navigate(location)
+        const {navigate} = this.props.navigation;
 
-        //navigation.navigate('Home');
+        navigate('Home');
 
         if(!this.state.email)
         {
@@ -144,6 +133,8 @@ class LoginPage extends Component
             //Alert.alert(this.state.email) // If password not filled, show email
             return;
         }
+
+        //navigate('Home'); //This is all we will need to navigate to new page
 
         //Alert.alert(this.state.email, this.state.password) // If both are filled, show both
         
@@ -172,9 +163,8 @@ class LoginPage extends Component
             else
             {
                 storage.storeToken(res);
-                this.props.changeToLoggedIn(this.state.email);
+                navigate('Home');
             }
-
         }
         catch(e)
         {
@@ -189,9 +179,11 @@ class LoginPage extends Component
         }
     }
 
+    
 }
 
 const styles = StyleSheet.create({
+    // Fits entire screen  
     container: {
       flex: 1,
     },

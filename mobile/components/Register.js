@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
-import { Text, View, StyleSheet, Modal, Image, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Modal, Image, Dimensions, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
-
-
 import { Button, Avatar, Input, CheckBox } from 'react-native-elements';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Login_Container, Register_Container, Register_Text, Welcome_Message } from './style';
-import { Alert } from 'react-native';
 
 
 class RegisterPage extends Component {
@@ -24,10 +21,6 @@ class RegisterPage extends Component {
           modalVisible: false,
         }
 
-        // this.handleConfirmedChange = this.handleConfirmedChange.bind(this);
-        // this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        // this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        // this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
         this.resetForm = this.resetForm.bind(this);
     }
@@ -156,44 +149,21 @@ class RegisterPage extends Component {
         );
     }
 
+    // Opens Register Modal
     setModalVisible() {
         this.setState({
             modalVisible: true
         })      
     }
 
+    // Closes Register Modal
     closeModal(){
         this.setState({
             modalVisible:false
         })
     }
 
-    // handleEmailChange(e){
-    //     this.setState({
-    //         email:e.target.value,
-    //     })  
-    // }
-  
-    // handleUsernameChange(e){
-    //     this.setState({
-    //         username:e.target.value,
-    //     })   
-    // }
-  
-    // handlePasswordChange(e){
-    //     this.setState({
-    //         password:e.target.value,
-    //         passwordMatch:true,
-    //     })   
-    // }
-  
-    // handleConfirmedChange(e){
-    //     this.setState({
-    //         confirmed:e.target.value,
-    //         passwordMatch:true,
-    //     }) 
-    // }
-
+    // Handles Register
     async handleRegisterSubmit()
     {
         if(!this.state.email)
@@ -214,10 +184,6 @@ class RegisterPage extends Component {
         }
         if(this.state.confirmed != this.state.password)
         {
-
-        //   this.setState({
-        //     passwordMatch:false,
-        //   })
 
         //Alert.alert(this.state.email, this.state.username) // If all are filled, show email and username
         

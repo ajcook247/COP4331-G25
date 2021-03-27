@@ -2,17 +2,24 @@ import React, { Component, useState } from 'react';
 import { Text, View, Image, Button } from 'react-native';
 import { Navigation_Container, Welcome_Message } from './style';
 
+import { useNavigation } from '@react-navigation/native';
+
+
+
 
 // ---- Components ----
 
 //red logout button on top right, currently big centered button
 const LogOutButton = ({props, navigation}) => {
+    
+    navigation = useNavigation();
 
     return (
+        
         <Button
             onPress = {() => {
                 //setIsLoggedIn(false);
-                //navigation.navigate('Login');
+                navigation.navigate('Login');
             }}
             title = "Logout"
             color = "#FF0000"

@@ -12,12 +12,14 @@ import HomePage from './components/Home';
 
 const Stack = createStackNavigator();
 
+// GestureEnabled: false -> Does not allow user to swipe back
+// HeaderLeft: false -> Does not allow user to hit back arrow
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name = "Login" component = {LoginPage} options = {{headerShown: false}}/>
-        {<Stack.Screen name = "Home" component = {HomePage}/>}
+        {<Stack.Screen name = "Home" component = {HomePage} options = {{headerLeft: false, gestureEnabled: false}} />}
       </Stack.Navigator>
     </NavigationContainer>
   );

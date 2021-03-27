@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
-import { Text, View, StyleSheet, Modal, Image, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Modal, Image, Dimensions, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
-
-
 import { Button, Avatar, Input, CheckBox } from 'react-native-elements';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Login_Container, Register_Container, Register_Text, Reset_Container, Welcome_Message } from './style';
-import { Alert } from 'react-native';
+
 
 
 class ResetPage extends Component {
@@ -23,8 +21,6 @@ class ResetPage extends Component {
           passwordMatch:true,
           modalVisible: false,
         }
-
-
     }
 
     render() {
@@ -148,12 +144,14 @@ class ResetPage extends Component {
         );
     }
 
+    // Opens Forgot Password Modal
     setModalVisible() {
         this.setState({
             modalVisible: true
         })      
     }
 
+    // Closes Forgot Password Modal
     closeModal(){
         this.setState({
             modalVisible:false
