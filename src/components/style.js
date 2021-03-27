@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import backgroundImg from '../static/background.png'
 
 export const LoginHeader = styled.div`
   margin-left:520px;
@@ -289,7 +288,110 @@ export const NewTodoListEnter = styled.input.attrs({
 
 export const CurrentTodoListHeader = styled.h1`
       text-align:center;
-      
-
-
 `
+export const EditTodoItemWrapper = styled.div`
+    width:370px;
+    height:330px;
+    margin:150px auto;
+    background:white;
+    box-shadow:0 0 8px rgba(0,0,0 .1);
+    padding-bottom:130px;
+    border-radius:15px;
+    background-image: linear-gradient(white,gray);
+    position:absolute;
+    top:10px;
+    left:300px;
+`
+
+
+export const EditTodoItemButton = styled.button`
+  width:110px;
+  padding: 11px 20px;
+  color: black;
+  font-weight: 400;
+  text-transform: uppercase;
+  background: white;
+  border-radius: 3px;
+  margin-top: 30px;
+  margin-left:115px;
+
+`;
+
+export const EditItemHeader = styled.h1`
+      text-align:center;
+`
+
+
+export const EditItemCloseButton = styled.div`
+      width:20px;
+      height:20px;
+      position: relative;
+      padding:3px;
+      background: red;
+      color: white;
+      float:right;
+      cursor:pointer;
+      text-align:center;
+
+        
+`;
+
+
+export const AddTodoItemButton = styled.button`
+  width:110px;
+  padding: 11px 20px;
+  color: black;
+  font-weight: 400;
+  background: white;
+  border-radius: 3px;
+  margin-top: 30px;
+  margin-left:765px;
+
+`;
+
+export const AddTodoItemWrapper = styled.div`
+    width:370px;
+    height:330px;
+    margin:150px auto;
+    background:white;
+    box-shadow:0 0 8px rgba(0,0,0 .1);
+    padding-bottom:130px;
+    border-radius:15px;
+    background-image: linear-gradient(white,gray);
+    position:absolute;
+    top:10px;
+    left:300px;
+`
+
+
+export const AddItemCloseButton = styled.div`
+      width:20px;
+      height:20px;
+      position: relative;
+      padding:3px;
+      background: red;
+      color: white;
+      float:right;
+      cursor:pointer;
+      text-align:center;
+
+        
+`;
+
+export const AddItemHeader = styled.h1`
+      text-align:center;
+`
+
+
+export const AddTodoItemSubmitButton = styled.button`
+  width:110px;
+  padding: 11px 20px;
+  color: black;
+  font-weight: 400;
+  text-transform: uppercase;
+  background: white;
+  border-radius: 3px;
+  margin-top: 30px;
+  margin-left:115px;
+
+`;
