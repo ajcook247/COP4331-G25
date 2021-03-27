@@ -45,7 +45,10 @@ class LoginPage extends Component
     render(){
         return (
             <View style={styles.container}>
-                <LinearGradient colors={['#96CAF7', '#FFF']}>
+                <LinearGradient 
+                style={styles.container}
+                colors={['#96CAF7', '#FFF']}>
+
                     <Welcome_Message> 
                         <Text style={{fontSize: 20}}>Welcome to B-Dreamy</Text>
                     </Welcome_Message>
@@ -187,8 +190,6 @@ class LoginPage extends Component
     }
 
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
