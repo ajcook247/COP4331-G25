@@ -17,6 +17,7 @@ class RegisterPage extends Component {
           password:'',
           confirmed:'',
           email:'',
+          name:'',
           passwordMatch:true,
           modalVisible: false,
         }
@@ -115,6 +116,23 @@ class RegisterPage extends Component {
                             }
                             containerStyle={{width: 300}}
                             />
+                            <Input
+                            value={this.state.name} 
+                            onChangeText={(text) => this.setState({name: text})}
+                            secureTextEntry={true}
+                            placeholder='Enter your name'
+                            placeholderTextColor='#000'
+                            textAlign="left"
+                            style={{fontSize: 20}}
+                            leftIcon={
+                                <IconFA
+                                    name='child'
+                                    size={24}
+                                    color='black'
+                                />
+                            }
+                            containerStyle={{width: 300}}
+                            />
                             <Button
                             title="Create Account"
                             titleStyle={{fontSize: 20}}
@@ -182,8 +200,14 @@ class RegisterPage extends Component {
         {
           return;
         }
+        if(!this.state.name)
+        {
+          return;
+        }
         if(this.state.confirmed != this.state.password)
         {
+        
+            Alert.alert('Please make sure your passwords are the same');
 
         //Alert.alert(this.state.email, this.state.username) // If all are filled, show email and username
         
@@ -202,21 +226,21 @@ class RegisterPage extends Component {
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        username:this.state.username,
+                        login:this.state.username,
                         password:this.state.password,
                         email:this.state.email,
+                        name:this.state.name,
                    })        
                 });
                 var res = JSON.parse(await response.text());
-                if( res.id <= 0 )
+                if( res.error )
                 {
                 return;
                 }
                 else
                 {
-                this.props.newRegisterLogin(this.state.username,this.state.password);
-                this.resetForm();
-                this.props.registerSucceed();
+                    this.resetForm();
+                    navigate('Home');
                 }
             }
             catch(e)
@@ -232,6 +256,7 @@ class RegisterPage extends Component {
           password:'',
           email:'',
           confirmed:'',
+          name:'',
         })
     }
 
