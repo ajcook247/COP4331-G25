@@ -3,6 +3,7 @@ import {LoginWrapper,LoginHeader,LoginFooter,Input,Button,ButtonGroup,ForgetPass
 import Register from './register';
 import ForgetPassword from './resetPassword';
 import storage from '../tokenStorage';
+const jwt = require("jsonwebtoken");
 
 
 
@@ -95,7 +96,7 @@ class Login extends Component{
         if(!this.state.password){
             return;
         }
-
+        
         try {
             let response = await fetch('http://localhost:5000/api/login',{
                     method:'POST',
@@ -104,13 +105,16 @@ class Login extends Component{
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        username:this.state.username,
+                        login:this.state.username,
                         password:this.state.password
                     })
                     
             });
+            
+
             var res = JSON.parse(await response.text());
-            if( res.id <= 0 )
+            console.log(res);
+            if(res.error)
             {
                 this.setState({
                     wrongCombination:true
@@ -118,7 +122,11 @@ class Login extends Component{
                 
                 
             }else{
+
                 storage.storeToken(res);
+                var tok = storage.retrieveToken();
+                var ud = jwt.decode(tok,{complete:true});
+                console.log(ud.payload);
                 this.props.changeToLoggedIn(this.state.username);
             }
 
@@ -132,7 +140,7 @@ class Login extends Component{
     }
 
     handleKeypress(e){
-        if(e.key=='Enter'){
+        if(e.key==='Enter'){
             this.handleLoginClick();
         }
     }
