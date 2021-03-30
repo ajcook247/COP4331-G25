@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Input,Button,RegisterWrapper,RegisterCloseButton,RegisterInputGroup,PlusOutlined} from './style';
+import {Input,Button,RegisterWrapper,RegisterCloseButton,RegisterInputGroup} from './style';
 
 
 
@@ -11,6 +11,7 @@ class Register extends Component{
         password:'',
         confirmed:'',
         email:'',
+        fullName:'',
         passwordMatch:true,
       }
       this.handleConfirmedChange = this.handleConfirmedChange.bind(this);
@@ -18,6 +19,7 @@ class Register extends Component{
       this.handleUsernameChange = this.handleUsernameChange.bind(this);
       this.handleEmailChange = this.handleEmailChange.bind(this);
       this.handleRegisterSubmit = this.handleRegisterSubmit.bind(this);
+      this.handleFullnameChange = this.handleFullnameChange.bind(this);
       this.resetForm = this.resetForm.bind(this);
     }
     render(){
@@ -28,6 +30,7 @@ class Register extends Component{
                 <RegisterCloseButton onClick={this.props.closeRegisterButton}>X</RegisterCloseButton>
                 <RegisterInputGroup>
                     <Input placeholder='Email' onChange={this.handleEmailChange} />
+                    <Input placeholder='Fullname' onChange={this.handleFullnameChange} />
                     <Input placeholder='Username' onChange={this.handleUsernameChange} />  
                     <Input placeholder='Password' onChange={this.handlePasswordChange} />
                     <Input placeholder='Confirm Password' onChange={this.handleConfirmedChange} />  
@@ -56,6 +59,13 @@ class Register extends Component{
 
         })   }
 
+    handleFullnameChange(e){
+      this.setState({
+        fullName:e.target.value,
+
+      }) 
+    }
+
     handleConfirmedChange(e){
       this.setState({
           confirmed:e.target.value,
@@ -76,7 +86,7 @@ class Register extends Component{
         return;
       }
 
-      if(this.state.confirmed != this.state.password){
+      if(this.state.confirmed !== this.state.password){
         this.setState({
           passwordMatch:false,
         })  
@@ -91,19 +101,24 @@ class Register extends Component{
                       'Content-Type':'application/json'
                   },
                   body: JSON.stringify({
-                      username:this.state.username,
+                      login:this.state.username,
                       password:this.state.password,
                       email:this.state.email,
+                      name:this.state.fullName,
                  })        
           });
           var res = JSON.parse(await response.text());
-          if( res.id <= 0 )
+          if( res.error )
           {
+            this.props.closeRegisterButton();
+
             return;
           }else{
-            this.props.newRegisterLogin(this.state.username,this.state.password);
+          //  this.props.newRegisterLogin(this.state.username,this.state.password);
+          //console.log(res);
             this.resetForm();
-            this.props.registerSucceed();
+            this.props.closeRegisterButton();
+
           }
 
       }
