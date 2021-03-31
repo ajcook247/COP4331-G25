@@ -23,17 +23,21 @@ exports.setApp = function(app, client)
         {
             id = results[0]._id;
             name = results[0].Name;
+            try
+            {
+                // ret = {"id":id, "name":name};
+                ret = jwt.createToken(name, id);
+            }
+            catch(e)
+            {
+                ret = {error:e.message};
+            }
+
+        }else{
+            ret = {error:"Check your credential please!"};
         }
 
-        try
-        {
-            // ret = {"id":id, "name":name};
-            ret = jwt.createToken(name, id);
-        }
-        catch(e)
-        {
-            ret = {error:e.message};
-        }
+       
 
         res.status(200).json(ret);
     });//end login
@@ -47,18 +51,27 @@ exports.setApp = function(app, client)
         // const results = await User.find()
 
         const newUser = new User({ Login: login, Password: password, Email : email, Name : name, Verified: false});
+        const duplicates = await db.collection('Users').find({Login:login}).toArray();      
 
-        try
-        {
-            const result = db.collection('Users').insertOne(newUser);
-            // newUser.save();
+        if(duplicates.length > 0){
+            ret = {error:'Exists user, please change your username!'};
+        }else{
+            try
+            {
+    
+                const result = db.collection('Users').insertOne(newUser);
+                var ret = {error:''};
+
+                // newUser.save();
+            }
+            catch(e)
+            {
+                error = e.message;
+                console.log(e.message);
+            }
         }
-        catch(e)
-        {
-            error = e.message;
-            console.log(e.message);
-        }
-        var ret = {error:''};
+
+        
         res.status(200).json(ret);
     });
 
