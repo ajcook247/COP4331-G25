@@ -2,9 +2,15 @@ import React, {Component} from 'react';
 import {MainPageNavWrapper,TodoListOrder,NewTodoListEnter} from './style';
 import { StarOutlined, CheckOutlined, ReadOutlined, SmileOutlined,PlusOutlined,RightSquareOutlined} from '@ant-design/icons';
 import storage from '../tokenStorage';
-import { isExpired, decodeToken } from "react-jwt";
+
+const jwt = require("jsonwebtoken");
+var tok = storage.retrieveToken();
+var ud = jwt.decode(tok,{complete:true});
+
 
 class MainNav extends Component {
+
+    
 
     constructor(props){
         super(props);
@@ -12,15 +18,11 @@ class MainNav extends Component {
         this.state=
         {
             hasTodoList:true,
-           
-           
             todoList:[{name:'Summer Vacation',ID:'0'},{name:'Study React',ID:'1'},{name:'Study Node.js',ID:'2'}],
             newTodoList:'',
             errorMsg:'',
-            tok:storage.retrieveToken(),
-            ud:decodeToken(this.state.tok),
-            userId:this.state.ud.payload.userId,
-            usename:this.state.ud.payload.username,
+            userId:ud.payload.userId,
+            username:ud.payload.fullName,
        
             
         }
@@ -32,7 +34,7 @@ class MainNav extends Component {
         this.handleShowCustomizedTodoItem = this.handleShowCustomizedTodoItem.bind(this);
         this.handleAddNewTodoListChange = this.handleAddNewTodoListChange.bind(this);
 
-
+ 
 
     }
 
@@ -45,7 +47,7 @@ class MainNav extends Component {
         
             <MainPageNavWrapper> 
                 
-                           <h1><SmileOutlined /> Welcome {this.props.username}!<br/><br/></h1>
+                           <h1><SmileOutlined /> Welcome {this.state.username}!<br/><br/></h1>
                             <br/>
                             
                             <TodoListOrder onClick={this.handleShowAllItems}><h2><ReadOutlined />All Tasks</h2></TodoListOrder>
