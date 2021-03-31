@@ -49,7 +49,7 @@ class Login extends Component{
                     <Button onClick={this.handleLoginClick}>Login</Button>
                     <Button onClick={this.handleRegisterClick}>Register</Button>     
                     </ButtonGroup  >    
-                    {this.state.wrongCombination && <WrongPasswordMsg><h4> Wrong password or Username! please enter again.</h4></WrongPasswordMsg>}
+                    {this.state.wrongCombination && <WrongPasswordMsg><h4> Check your credential please!</h4></WrongPasswordMsg>}
                 
                     <ForgetPasswordButton onClick={this.handleForgetPassword}>Forget Password?</ForgetPasswordButton>
                 </LoginWrapper>
@@ -124,7 +124,7 @@ class Login extends Component{
             }else{
 
                 storage.storeToken(res);
-                var tok = storage.retrieveToken();
+               var tok = storage.retrieveToken();
                 var ud = jwt.decode(tok,{complete:true});
                 console.log(ud.payload);
                 this.props.changeToLoggedIn(this.state.username);
@@ -133,7 +133,7 @@ class Login extends Component{
         }
 
         catch(e){
-            console.log(e);
+          //  console.log(e);
             return;
         }
     
