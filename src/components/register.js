@@ -93,7 +93,7 @@ class Register extends Component{
         return;
       }else{
         try {
-          /* we will add register api*/ 
+          //https://s21l-g25.herokuapp.com/
           let response = await fetch('http://localhost:5000/api/register',{
                   method:'POST',
                   headers:{
@@ -110,14 +110,16 @@ class Register extends Component{
           var res = JSON.parse(await response.text());
           if( res.error )
           {
+            console.log(res.error);
             this.props.closeRegisterButton();
-
             return;
           }else{
           //  this.props.newRegisterLogin(this.state.username,this.state.password);
           //console.log(res);
             this.resetForm();
             this.props.closeRegisterButton();
+            console.log(res);
+
 
           }
 
