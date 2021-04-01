@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Login from './components/login';
+import MainPage from './pages/main'
 import {BackgroundBody} from './components/style'
+
 
 class App extends Component {
 
@@ -23,10 +25,10 @@ class App extends Component {
 
 
 
-
+/*will be used*/
   async doLogout(){
       try {
-          let res = await fetch('/logout',{
+          let res = await fetch('http://localhost:5000/api/logout',{
               method:'POST',
               headers:{
                 'Accept':'application/json',
@@ -61,7 +63,9 @@ class App extends Component {
 
       return (
         <div> 
-          todolist...welcome {this.state.username}
+          <MainPage  username={this.state.username} doLogout={this.doLogout}/>
+         
+           
          </div>
       )
 
