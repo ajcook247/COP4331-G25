@@ -8,7 +8,7 @@ import { RiBookmark3Fill,RiBookmark3Line,RiBookmark2Fill,RiBookmark2Line } from 
 import AddTodoItem from '../components/addTodoItem';
 import EditTodoItem from '../components/editTodoItem';
 import storage from '../tokenStorage';
-import { isExpired, decodeToken } from "react-jwt";
+const jwt = require("jsonwebtoken");
 
 class MainPage extends Component {
 
@@ -39,10 +39,10 @@ class MainPage extends Component {
 
 
 
-             tok:storage.retrieveToken(),
-             ud:decodeToken(this.state.tok),
-             userId:this.state.ud.payload.userId,
-             usename:this.state.ud.payload.username,
+          //   tok:storage.retrieveToken(),
+          //   ud:decodeToken(this.state.tok),
+         //    userId:this.state.ud.payload.userId,
+         //    usename:this.state.ud.payload.username,
             
         }
     this.showItems = this.showItems.bind(this);
@@ -93,11 +93,6 @@ class MainPage extends Component {
                                <AddTodoItemButton onClick={this.handleAddTodoitem}>Add</AddTodoItemButton>
                         </TodoItemWrapper>
 
-
-            
-            
-            
-            
             </div>
 
             
