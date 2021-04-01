@@ -20,10 +20,9 @@ class LoginPage extends Component
         super(props);
 
         this.state={
-            email:'', //OR USERNAME ??
+            username:'',
             password:'',
             wrongCombination:false,
-            showRegister:false,
             showForgetPassword:false,
             loggedIn:false
         }
@@ -51,16 +50,16 @@ class LoginPage extends Component
                             style={{width:70, height:70, marginTop: 20}}
                         />
                         <Input 
-                            value={this.state.email} 
-                            onChangeText={(text) => this.setState({email: text})}
-                            placeholder='Email'
+                            value={this.state.username} 
+                            onChangeText={(text) => this.setState({username: text, wrongCombination:false,})}
+                            placeholder='Username'
                             placeholderTextColor='#000'
                             textAlign="left"
                             style={{fontSize: 20}}
                             leftIcon={
                                 <IconMCI
-                                    name='email'
-                                    size={24}
+                                    name='account-circle'
+                                    size={22}
                                     color='black'
                                 />
                             }
@@ -68,7 +67,7 @@ class LoginPage extends Component
                         />
                         <Input
                             value={this.state.password} 
-                            onChangeText={(text) => this.setState({password: text})}
+                            onChangeText={(text) => this.setState({password: text, wrongCombination:false,})}
                             //onKeyPress={this.handleKeypress}
                             secureTextEntry={true}
                             placeholder='Password'
@@ -84,6 +83,7 @@ class LoginPage extends Component
                             }
                             containerStyle={{width: 300}}
                         />
+                        {this.state.wrongCombination && <Text><h4> Check your credential please!</h4></Text>}
                         <Button
                             onPress={this.handleLoginClick}
                             // onPress={() =>
@@ -121,22 +121,22 @@ class LoginPage extends Component
         // necessary anywhere we want to call navigate(location)
         const {navigate} = this.props.navigation;
 
-        navigate('Home');
+        navigate('Home'); // Delete once running on server for testing
 
-        if(!this.state.email)
+        if(!this.state.username)
         {
-            //Alert.alert(this.state.password) // If email not filled, show password
+            //Alert.alert(this.state.password) // If username not filled, show password
             return;
         }
         if(!this.state.password)
         {
-            //Alert.alert(this.state.email) // If password not filled, show email
+            //Alert.alert(this.state.username) // If password not filled, show username
             return;
         }
 
         //navigate('Home'); //This is all we will need to navigate to new page
 
-        //Alert.alert(this.state.email, this.state.password) // If both are filled, show both
+        //Alert.alert(this.state.username, this.state.password) // If both are filled, show both
         
         try 
         {
@@ -148,13 +148,13 @@ class LoginPage extends Component
                     'Content-Type':'application/json'
                 },
                 body: JSON.stringify({
-                    email:this.state.email,
+                    login:this.state.username,
                     password:this.state.password
                 })
                     
             });
             var res = JSON.parse(await response.text());
-            if( res.id <= 0 )
+            if( res.error )
             {
                 this.setState({
                     wrongCombination:true
@@ -163,7 +163,10 @@ class LoginPage extends Component
             else
             {
                 storage.storeToken(res);
-                navigate('Home');
+                var tok = storage.retrieveToken();
+                var ud = jwt.decode(tok,{complete:true});
+                navigate('Home', { username: this.state.username}); //When navigating home, pass username
+
             }
         }
         catch(e)

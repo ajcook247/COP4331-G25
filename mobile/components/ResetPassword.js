@@ -44,8 +44,9 @@ class ResetPage extends Component {
                             containerStyle={{marginTop: 60, marginBottom: 30}}
                             size="large"
                             />  
-                            <Text>Reset your Password below</Text>
 
+                            <Text>Please enter your email below</Text>
+                            
                             <Input 
                             onChange={this.handleEmailChange}
                             placeholder='Email'
@@ -61,53 +62,9 @@ class ResetPage extends Component {
                             }
                             containerStyle={{marginTop: 40, width: 300}}
                             />
-                            <Input
-                            onChange={this.handleUsernameChange}
-                            placeholder='Username'
-                            placeholderTextColor='#000'
-                            textAlign="left"
-                            style={{fontSize: 20}}
-                            leftIcon={
-                                <IconMCI
-                                    name='account-circle'
-                                    size={20}
-                                    color='black'
-                                />
-                            }
-                            containerStyle={{width: 300}}
-                            /> 
-                            <Input
-                            onChange={this.handlePasswordChange}
-                            secureTextEntry={true}
-                            placeholder='Password'
-                            placeholderTextColor='#000'
-                            textAlign="left"
-                            style={{fontSize: 20}}
-                            leftIcon={
-                                <IconFA
-                                    name='lock'
-                                    size={24}
-                                    color='black'
-                                />
-                            }
-                            containerStyle={{width: 300}}
-                            />
-                            <Input
-                            onChange={this.handleConfirmedChange}
-                            secureTextEntry={true}
-                            placeholder='Confirm Password'
-                            placeholderTextColor='#000'
-                            textAlign="left"
-                            style={{fontSize: 20}}
-                            leftIcon={
-                                <IconFA
-                                    name='lock'
-                                    size={24}
-                                    color='black'
-                                />
-                            }
-                            containerStyle={{width: 300}}
-                            />
+
+                            <Text>Send reset form to Your Email</Text>
+                            
                             <Button
                             title="Change Password"
                             titleStyle={{fontSize: 20}}

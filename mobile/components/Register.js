@@ -235,17 +235,17 @@ class RegisterPage extends Component {
                 var res = JSON.parse(await response.text());
                 if( res.error )
                 {
-                return;
+                    Alert.alert('Username Already exists, please try a new one');
+                    return;
                 }
                 else
                 {
                     this.resetForm();
-                    navigate('Home');
+                    this.closeModal();
                 }
             }
             catch(e)
             {
-                console.log(e);
                 return;
             }
         }

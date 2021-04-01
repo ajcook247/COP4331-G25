@@ -98,6 +98,15 @@ const ListGroup = () => {
                 <TodoListItem/>
                 <TodoListItem/>
                 <TodoListItem/>
+                <TodoListItem/>
+                <TodoListItem/>
+                <TodoListItem/>
+                <TodoListItem/>
+                <TodoListItem/>
+                <TodoListItem/>
+                <TodoListItem/>
+                <TodoListItem/>
+                <TodoListItem/>
             </ScrollView>
         </SafeAreaView>
     );
@@ -145,7 +154,6 @@ const DividingLine = () => {
 
     return (
         <View style = {{
-            marginVertical: 2,
             borderBottomColor: '#030608',
             borderBottomWidth: 2
         }}/>
@@ -177,6 +185,7 @@ const BottomView = () => {
 
 }
 
+/*
 //main component
 const HomePage = () => {
 
@@ -195,7 +204,32 @@ const HomePage = () => {
         
     );
     
+}*/
+
+
+const HomePage = () => {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(true); //used to determine render back to login page (false -> render LoginPage)
+
+
+    return (
+
+        <View style = {{flexDirection:"column", flex:1}}>
+            <View style={{ flex: 1, backgroundColor: "#96CAF7" }}>
+                <TopView></TopView>
+            </View>
+            <DividingLine> </DividingLine>
+            <View style={{ flex: 1.3, backgroundColor: "#96CAF7" }}>
+            <BottomView> </BottomView>
+            </View>
+
+
+        </View>
+        
+    );
+    
 }
+
 
 // ---- Helper Functions ----
 const CheckForLogout = (props) => {
