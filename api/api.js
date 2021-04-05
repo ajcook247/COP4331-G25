@@ -69,31 +69,40 @@ exports.setApp = function(app, client)
     {
 		var error = '';
 
-		const {id} = req.body;
-		const list;
+		const {id,jwtToken} = req.body;
+		var list = [];
 		
-		if( token.isExpired(jwtToken))
+		if( jwt.isExpired(jwtToken))
 		{
 			var r = {error:'The JWT is no longer valid'};
 			res.status(200).json(r);
 			return;
 		}
 		
-		list = await db.collection('Collections').findOne({ID:id});
+
+        try{
+            list = await db.collection('Collections').find({ID:id}).toArray();
+        }
+        catch(e){
+            error = e.message;
+        };
+        
+            
+        var ret ={list:list,
+                  error:error,
+                };
 		res.status(200).json(ret);
     });
 
 	/*
 	app.post('/api/showCompleted', async (req, res, next) =>
     {
-
     });
 	*/
 
 	/*
 	app.post('/api/showCustomizedItem', async (req, res, next) =>
     {
-
     });
 	*/
 
@@ -101,10 +110,10 @@ exports.setApp = function(app, client)
     {
         var error = '';
 
-        const {name, userId} = req.body;
-        const newList = new Collections({Name:name, UserID:userId});     
+        const {name,userId,jwtToken} = req.body;
+        const newList = new Collections({Name:name, UserId:userId});     
         
-        if( token.isExpired(jwtToken))
+        if( jwt.isExpired(jwtToken))
 		{
 			var r = {error:'The JWT is no longer valid'};
 			res.status(200).json(r);
