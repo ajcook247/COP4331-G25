@@ -8,41 +8,33 @@ import { RiBookmark3Fill,RiBookmark3Line,RiBookmark2Fill,RiBookmark2Line } from 
 import AddTodoItem from '../components/addTodoItem';
 import EditTodoItem from '../components/editTodoItem';
 import storage from '../tokenStorage';
-import { isExpired, decodeToken } from "react-jwt";
+
+const jwt = require("jsonwebtoken");
+var tok = storage.retrieveToken();
+var ud = jwt.decode(tok,{complete:true});
+
 
 class MainPage extends Component {
 
     constructor(props){
         super(props);
         this.state={
-            todoItem:[{
-                des:'go to park1',
-                due:'2020',
-                id:'1',
-                completed:false,
-                star:true,
-            },{ des:'go to park2',
-            due:'2020',
-            id:'2',
-            completed:false,
-            star:true,},{ des:'go to park3',
-            due:'2020',
-            id:'3',
-            completed:true,
-            star:true,}],
+            todoItem:[],
 
             editIsOpen:false,
             addIsOpen:false,
-            currentTodoList:{name:'Summer',listID:'1'},
+            addButtonIsOpen:false,
+            currentTodoList:{
+            },
             currentTodoItem:'',
             errorMsg:'',
 
 
 
-             tok:storage.retrieveToken(),
-             ud:decodeToken(this.state.tok),
-             userId:this.state.ud.payload.userId,
-             usename:this.state.ud.payload.username,
+          //   tok:storage.retrieveToken(),
+          //   ud:decodeToken(this.state.tok),
+          userId:ud.payload.userId,
+          usename:ud.payload.username,
             
         }
     this.showItems = this.showItems.bind(this);
@@ -55,6 +47,9 @@ class MainPage extends Component {
     this.closeEditItem = this.closeEditItem.bind(this);
     this.closeAddTodoItem = this.closeAddTodoItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.showAddButton = this.showAddButton.bind(this);
+    this.closeAddButton = this.closeAddButton.bind(this);
+
     }
 
 
@@ -63,7 +58,7 @@ class MainPage extends Component {
     render(){
         return (
            
-           <div> <MainNav username={this.props.username}  showItems={this.showItems} />               
+           <div> <MainNav username={this.props.username}  showItems={this.showItems} showAddButton={this.showAddButton} closeAddButton={this.closeAddButton}/>               
                         <TodoItemWrapper>  <LogoutButton onClick={this.props.doLogout}>Logout</LogoutButton>         
                          <CurrentTodoListHeader>{this.state.currentTodoList.name}</CurrentTodoListHeader>                     
                                 {this.state.todoItem.map(
@@ -84,20 +79,16 @@ class MainPage extends Component {
                                userID={this.state.userID} tok={this.state.tok} 
                                showItems={this.showItems} closeEditItem={this.closeEditItem}/>} 
 
-                               {this.state.addIsOpen && <AddTodoItem currentTodoList={this.state.CurrentTodoList} 
-                               userID={this.state.userID} tok={this.state.tok} 
-                               showItems={this.showItems} closeAddItem={this.closeAddTodoItem}/>} 
+                               
 
 
                                 </TodoListOrderMainPage>)}    
-                               <AddTodoItemButton onClick={this.handleAddTodoitem}>Add</AddTodoItemButton>
+                                {this.state.addIsOpen && <AddTodoItem currentTodoList={this.state.CurrentTodoList} 
+                               userID={this.state.userID} tok={this.state.tok} 
+                               showItems={this.showItems} closeAddItem={this.closeAddTodoItem}/>} 
+                          {this.state.addButtonIsOpen && <AddTodoItemButton onClick={this.handleAddTodoitem}>Add</AddTodoItemButton>}
                         </TodoItemWrapper>
 
-
-            
-            
-            
-            
             </div>
 
             
@@ -267,6 +258,17 @@ class MainPage extends Component {
 
     }
 
+    showAddButton(){
+        this.setState({
+            addButtonIsOpen:true
+        })
+    }
+
+    closeAddButton(){
+        this.setState({
+            addButtonIsOpen:false
+        })
+    }
     
 
     handleAddTodoitem(){
