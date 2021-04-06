@@ -10,6 +10,20 @@ import EditTodoItem from '../components/editTodoItem';
 import storage from '../tokenStorage';
 const jwt = require("jsonwebtoken");
 
+const app_name = 's21l-g25';
+
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
+
 class MainPage extends Component {
 
     constructor(props){
@@ -108,7 +122,7 @@ class MainPage extends Component {
 
     async changeItemToIncompleted(itemID){
         try {
-            let response = await fetch('http://localhost:5000/api/changeToIncomplete',{
+            let response = await fetch(buildPath('api/changeToIncomplete'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',

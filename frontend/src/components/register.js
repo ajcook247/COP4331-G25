@@ -1,7 +1,19 @@
 import React, {Component} from 'react';
 import {Input,Button,RegisterWrapper,RegisterCloseButton,RegisterInputGroup} from './style';
 
+const app_name = 's21l-g25';
 
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
 
 class Register extends Component{
     constructor(props){
@@ -92,20 +104,18 @@ class Register extends Component{
         })  
         return;
       }else{
+
+        var obj = {login: this.state.username, password: this.state.password, email: this.state.email, Verified: false, name: this.state.fullName }
+        var js = JSON.stringify(obj);
+
         try {
           //https://s21l-g25.herokuapp.com/
-          let response = await fetch('http://localhost:5000/api/register',{
+          let response = await fetch(buildPath('api/register'),{
                   method:'POST',
                   headers:{
-                      'Accept': 'application/json',
-                      'Content-Type':'application/json'
-                  },
-                  body: JSON.stringify({
-                      login:this.state.username,
-                      password:this.state.password,
-                      email:this.state.email,
-                      name:this.state.fullName,
-                 })        
+                    'Content-Type':'application/json'
+                },
+                body: js     
           });
           var res = JSON.parse(await response.text());
           if( res.error )
@@ -119,7 +129,6 @@ class Register extends Component{
             this.resetForm();
             this.props.closeRegisterButton();
             console.log(res);
-
 
           }
 

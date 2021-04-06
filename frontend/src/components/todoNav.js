@@ -7,6 +7,19 @@ const jwt = require("jsonwebtoken");
 var tok = storage.retrieveToken();
 var ud = jwt.decode(tok,{complete:true});
 
+const app_name = 's21l-g25';
+
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
 
 class MainNav extends Component {
 
@@ -79,7 +92,7 @@ class MainNav extends Component {
 
     async handleShowAllItems(){
         try {
-            let response = await fetch('http://localhost:5000/api/showAll',{
+            let response = await fetch(buildPath('api/showAll'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -115,7 +128,7 @@ class MainNav extends Component {
     async handleShowCompletedItems(){
 
         try {
-            let response = await fetch('http://localhost:5000/api/showComplete',{
+            let response = await fetch(buildPath('api/showComplete'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -151,7 +164,7 @@ class MainNav extends Component {
     async handleShowStarItems(){
 
         try {
-            let response = await fetch('http://localhost:5000/api/showStar',{
+            let response = await fetch(buildPath('api/showStar'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -186,7 +199,7 @@ class MainNav extends Component {
     async getTodoList(){
         
         try {
-            let response = await fetch('http://localhost:5000/api/getTodoList',{
+            let response = await fetch(buildPath('api/getTodoList'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -224,7 +237,7 @@ class MainNav extends Component {
 
     async handleShowCustomizedTodoItem(listID){
         try {
-            let response = await fetch('http://localhost:5000/api/showCustomizedTodoItem',{
+            let response = await fetch(buildPath('api/showCustomizedTodoItem'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -268,7 +281,7 @@ class MainNav extends Component {
 
     async addNewTodoList(){
         try {
-            let response = await fetch('http://localhost:5000/api/addNewTodoList',{
+            let response = await fetch(buildPath('api/addNewTodoList'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',

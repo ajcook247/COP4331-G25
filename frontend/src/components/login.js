@@ -6,9 +6,22 @@ import storage from '../tokenStorage';
 const jwt = require("jsonwebtoken");
 
 
+const app_name = 's21l-g25';
 
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
 
 class Login extends Component{
+    
     constructor(props){
         super(props);
 
@@ -61,6 +74,10 @@ class Login extends Component{
         );
     }
 
+    
+
+    
+
     handleRegisterClick(){
         this.setState({
             showRegister:true
@@ -96,18 +113,17 @@ class Login extends Component{
         if(!this.state.password){
             return;
         }
+
+        var obj = {login: this.state.username, password: this.state.password}
+        var js = JSON.stringify(obj);
         
         try {
-            let response = await fetch('http://localhost:5000/api/login',{
+            let response = await fetch(buildPath('api/login'),{
                     method:'POST',
+                    body : js,
                     headers:{
-                        'Accept': 'application/json',
                         'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify({
-                        login:this.state.username,
-                        password:this.state.password
-                    })
+                    }   
                     
             });
             
@@ -124,9 +140,10 @@ class Login extends Component{
             }else{
 
                 storage.storeToken(res);
-               var tok = storage.retrieveToken();
+                var tok = storage.retrieveToken();
                 var ud = jwt.decode(tok,{complete:true});
                 console.log(ud.payload);
+                window.location.href = '/main';
                 this.props.changeToLoggedIn(this.state.username);
             }
 
