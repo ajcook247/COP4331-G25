@@ -1,6 +1,21 @@
 import React, {Component} from 'react';
 import {EditTodoItemWrapper,Input,EditTodoItemButton,EditItemHeader,EditItemCloseButton} from './style';
 
+
+
+const app_name = 's21l-g25';
+
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
 class EditTodoItem extends Component{
 
     constructor(props){
@@ -64,7 +79,7 @@ class EditTodoItem extends Component{
 
     async handleEditSubmit(){
         try {
-            let response = await fetch('http://localhost:5000/api/editItem',{
+            let response = await fetch(buildPath('api/editItem'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',

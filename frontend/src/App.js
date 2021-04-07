@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Login from './components/login';
 import MainPage from './pages/main'
 import {BackgroundBody} from './components/style'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 
 class App extends Component {
@@ -25,7 +26,7 @@ class App extends Component {
 
 
 
-/*will be used*/
+ /*will be used*/
   async doLogout(){
       try {
           let res = await fetch('http://localhost:5000/api/logout',{
@@ -58,30 +59,34 @@ class App extends Component {
 
 
 
-  render() {
-    if(this.state.isLoggedIn){
-
+  render() 
+  {
+    
       return (
-        <div> 
-          <MainPage  username={this.state.username} doLogout={this.doLogout}/>
-         
-           
-         </div>
+        < Router>
+          < Switch>
+
+            <Route path= "/" exact>
+              <BackgroundBody> 
+              <div > 
+                <Login changeToLoggedIn={this.changeToLoggedIn} />
+              </div>
+              </BackgroundBody>
+            </Route>
+
+            <Route path= "/main" exact>
+              <div> 
+                <MainPage  username={this.state.username} doLogout={this.doLogout}/> 
+              </div>  
+            </Route>
+          </ Switch>
+        </ Router>
       )
-
-    }else{
-      return (
-         <BackgroundBody> <div > 
-            <Login changeToLoggedIn={this.changeToLoggedIn} />
-          </div></BackgroundBody>
-     
-    )
+   
   }
 
+ 
+};
 
-
-    
-  };
-}
 
 export default App;
