@@ -105,8 +105,14 @@ exports.setApp = function(app, client)
         // const results = await User.find()
 
         const newUser = new User({ Login: login, Password: password, Email : email, Name : name, Verified: false});
-        const duplicates = await db.collection('Users').find({Login:login}).toArray();      
+        const duplicates = await db.collection('Users').find({Login:login}).toArray(); 
 
+        /*function handleVerified()
+        {
+
+            
+        }*/
+        
         if(duplicates.length > 0){
             ret = {error:'Exists user, please change your username!'};
         }else{
@@ -119,8 +125,10 @@ exports.setApp = function(app, client)
                     from: "bdreamywebsite@hotmail.com",
                     subject: "B-DREAMY : Confirm Email",
                     html:`
+
                     <h1>Welcome to B-DREAMY!!</h1>
-                    <h4>Please confirm e-mail :<a href ="http://localhost:3000/main/" > CONFIRM </a></h4>
+                    <h4>Please confirm e-mail :< a onclick = href ="http://localhost:3000/main/" > CONFIRM </a></h4>
+
                     `
                   })
 

@@ -6,6 +6,10 @@ const path = require('path');
 
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
+const MongoClient = require('mongodb').MongoClient; 
+const client = new MongoClient(url);
+client.connect();
+
 const PORT = process.env.PORT || 5000;
 const app = express();
 
@@ -31,3 +35,14 @@ app.listen(PORT, () =>
 {
     console.log('Server listening on port ' + PORT);
 });
+
+if (process.env.NODE_ENV === 'production') 
+{
+  // Set static folder
+  app.use(express.static('frontend/build'));
+
+  app.get('*', (req, res) => 
+ {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  });
+}
