@@ -6,12 +6,9 @@ import IconFA from 'react-native-vector-icons/FontAwesome';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Login_Container, Register_Container, Register_Text, Welcome_Message } from './style';
-
 import RegisterPage from './Register';
 import ResetPage from './ResetPassword';
 import storage from '../tokenStorage';
-
-//import App from './../'
 
 
 class LoginPage extends Component
@@ -83,7 +80,7 @@ class LoginPage extends Component
                             }
                             containerStyle={{width: 300}}
                         />
-                        {this.state.wrongCombination && <Text><h4> Check your credential please!</h4></Text>}
+                        {this.state.wrongCombination && <Text> Check your credential please!</Text>}
                         <Button
                             onPress={this.handleLoginClick}
                             // onPress={() =>
@@ -121,8 +118,6 @@ class LoginPage extends Component
         // necessary anywhere we want to call navigate(location)
         const {navigate} = this.props.navigation;
 
-        navigate('Home'); // Delete once running on server for testing
-
         if(!this.state.username)
         {
             //Alert.alert(this.state.password) // If username not filled, show password
@@ -134,17 +129,20 @@ class LoginPage extends Component
             return;
         }
 
-        //navigate('Home'); //This is all we will need to navigate to new page
+        var obj = {login: this.state.username, password: this.state.password}
+        var js = JSON.stringify(obj);
 
         //Alert.alert(this.state.username, this.state.password) // If both are filled, show both
         
+        //Alert.alert(obj)
+
+
         try 
         {
-            // Add API later
-            let response = await fetch('http://localhost:5000/api/login',{
+            let response = await fetch('https://s21l-g25.herokuapp.com/api/login',{
                 method:'POST',
+                body: js,
                 headers:{
-                    'Accept': 'application/json',
                     'Content-Type':'application/json'
                 },
                 body: JSON.stringify({
@@ -154,6 +152,7 @@ class LoginPage extends Component
                     
             });
             var res = JSON.parse(await response.text());
+
             if( res.error )
             {
                 this.setState({
@@ -163,10 +162,13 @@ class LoginPage extends Component
             else
             {
                 storage.storeToken(res);
-                var tok = storage.retrieveToken();
-                var ud = jwt.decode(tok,{complete:true});
-                navigate('Home', { username: this.state.username}); //When navigating home, pass username
 
+                // var tok = storage.retrieveToken();
+                // var ud = jwt.decode(tok,{complete:true});
+
+
+                navigate('Home', { username: this.state.username}); //When navigating home, pass username
+                // navigate("Home");
             }
         }
         catch(e)

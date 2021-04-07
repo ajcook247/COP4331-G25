@@ -6,7 +6,7 @@ import { Button, Avatar, Input, CheckBox } from 'react-native-elements';
 import IconFA from 'react-native-vector-icons/FontAwesome';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Login_Container, Register_Container, Register_Text, Welcome_Message } from './style';
+import { Register_Container } from './style';
 
 
 class RegisterPage extends Component {
@@ -48,6 +48,7 @@ class RegisterPage extends Component {
                             containerStyle={{marginTop: 60, marginBottom: 30}}
                             size="large"
                             />  
+                            
                             <Text>Register for a new user below</Text>
 
                             <Input 
@@ -217,12 +218,16 @@ class RegisterPage extends Component {
         }
         else
         {
+
+            var obj = {login: this.state.username, password: this.state.password, email: this.state.email, Verified: false, name: this.state.name }
+            var js = JSON.stringify(obj);
+
             try {
                 /* we will add register api*/ 
-                let response = await fetch('http://localhost:5000/api/register',{
-                method:'POST',
+                let response = await fetch('https://s21l-g25.herokuapp.com/api/register',{
+                    method:'POST',
+                    body: js,
                     headers:{
-                        'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
@@ -235,7 +240,7 @@ class RegisterPage extends Component {
                 var res = JSON.parse(await response.text());
                 if( res.error )
                 {
-                    Alert.alert('Username Already exists, please try a new one');
+                    Alert.alert('Username Already exists, please try a new one'); //email duplicate??
                     return;
                 }
                 else

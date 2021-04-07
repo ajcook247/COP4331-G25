@@ -3,10 +3,10 @@ import { Text, View, StyleSheet, Modal, Image, Dimensions, Alert } from 'react-n
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import { Button, Avatar, Input, CheckBox } from 'react-native-elements';
-import IconFA from 'react-native-vector-icons/FontAwesome';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Login_Container, Register_Container, Register_Text, Reset_Container, Welcome_Message } from './style';
+import { Reset_Container } from './style';
+
 
 
 
@@ -14,13 +14,11 @@ class ResetPage extends Component {
     constructor(props){
         super(props);
         this.state={
-          username:'',
-          password:'',
-          confirmed:'',
           email:'',
-          passwordMatch:true,
           modalVisible: false,
         }
+
+        this.sendPasswordRequestLink = this.sendPasswordRequestLink.bind(this);
     }
 
     render() {
@@ -48,7 +46,8 @@ class ResetPage extends Component {
                             <Text>Please enter your email below</Text>
                             
                             <Input 
-                            onChange={this.handleEmailChange}
+                            value={this.state.email} 
+                            onChangeText={(text) => this.setState({email: text})}
                             placeholder='Email'
                             placeholderTextColor='#000'
                             textAlign="left"
@@ -66,13 +65,13 @@ class ResetPage extends Component {
                             <Text>Send reset form to Your Email</Text>
                             
                             <Button
-                            title="Change Password"
+                            title="Send form to email"
                             titleStyle={{fontSize: 20}}
                             containerStyle={{width: 200, marginTop:30, borderRadius: 20}}
-                            onPress={() => {
-                                //this.closeModal();
-                            }}
+                            onPress={this.sendPasswordRequestLink}
+
                             />
+                            
                             <Button
                             title="Back to main page"
                             titleStyle={{fontSize: 20}}
@@ -114,6 +113,41 @@ class ResetPage extends Component {
             modalVisible:false
         })
     }
+
+    async sendPasswordRequestLink(){
+
+        if(!this.state.email){
+            return;
+        }
+
+        var obj = {email: this.state.email}
+        var js = JSON.stringify(obj);
+
+        try {
+            let response = await fetch('https://s21l-g25.herokuapp.com/reset-password',{
+                    method:'POST',
+                    body: js,
+                    headers:{
+                        'Content-Type':'application/json'
+                    }        
+            });
+            var res = JSON.parse(await response.text());
+
+           if( res.error )
+            {
+                Alert.alert('something went wrong' );
+            }
+            else
+            {
+                Alert.alert('succeeded');
+            }
+        }
+        catch(e){
+            return;
+        }
+    
+    }
+
 }
 
 
