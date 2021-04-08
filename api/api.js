@@ -69,40 +69,31 @@ exports.setApp = function(app, client)
     {
 		var error = '';
 
-		const {id,jwtToken} = req.body;
-		var list = [];
+		const {id} = req.body;
+		const list;
 		
-		if( jwt.isExpired(jwtToken))
+		if( token.isExpired(jwtToken))
 		{
 			var r = {error:'The JWT is no longer valid'};
 			res.status(200).json(r);
 			return;
 		}
 		
-
-        try{
-            list = await db.collection('Collections').find({ID:id}).toArray();
-        }
-        catch(e){
-            error = e.message;
-        };
-        
-            
-        var ret ={list:list,
-                  error:error,
-                };
+		list = await db.collection('Collections').findOne({ID:id});
 		res.status(200).json(ret);
     });
 
 	/*
 	app.post('/api/showCompleted', async (req, res, next) =>
     {
+
     });
 	*/
 
 	/*
 	app.post('/api/showCustomizedItem', async (req, res, next) =>
     {
+
     });
 	*/
 
@@ -110,10 +101,10 @@ exports.setApp = function(app, client)
     {
         var error = '';
 
-        const {name,userId,jwtToken} = req.body;
-        const newList = new Collections({Name:name, UserId:userId});     
+        const {name, userId} = req.body;
+        const newList = new Collections({Name:name, UserID:userId});     
         
-        if( jwt.isExpired(jwtToken))
+        if( token.isExpired(jwtToken))
 		{
 			var r = {error:'The JWT is no longer valid'};
 			res.status(200).json(r);
@@ -123,6 +114,58 @@ exports.setApp = function(app, client)
 		try
 		{
 			const result = db.collection('Collections').insertOne(newList);
+		}
+		catch(e)
+		{
+			error = e.message;
+			console.log(e.message);
+		}
+		
+		var ret = {error:''};
+		res.status(200).json(ret);
+    });
+	
+	app.post('/api/editTask', async (req, res, next) =>
+    {
+		var error = '';
+		const { id, name } = req.body;
+
+		if( token.isExpired(jwtToken))
+		{
+			var r = {error:'The JWT is no longer valid'};
+			res.status(200).json(r);
+			return;
+		}
+		
+		try
+		{
+			db.collection('Collections').update({ID: id}, {$set: {Name: name}});
+		}
+		catch(e)
+		{
+			error = e.message;
+			console.log(e.message);
+		}
+		
+		var ret = {error:''};
+		res.status(200).json(ret);
+    });
+	
+	app.post('/api/removeTask', async (req, res, next) =>
+    {
+		var error = '';
+		const { id } = req.body;
+			
+		if( token.isExpired(jwtToken))
+		{
+			var r = {error:'The JWT is no longer valid'};
+			res.status(200).json(r);
+			return;
+		}
+		
+		try
+		{
+			db.collection('Collections').deleteOne({ ID: id });
 		}
 		catch(e)
 		{
