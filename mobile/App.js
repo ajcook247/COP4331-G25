@@ -7,13 +7,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-
 import LoginPage from './components/Login';
 import HomePage from './components/Home';
 import HomeTest from './components/HomeTest'
 
 const Stack = createStackNavigator();
-
 
 // GestureEnabled: false -> Does not allow user to swipe back
 // HeaderLeft: false -> Does not allow user to hit back arrow
@@ -22,8 +20,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name = "Login" component = {LoginPage} options = {{headerShown: false}}/>
-        
-        <Stack.Screen name = "Home" component = {HomeTest} options = {{headerShown: false, gestureEnabled: false}} />
+        {<Stack.Screen name = "Home" component = {HomeTest} options = {{headerShown: false, gestureEnabled: false}} />}
       </Stack.Navigator>
     </NavigationContainer>
   );
