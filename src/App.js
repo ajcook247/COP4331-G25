@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Login from './components/login';
+import MainPage from './pages/main'
 import {BackgroundBody} from './components/style'
+
 
 class App extends Component {
 
@@ -12,6 +14,7 @@ class App extends Component {
     }
     this.changeToLoggedIn = this.changeToLoggedIn.bind(this);
     this.doLogout = this.doLogout.bind(this);
+    //this.resetAll = this.resetAll.bind(this);
   }
 
   changeToLoggedIn(username){
@@ -23,10 +26,10 @@ class App extends Component {
 
 
 
-
+/*will be used*/
   async doLogout(){
       try {
-          let res = await fetch('/logout',{
+          let response = await fetch('http://localhost:5000/api/logout',{
               method:'POST',
               headers:{
                 'Accept':'application/json',
@@ -34,12 +37,16 @@ class App extends Component {
               }
           });
 
-          let result = await res.json();
-          if (result && result.success) {
+          var res = JSON.parse(await response.text());
+         // console.log(res);
+          if (!res.error) {
               this.setState({
                 isLoggedIn:false,
                 username:'' 
               })
+        //      this.resetAll();
+
+
           }
           
 
@@ -61,7 +68,9 @@ class App extends Component {
 
       return (
         <div> 
-          todolist...welcome {this.state.username}
+          <MainPage  username={this.state.username} doLogout={this.doLogout}/>
+         
+           
          </div>
       )
 
