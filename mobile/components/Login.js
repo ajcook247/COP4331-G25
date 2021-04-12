@@ -8,7 +8,7 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Login_Container, Register_Container, Register_Text, Welcome_Message } from './style';
 import RegisterPage from './Register';
 import ResetPage from './ResetPassword';
-import storage from '../tokenStorage';
+import Storage from '../tokenStorage';
 
 
 class LoginPage extends Component
@@ -21,7 +21,7 @@ class LoginPage extends Component
             password:'',
             wrongCombination:false,
             showForgetPassword:false,
-            loggedIn:false
+            loggedIn:false,
         }
         
         this.handleLoginClick = this.handleLoginClick.bind(this);
@@ -133,10 +133,6 @@ class LoginPage extends Component
         var js = JSON.stringify(obj);
 
         //Alert.alert(this.state.username, this.state.password) // If both are filled, show both
-        
-        //Alert.alert(obj)
-
-
         try 
         {
             let response = await fetch('https://s21l-g25.herokuapp.com/api/login',{
@@ -160,12 +156,9 @@ class LoginPage extends Component
                 })  
             }
             else
-            {
-                storage.storeToken(res);
-
-                // var tok = storage.retrieveToken();
-                // var ud = jwt.decode(tok,{complete:true});
-
+            {                   
+                // Stores token on storage
+                Storage.storeToken(res);
 
                 navigate('Home', { username: this.state.username}); //When navigating home, pass username
                 // navigate("Home");
@@ -195,96 +188,3 @@ const styles = StyleSheet.create({
   });
 
 export default LoginPage;
-
-
-/*
-function LoginPage()
-{
-
-  return (
-    <View>
-        <Welcome_Message> 
-            <Text style={{fontSize: 20, fontFamily:'sans-serif-light'}}>Welcome to WebsiteName</Text>
-        </Welcome_Message>
-
-        <Login_Container>
-        <Image
-            source={require('../images/TodoTwo.png')}
-            style={{width:70, height:70, marginTop: 20}}
-        />
-        <Input 
-            placeholder='Email'
-            placeholderTextColor='#000'
-            textAlign="left"
-            style={{fontSize: 20, fontFamily:'sans-serif-light'}}
-            leftIcon={
-                <IconMCI
-                    name='email'
-                    size={24}
-                    color='black'
-                />
-            }
-            containerStyle={{marginTop: 40, width: 300}}
-        />
-        <Input 
-            placeholder='Password'
-            placeholderTextColor='#000'
-            textAlign="left"
-            style={{fontSize: 20, fontFamily:'sans-serif-light'}}
-            leftIcon={
-                <IconFA
-                    name='lock'
-                    size={24}
-                    color='black'
-                />
-            }
-            containerStyle={{width: 300}}
-        />
-
-        <Button
-            title="Sign In"
-            titleStyle={{fontSize: 20, fontFamily:'sans-serif-light'}}
-            containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
-            raised
-        />
-        
-
-        <Button
-            title="Forgot password?"
-            titleStyle={{fontSize: 20, fontFamily:'sans-serif-light'}}
-            containerStyle={{width: 180, marginTop:30}}
-            type="clear"
-        />
-        </Login_Container>
-
-        <Register_Container>
-            <Register_Text> 
-                <Text style={{fontSize: 20, fontFamily:'sans-serif-light'}}>Don't have an account?</Text>
-            </Register_Text>
-        <Button
-            title="Sign Up"
-            titleStyle={{fontSize: 20, fontFamily:'sans-serif-light'}}
-            containerStyle={{width: 150, marginTop:10}}
-            type="clear"
-        />
-        </Register_Container>
-    </View>
-  )
-};
-
-
-export default LoginPage;
-
-*/
-
-/*
-
-<Avatar
-    rounded
-        icon={{name: 'user', type: 'font-awesome', color: 'white'}}
-        overlayContainerStyle={{backgroundColor: 'gray'}}
-        containerStyle={{marginTop: 40}}
-        size="large"
-/>
-
-*/
