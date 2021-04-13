@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {MainPageNavWrapper,TodoListOrder,NewTodoListEnter} from './style';
 import { StarOutlined, CheckOutlined, ReadOutlined, SmileOutlined,PlusOutlined,RightSquareOutlined} from '@ant-design/icons';
+import { VscTrash } from "react-icons/vsc";
 import storage from '../tokenStorage';
 
 const jwt = require("jsonwebtoken");
 var tok = storage.retrieveToken();
 var ud = jwt.decode(tok,{complete:true});
+
 
 const app_name = 's21l-g25';
 
