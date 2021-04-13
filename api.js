@@ -145,4 +145,34 @@ exports.setApp = function(app, client)
         res.status(200).json(ret);
     });
 
+
+    app.post('/api/getList', async (req, res, next) =>
+    {
+		var error = '';
+
+		const {id,jwtToken} = req.body;
+		var list = [];
+		
+		if( jwt.isExpired(jwtToken))
+		{
+			var r = {error:'The JWT is no longer valid'};
+			res.status(200).json(r);
+			return;
+		}
+		
+
+        try{
+            list = await db.collection('Collections').find({ID:id}).toArray();
+        }
+        catch(e){
+            error = e.message;
+        };
+        
+            
+        var ret ={list:list,
+                  error:error,
+                };
+		res.status(200).json(ret);
+    });
+
 }

@@ -1,25 +1,13 @@
 import React, {Component} from 'react';
 import {MainPageNavWrapper,TodoListOrder,NewTodoListEnter} from './style';
 import { StarOutlined, CheckOutlined, ReadOutlined, SmileOutlined,PlusOutlined,RightSquareOutlined} from '@ant-design/icons';
+import { VscTrash } from "react-icons/vsc";
 import storage from '../tokenStorage';
 
 const jwt = require("jsonwebtoken");
 var tok = storage.retrieveToken();
 var ud = jwt.decode(tok,{complete:true});
 
-const app_name = 's21l-g25';
-
-function buildPath(route)
-{
-    if (process.env.NODE_ENV === 'production') 
-    {
-        return 'https://' + app_name +  '.herokuapp.com/' + route;
-    }   
-    else
-    {        
-        return 'http://localhost:5000/' + route;
-    }
-}
 
 class MainNav extends Component {
 
@@ -30,13 +18,13 @@ class MainNav extends Component {
 
         this.state=
         {
-            hasTodoList:true,
-            todoList:[{name:'Summer Vacation',ID:'0'},{name:'Study React',ID:'1'},{name:'Study Node.js',ID:'2'}],
+            hasTodoList:false,
+            todoList:[],
+            //{name:'Summer Vacation',ID:'0'},{name:'Study React',ID:'1'},{name:'Study Node.js',ID:'2'}
             newTodoList:'',
             errorMsg:'',
             userId:ud.payload.userId,
             username:ud.payload.fullName,
-       
             
         }
         this.handleShowAllItems = this.handleShowAllItems.bind(this);
@@ -72,7 +60,7 @@ class MainNav extends Component {
                             
                                 
                            {this.state.todoList.map(
-                            (list)=><TodoListOrder key={list.ID} onClick={()=>this.handleShowCustomizedTodoItem(list.ID)}><RightSquareOutlined/ >{list.name}</TodoListOrder>)}
+                            (list)=><TodoListOrder key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}><RightSquareOutlined/ >{list.Name}<VscTrash /></TodoListOrder>)}
                            
                           
                             
@@ -87,12 +75,14 @@ class MainNav extends Component {
 
     componentDidMount(){
         this.getTodoList();
-        
       }
 
     async handleShowAllItems(){
+        
         try {
-            let response = await fetch(buildPath('api/showAll'),{
+            this.props.closeAddButton();
+
+            let response = await fetch('http://localhost:5000/api/showAll',{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -128,7 +118,9 @@ class MainNav extends Component {
     async handleShowCompletedItems(){
 
         try {
-            let response = await fetch(buildPath('api/showComplete'),{
+            this.props.closeAddButton();
+
+            let response = await fetch('http://localhost:5000/api/showComplete',{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -164,7 +156,9 @@ class MainNav extends Component {
     async handleShowStarItems(){
 
         try {
-            let response = await fetch(buildPath('api/showStar'),{
+            this.props.closeAddButton()
+
+            let response = await fetch('http://localhost:5000/api/showStar',{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -198,8 +192,10 @@ class MainNav extends Component {
 
     async getTodoList(){
         
+       // var ud = jwt.decode(tok,{complete:true});
+       //console.log(ud.payload);
         try {
-            let response = await fetch(buildPath('api/getTodoList'),{
+            let response = await fetch('http://localhost:5000/api/getList',{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -207,21 +203,25 @@ class MainNav extends Component {
                     },
                     body: JSON.stringify({
                         userID:this.state.userID,
-                        jwtToken:this.state.tok,
+                        jwtToken:tok,
                     })
                     
             });
             var res = JSON.parse(await response.text());
-            
-            if( res.error)
+            //console.log(res);
+            if( res.error || !res.list)
             {
                return;
                 
             }else{
-
+                //console.log(res.list);
                 this.setState({
-                    todoList:res.result,
+                    hasTodoList:true,
+                    todoList:[...res.list],
                 })
+              //console.log("asd");
+              //console.log(this.state.todoList);
+              //  console.log("aaa");
                 
             }
 
@@ -237,7 +237,8 @@ class MainNav extends Component {
 
     async handleShowCustomizedTodoItem(listID){
         try {
-            let response = await fetch(buildPath('api/showCustomizedTodoItem'),{
+            this.props.showAddButton();
+            let response = await fetch('http://localhost:5000/api/showCustomizedTodoItem',{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -280,22 +281,32 @@ class MainNav extends Component {
     }
 
     async addNewTodoList(){
+        console.log(this.state.newTodoList);
+        console.log(this.state.userId);
+        console.log(tok);
+
         try {
-            let response = await fetch(buildPath('api/addNewTodoList'),{
+            if(!this.state.newTodoList){
+                return;
+            }
+
+            let response = await fetch('http://localhost:5000/api/addList',{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
-                        listName:this.state.newTodoList,
+                        name:this.state.newTodoList,
+                        userId:this.state.userId,
+                        jwtToken:tok,
+                        
                     })
                     
             });
+
             var res = JSON.parse(await response.text());
-            
+            console.log(res);
             if( res.error)
             {
                return;
@@ -304,6 +315,7 @@ class MainNav extends Component {
                 this.setState({
                   errorMsg:"new todo list has been added!"  
                 })
+                this.getTodoList();
                 return;
                 
             }
@@ -314,6 +326,8 @@ class MainNav extends Component {
             console.log(e);
             return;
         }
+
+
       
     }
 
