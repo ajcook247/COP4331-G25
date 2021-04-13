@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 const Schema  = mongoose.Schema;
 var Int32 = require('mongoose-int32');
 
-const TaskSchema = new Schema({
+const CollectionSchema = new Schema({
     Id:
     {
         type: Int32
     },
     UserId:
     {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User',
+        type: mongoose.Schema.Types.ObjectId, ref: 'Users',
         required:true
     },
     Name:
@@ -26,4 +26,4 @@ const TaskSchema = new Schema({
 
 });
 
-module.exports = Collections = mongoose.model("Tasks", TaskSchema);
+module.exports = Collections = mongoose.model("Collections", CollectionSchema);
