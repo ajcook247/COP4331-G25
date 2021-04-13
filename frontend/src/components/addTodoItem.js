@@ -2,7 +2,19 @@ import React, {Component} from 'react';
 import {AddTodoItemWrapper,Input,AddItemCloseButton,AddItemHeader,AddTodoItemSubmitButton} from './style';
 
 
+const app_name = 's21l-g25';
 
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
 
 
 class AddTodoItem extends Component{
@@ -75,7 +87,7 @@ class AddTodoItem extends Component{
 
 
     try {
-        let response = await fetch('http://localhost:5000/api/addTask',{
+        let response = await fetch(buildPath('api/addTask'),{
                 method:'POST',
                 headers:{
                     'Accept': 'application/json',
