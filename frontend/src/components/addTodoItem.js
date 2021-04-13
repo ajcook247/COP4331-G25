@@ -67,6 +67,13 @@ class AddTodoItem extends Component{
    }
 
    async handleAddSubmit(){
+       console.log(this.props.userID);
+       console.log(this.props.tok);
+       console.log(this.props.currentTodoListID);
+       console.log(this.state.des);
+       console.log(this.state.due);
+
+
     try {
         let response = await fetch('http://localhost:5000/api/addTask',{
                 method:'POST',
@@ -75,11 +82,11 @@ class AddTodoItem extends Component{
                     'Content-Type':'application/json'
                 },
                 body: JSON.stringify({
-                    userID:this.props.userID,
+                    userId:this.props.userID,
                     jwtToken:this.props.tok,
-                    listID:this.props.currentTodoList.listID,
-                    itemDes:this.state.des,
-                    itemDue:this.state.due,
+                    collectionId:this.props.currentTodoListID,
+                    description:this.state.des,
+                    date:this.state.due,
                 })
                 
         });
@@ -88,7 +95,7 @@ class AddTodoItem extends Component{
         {
            return;       
         }else{               
-            this.props.showItems(res.result);
+            //this.props.showItems(res.result);
             this.props.closeAddItem();
         }
 
