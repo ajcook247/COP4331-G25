@@ -1,48 +1,33 @@
 const mongoose = require("mongoose");
-const Schema  = mongoose.Schema;
+const Schema = mongoose.Schema;
 var Int32 = require('mongoose-int32');
 
-const TaskSchema = new Schema({
-    Id:
+//create schema
+const UserSchema = new Schema({
+    UserId:
     {
         type: Int32
     },
-    UserId:
-    {
-        type: mongoose.Schema.Types.ObjectId, ref: 'Users',
-        required:true
-    },
-    CollectionId:
-    {
-        type: mongoose.Schema.Types.ObjectId, ref: 'Collections',
-        required:true
-    },
-    
-    Name:
-    {
+    Login:{
         type: String,
         required: true
     },
-    Description:
-    {
+    Password: {
         type: String,
-        required: false
-    },
-    Deadline:
-    {
-        type: Date,
-        required: false
-    },
-    Done:
-    {
-        type: Boolean,
         required: true
     },
-    Urgent:
-    {
+    Email:{
+        type: String,
+        required: true
+    },
+    Name: {
+        type: String,
+        required: true
+    },
+    Verified: {
         type: Boolean,
         required: true
     }
 });
 
-module.exports = task = mongoose.model("Tasks", TaskSchema);
+module.exports = user = mongoose.model("Users", UserSchema);
