@@ -5,6 +5,22 @@ import {BackgroundBody} from './components/style'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 
+const app_name = 's21l-g25';
+
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
+
+
+
 class App extends Component {
 
   constructor(props){
@@ -29,7 +45,7 @@ class App extends Component {
  /*will be used*/
   async doLogout(){
       try {
-          let response = await fetch('http://localhost:5000/api/logout',{
+          let response = await fetch(buildPath('api/logout'),{
               method:'POST',
               headers:{
                 'Accept':'application/json',
