@@ -29,7 +29,7 @@ class App extends Component {
  /*will be used*/
   async doLogout(){
       try {
-          let res = await fetch('http://localhost:5000/api/logout',{
+          let response = await fetch('http://localhost:5000/api/logout',{
               method:'POST',
               headers:{
                 'Accept':'application/json',
@@ -37,12 +37,16 @@ class App extends Component {
               }
           });
 
-          let result = await res.json();
-          if (result && result.success) {
+          var res = JSON.parse(await response.text());
+         // console.log(res);
+          if (!res.error) {
               this.setState({
                 isLoggedIn:false,
                 username:'' 
               })
+        //      this.resetAll();
+
+
           }
           
 
