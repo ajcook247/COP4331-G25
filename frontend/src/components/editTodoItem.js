@@ -43,8 +43,8 @@ class EditTodoItem extends Component{
                 <EditItemCloseButton onClick={this.closeEditItem}>X</EditItemCloseButton>
 
                 <EditItemHeader>EDIT</EditItemHeader>
-                <Input placeholder={this.props.currentItem.des} onChange={this.handleDesChange} />
-                <Input placeholder={this.props.currentItem.due} onChange={this.handleDueChange} />  
+                <Input placeholder={this.props.currentItem.Description} onChange={this.handleDesChange} />
+                <Input placeholder={this.props.currentItem.Deadline} onChange={this.handleDueChange} />  
                 
                 
                 <EditTodoItemButton onClick={this.handleEditSubmit}>Submit</EditTodoItemButton>
@@ -64,32 +64,37 @@ class EditTodoItem extends Component{
     async handleDesChange(e){
       await this.setState(prevState=>({
         currentItem:{...prevState.currentItem,
-            des:e.target.value,}}
+            Description:e.target.value,}}
        ))
-       console.log(this.state.currentItem);
+      // console.log(this.state.currentItem);
     }
 
     async handleDueChange(e){
         await this.setState(prevState=>({
             currentItem:{...prevState.currentItem,
-                due:e.target.value,}}
+                Deadline:e.target.value,}}
            ))
-           console.log(this.state.currentItem);
+          // console.log(this.state.currentItem);
     }
 
     async handleEditSubmit(){
+     
+
         try {
-            let response = await fetch(buildPath('api/editItem'),{
+            let response = await fetch(buildPath('api/editTask'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        userID:this.props.userID,
+                       // userID:this.props.userID,
                         jwtToken:this.props.tok,
-                        listID:this.props.currentTodoList.listID,
-                        item:this.state.currentItem,
+                       // listID:this.props.currentTodoList.listID,
+                        description:this.state.currentItem.Description,
+                        deadline:this.state.currentItem.Deadline,
+                        taskId:this.state.currentItem._id,
+
                     })
                     
             });
@@ -98,8 +103,8 @@ class EditTodoItem extends Component{
             {
                return;       
             }else{               
-                this.props.showItems(res.result);
-                this.props.closeEditItem();
+               // this.props.showItems(res.result);
+                this.closeEditItem();
             }
 
         }

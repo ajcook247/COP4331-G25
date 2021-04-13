@@ -9,6 +9,20 @@ var tok = storage.retrieveToken();
 var ud = jwt.decode(tok,{complete:true});
 
 
+const app_name = 's21l-g25';
+
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
+
 class MainNav extends Component {
 
     
@@ -23,6 +37,7 @@ class MainNav extends Component {
             //{name:'Summer Vacation',ID:'0'},{name:'Study React',ID:'1'},{name:'Study Node.js',ID:'2'}
             newTodoList:'',
             errorMsg:'',
+            currentTodoList:'',
             userId:ud.payload.userId,
             username:ud.payload.fullName,
             
@@ -34,7 +49,7 @@ class MainNav extends Component {
         this.getTodoList = this.getTodoList.bind(this);
         this.handleShowCustomizedTodoItem = this.handleShowCustomizedTodoItem.bind(this);
         this.handleAddNewTodoListChange = this.handleAddNewTodoListChange.bind(this);
-
+        this.deleteTodoList = this.deleteTodoList.bind(this);
  
 
     }
@@ -60,7 +75,9 @@ class MainNav extends Component {
                             
                                 
                            {this.state.todoList.map(
-                            (list)=><TodoListOrder key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}><RightSquareOutlined/ >{list.Name}<VscTrash /></TodoListOrder>)}
+                            (list)=><span><TodoListOrder key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}><RightSquareOutlined />{list.Name}</TodoListOrder>
+                             <VscTrash onClick={()=>this.deleteTodoList(list._id)}/> </span>
+                            )}
                            
                           
                             
@@ -74,7 +91,7 @@ class MainNav extends Component {
     }
 
     componentDidMount(){
-        this.getTodoList();
+        this.getTodoList();  
       }
 
     async handleShowAllItems(){
@@ -82,15 +99,15 @@ class MainNav extends Component {
         try {
             this.props.closeAddButton();
 
-            let response = await fetch('http://localhost:5000/api/showAll',{
+            let response = await fetch(buildPath('api/showAll'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
+                        userId:this.state.userId,
+                        jwtToken:tok,
                     })
                     
             });
@@ -100,7 +117,10 @@ class MainNav extends Component {
                return;
                 
                 
-            }else{               
+            }else{         
+                //console.log("aaaabbbb");
+    
+               // console.log(res);
                 this.props.showItems(res.result);
             }
 
@@ -120,15 +140,15 @@ class MainNav extends Component {
         try {
             this.props.closeAddButton();
 
-            let response = await fetch('http://localhost:5000/api/showComplete',{
+            let response = await fetch(buildPath('api/showCompleted'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
+                        userId:this.state.userId,
+                        jwtToken:tok,
                     })
                     
             });
@@ -136,13 +156,10 @@ class MainNav extends Component {
             if( res.error)
             {
                return;
-                
-                
             }else{
-               
+             //   console.log(res);
                 this.props.showItems(res.result);
             }
-
         }
 
         catch(e){
@@ -158,15 +175,15 @@ class MainNav extends Component {
         try {
             this.props.closeAddButton()
 
-            let response = await fetch('http://localhost:5000/api/showStar',{
+            let response = await fetch(buildPath('api/showUrgent'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
+                        userId:this.state.userId,
+                        jwtToken:tok,
                     })
                     
             });
@@ -175,8 +192,8 @@ class MainNav extends Component {
             {
                return;
                 
-                
-            }else{               
+            }else{           
+              //  console.log(res);    
                 this.props.showItems(res.result);
             }
 
@@ -192,23 +209,23 @@ class MainNav extends Component {
 
     async getTodoList(){
         
-       // var ud = jwt.decode(tok,{complete:true});
-       //console.log(ud.payload);
+       //var ud = jwt.decode(tok,{complete:true});
+       //console.log(this.state.userId);
         try {
-            let response = await fetch('http://localhost:5000/api/getList',{
+            let response = await fetch(buildPath('api/getList'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        userID:this.state.userID,
+                        id:this.state.userId,
                         jwtToken:tok,
                     })
                     
             });
             var res = JSON.parse(await response.text());
-            //console.log(res);
+            console.log(res);
             if( res.error || !res.list)
             {
                return;
@@ -238,16 +255,15 @@ class MainNav extends Component {
     async handleShowCustomizedTodoItem(listID){
         try {
             this.props.showAddButton();
-            let response = await fetch('http://localhost:5000/api/showCustomizedTodoItem',{
+            let response = await fetch(buildPath('api/showCustomizedItem'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
-                        todoListID:listID,
+                        CollectionId:listID,
+                        jwtToken:tok,
                     })
                     
             });
@@ -259,6 +275,7 @@ class MainNav extends Component {
                 
             }else{
                 this.props.showItems(res.result);
+                this.props.setCurrentTodoList(listID);
                 
             }
 
@@ -281,16 +298,16 @@ class MainNav extends Component {
     }
 
     async addNewTodoList(){
-        console.log(this.state.newTodoList);
-        console.log(this.state.userId);
-        console.log(tok);
+       // console.log(this.state.newTodoList);
+       // console.log(this.state.userId);
+       // console.log(tok);
 
         try {
             if(!this.state.newTodoList){
                 return;
             }
 
-            let response = await fetch('http://localhost:5000/api/addList',{
+            let response = await fetch(buildPath('api/addList'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -306,7 +323,7 @@ class MainNav extends Component {
             });
 
             var res = JSON.parse(await response.text());
-            console.log(res);
+           // console.log(res);
             if( res.error)
             {
                return;
@@ -323,12 +340,57 @@ class MainNav extends Component {
         }
 
         catch(e){
-            console.log(e);
+         //   console.log(e);
             return;
         }
 
 
       
+    }
+
+
+
+    async deleteTodoList(id){
+       // console.log(id);
+       // console.log(tok);
+        try {
+            
+
+            let response = await fetch(buildPath('api/removeCollection'),{
+                    method:'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        collectionId:id,
+                        jwtToken:tok,
+                        
+                    })
+                    
+            });
+
+            var res = JSON.parse(await response.text());
+           // console.log(res);
+            if( res.error)
+            {
+               return;
+                
+            }else{
+               // this.setState({
+                //  errorMsg:"new todo list has been added!"  
+                //})
+                this.getTodoList();
+                return;
+                
+            }
+
+        }
+
+        catch(e){
+            console.log(e);
+            return;
+        }
     }
 
 

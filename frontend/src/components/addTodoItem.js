@@ -2,7 +2,19 @@ import React, {Component} from 'react';
 import {AddTodoItemWrapper,Input,AddItemCloseButton,AddItemHeader,AddTodoItemSubmitButton} from './style';
 
 
+const app_name = 's21l-g25';
 
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
 
 
 class AddTodoItem extends Component{
@@ -67,19 +79,26 @@ class AddTodoItem extends Component{
    }
 
    async handleAddSubmit(){
+       console.log(this.props.userID);
+       console.log(this.props.tok);
+       console.log(this.props.currentTodoListID);
+       console.log(this.state.des);
+       console.log(this.state.due);
+
+
     try {
-        let response = await fetch('http://localhost:5000/api/addTask',{
+        let response = await fetch(buildPath('api/addTask'),{
                 method:'POST',
                 headers:{
                     'Accept': 'application/json',
                     'Content-Type':'application/json'
                 },
                 body: JSON.stringify({
-                    userID:this.props.userID,
+                    userId:this.props.userID,
                     jwtToken:this.props.tok,
-                    listID:this.props.currentTodoList.listID,
-                    itemDes:this.state.des,
-                    itemDue:this.state.due,
+                    collectionId:this.props.currentTodoListID,
+                    description:this.state.des,
+                    date:this.state.due,
                 })
                 
         });
@@ -88,7 +107,7 @@ class AddTodoItem extends Component{
         {
            return;       
         }else{               
-            this.props.showItems(res.result);
+            //this.props.showItems(res.result);
             this.props.closeAddItem();
         }
 
