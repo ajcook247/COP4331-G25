@@ -81,7 +81,7 @@ class EditTodoItem extends Component{
      
 
         try {
-            let response = await fetch(buildPath('/api/editTask'),{
+            let response = await fetch(buildPath('api/editTask'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
