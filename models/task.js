@@ -9,9 +9,15 @@ const TaskSchema = new Schema({
     },
     UserId:
     {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User',
+        type: mongoose.Schema.Types.ObjectId, ref: 'Users',
         required:true
     },
+    CollectionId:
+    {
+        type: mongoose.Schema.Types.ObjectId, ref: 'Collections',
+        required:true
+    },
+    
     Name:
     {
         type: String,
