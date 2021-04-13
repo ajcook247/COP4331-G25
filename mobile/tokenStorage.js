@@ -27,8 +27,7 @@
 
 
 import * as React from 'react';
-import * as SecureStore from 'expo-secure-store'
-import jwtDecode from 'jwt-decode';
+import * as SecureStore from 'expo-secure-store';
 
 
 class Storage extends React.Component{
@@ -47,6 +46,7 @@ class Storage extends React.Component{
     }
   }
   
+  // Retrieve token method for mobile
   static async retrieveToken() {
   
     var ud;
@@ -55,15 +55,13 @@ class Storage extends React.Component{
       // Retrieve token
       ud = await SecureStore.getItemAsync('user_data');
 
-      // Decode JWT token on retrieval
-      ud = jwtDecode(ud, {complete:true});
     }
     catch(e)
     {
       console.log(e.message);
     }
 
-    // Return decoded JWT
+    // Return token
     return ud;
   }
 

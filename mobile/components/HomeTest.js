@@ -9,8 +9,14 @@ import IconIon from 'react-native-vector-icons/Ionicons';
 
 import Storage from '../tokenStorage';
 
+import jwtDecode from 'jwt-decode';
+
+
 // Variable to hold entire token
 var tok;
+
+// Variable to hold decoded JWT
+var ud;
 
 
 class HomeTest extends Component {
@@ -34,20 +40,25 @@ class HomeTest extends Component {
 
     // Before page render, load To-do lists and token variables
     async componentDidMount(){
-        
-        // Loads Todo lists
-        this.getTodoList();
 
         // retrieves token from storage
         tok = await Storage.retrieveToken();
 
+        // Decode JWT on retrieval
+        ud = jwtDecode(tok, {complete:true});
+
         // sets username and userId of user
-        this.setState({username: tok.fullName});
-        this.setState({userId: tok.userId})
+        this.setState({username: ud.fullName});
+        this.setState({userId: ud.userId})
 
         
-        console.log(tok.fullName);
-        console.log(tok.userId);
+        // Loads Todo lists
+        this.getTodoList();
+
+        // console.log(tok);
+        // console.log(ud);
+        // console.log(ud.fullName);
+        // console.log(ud.userId);
     }
 
     render(){
@@ -318,7 +329,7 @@ class HomeTest extends Component {
                          'Content-Type':'application/json'
                      },
                      body: JSON.stringify({
-                         userID:this.state.userID,
+                         userID:this.state.userId,
                          jwtToken:tok,
                      })
                      
