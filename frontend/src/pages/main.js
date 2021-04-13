@@ -8,8 +8,10 @@ import { RiBookmark3Fill,RiBookmark3Line,RiBookmark2Fill,RiBookmark2Line } from 
 import AddTodoItem from '../components/addTodoItem';
 import EditTodoItem from '../components/editTodoItem';
 import storage from '../tokenStorage';
-const jwt = require("jsonwebtoken");
 
+const jwt = require("jsonwebtoken");
+var tok = storage.retrieveToken();
+var ud = jwt.decode(tok,{complete:true});
 const app_name = 's21l-g25';
 
 function buildPath(route)
@@ -29,46 +31,30 @@ class MainPage extends Component {
     constructor(props){
         super(props);
         this.state={
-            todoItem:[{
-                des:'go to park1',
-                due:'2020',
-                id:'1',
-                completed:false,
-                star:true,
-            },{ des:'go to park2',
-            due:'2020',
-            id:'2',
-            completed:false,
-            star:true,},{ des:'go to park3',
-            due:'2020',
-            id:'3',
-            completed:true,
-            star:true,}],
-
+            todoItem:[],
             editIsOpen:false,
             addIsOpen:false,
-            currentTodoList:{name:'Summer',listID:'1'},
+            addButtonIsOpen:false,
+            currentTodoListID:'',
             currentTodoItem:'',
             errorMsg:'',
+            userId:ud.payload.userId,
+            usename:ud.payload.username,
+             }
+
+            this.showItems = this.showItems.bind(this);
+            this.handleEditTodoitem = this.handleEditTodoitem.bind(this);
+            this.handleAddTodoitem = this.handleAddTodoitem.bind(this);
+            this.flagTask = this.flagTask.bind(this);
+            this.closeEditItem = this.closeEditItem.bind(this);
+            this.closeAddTodoItem = this.closeAddTodoItem.bind(this);
+            this.deleteItem = this.deleteItem.bind(this);
+            this.showAddButton = this.showAddButton.bind(this);
+            this.closeAddButton = this.closeAddButton.bind(this);
+            this.setCurrentTodoList = this.setCurrentTodoList.bind(this);
+            this.markTask = this.markTask.bind(this);
 
 
-
-          //   tok:storage.retrieveToken(),
-          //   ud:decodeToken(this.state.tok),
-         //    userId:this.state.ud.payload.userId,
-         //    usename:this.state.ud.payload.username,
-            
-        }
-    this.showItems = this.showItems.bind(this);
-    this.handleEditTodoitem = this.handleEditTodoitem.bind(this);
-    this.handleAddTodoitem = this.handleAddTodoitem.bind(this);
-    this.changeItemToIncompleted = this.changeItemToIncompleted.bind(this);
-    this.changeItemToCompleted = this.changeItemToCompleted.bind(this);
-    this.changeItemToUnstar = this.changeItemToUnstar.bind(this);
-    this.changeItemToStar = this.changeItemToStar.bind(this);
-    this.closeEditItem = this.closeEditItem.bind(this);
-    this.closeAddTodoItem = this.closeAddTodoItem.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
     }
 
 
@@ -77,34 +63,37 @@ class MainPage extends Component {
     render(){
         return (
            
-           <div> <MainNav username={this.props.username}  showItems={this.showItems} />               
+           <div> <MainNav username={this.props.username}  showItems={this.showItems} showAddButton={this.showAddButton} closeAddButton={this.closeAddButton} setCurrentTodoList={this.setCurrentTodoList}/>               
                         <TodoItemWrapper>  <LogoutButton onClick={this.props.doLogout}>Logout</LogoutButton>         
-                         <CurrentTodoListHeader>{this.state.currentTodoList.name}</CurrentTodoListHeader>                     
+                         <CurrentTodoListHeader>Tasks</CurrentTodoListHeader>                     
                                 {this.state.todoItem.map(
-                                (item)=><TodoListOrderMainPage key={item.des}>      
+                                (item)=><TodoListOrderMainPage key={item._id}>      
                                 <TodoItem>
-                                 {item.completed && <RiBookmark2Fill onClick={()=>this.changeItemToIncompleted(item.id)} />} 
-                                {!item.completed && <RiBookmark2Line onClick={()=>this.changeItemToCompleted(item.id)} />}  
-                                {item.star && <RiBookmark3Fill onClick={()=>this.changeItemToUnstar(item.id)} />}
-                                 {!item.star && <RiBookmark3Line onClick={()=>this.changeItemToStar(item.id)} />} 
-                                 { item.des} Due {item.due}   
+                                 {item.Done && <RiBookmark2Fill onClick={()=>this.markTask(item._id)} />} 
+                                {!item.Done && <RiBookmark2Line onClick={()=>this.markTask(item._id)} />}
+
+                                {item.Urgent && <RiBookmark3Fill onClick={()=>this.flagTask(item._id)} />}
+                                 {!item.Urgent && <RiBookmark3Line onClick={()=>this.flagTask(item._id)} />} 
+
+                                 { item.Description} Due {item.Deadline}   
                                 <DeleteItemIcon> <FiSettings onClick={()=>this.handleEditTodoitem(item)} /> 
-                                <VscTrash onClick={()=>this.deleteItem(item.id)} />
+                                <VscTrash onClick={()=>this.deleteItem(item._id)} />
                                 </DeleteItemIcon>
             
                                 </TodoItem> 
                                {this.state.editIsOpen && <EditTodoItem currentItem={this.state.currentTodoItem} 
                                currentTodoList={this.state.CurrentTodoList} 
-                               userID={this.state.userID} tok={this.state.tok} 
+                               userID={this.state.userID} tok={tok} 
                                showItems={this.showItems} closeEditItem={this.closeEditItem}/>} 
 
-                               {this.state.addIsOpen && <AddTodoItem currentTodoList={this.state.CurrentTodoList} 
-                               userID={this.state.userID} tok={this.state.tok} 
-                               showItems={this.showItems} closeAddItem={this.closeAddTodoItem}/>} 
+                               
 
 
                                 </TodoListOrderMainPage>)}    
-                               <AddTodoItemButton onClick={this.handleAddTodoitem}>Add</AddTodoItemButton>
+                                {this.state.addIsOpen && <AddTodoItem currentTodoListID={this.state.currentTodoListID} 
+                               userID={this.state.userId} tok={tok} 
+                               showItems={this.showItems} closeAddItem={this.closeAddTodoItem}/>} 
+                          {this.state.addButtonIsOpen && <AddTodoItemButton onClick={this.handleAddTodoitem}>Add</AddTodoItemButton>}
                         </TodoItemWrapper>
 
             </div>
@@ -120,28 +109,32 @@ class MainPage extends Component {
         )
     }
 
-    async changeItemToIncompleted(itemID){
+
+
+
+    async markTask(itemID){
+       // console.log("asdsss");
+      //  console.log(itemID);
         try {
-            let response = await fetch(buildPath('api/changeToIncomplete'),{
+            let response = await fetch('http://localhost:5000/api/markTask',{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
-                    body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
-                        listID:this.state.currentTodoList.listID,
-                        itemID:itemID
+                    body: JSON.stringify({                        
+                        jwtToken:tok,
+                        taskId:itemID
                     })
                     
             });
             var res = JSON.parse(await response.text());
+            console.log(res);
             if( res.error)
             {
                return;       
             }else{               
-                this.showItems(res.result);
+              //  this.showItems(res.result);
             }
 
         }
@@ -152,19 +145,23 @@ class MainPage extends Component {
         }
     }
 
-    async changeItemToCompleted(itemID){
+   
+    
+
+    async flagTask(itemID){
+        //console.log("asddddd");
+        //console.log(tok);
+        //console.log(itemID);
         try {
-            let response = await fetch('http://localhost:5000/api/changeToIncomplete',{
+            let response = await fetch('http://localhost:5000/api/flagTask',{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
-                        listID:this.state.currentTodoList.listID,
-                        itemID:itemID
+                        jwtToken:tok,
+                        taskId:itemID
                     })
                     
             });
@@ -173,92 +170,34 @@ class MainPage extends Component {
             {
                return;       
             }else{               
-                this.showItems(res.result);
+            //    this.showItems(res.result);
             }
 
         }
 
         catch(e){
-            console.log(e);
+          //  console.log(e);
             return;
         }
     }
 
-
-
-    async changeItemToUnstar(itemID){
-        try {
-            let response = await fetch('http://localhost:5000/api/changeToUnstar',{
-                    method:'POST',
-                    headers:{
-                        'Accept': 'application/json',
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
-                        listID:this.state.currentTodoList.listID,
-                        itemID:itemID
-                    })
-                    
-            });
-            var res = JSON.parse(await response.text());
-            if( res.error)
-            {
-               return;       
-            }else{               
-                this.showItems(res.result);
-            }
-
-        }
-
-        catch(e){
-            console.log(e);
-            return;
-        }
-    }
-
-    async changeItemToStar(itemID){
-        try {
-            let response = await fetch('http://localhost:5000/api/changeToStar',{
-                    method:'POST',
-                    headers:{
-                        'Accept': 'application/json',
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
-                        listID:this.state.currentTodoList.listID,
-                        itemID:itemID
-                    })
-                    
-            });
-            var res = JSON.parse(await response.text());
-            if( res.error)
-            {
-               return;       
-            }else{               
-                this.showItems(res.result);
-            }
-
-        }
-
-        catch(e){
-            console.log(e);
-            return;
-        }
-    }
+    
 
 
     showItems(result){
+       // console.log(result);
         this.setState({
-            currentTodoList:result.todoList,
-            todoItem:result.todoItems,
+        //    currentTodoListID:result[0].CollectionId,
+            todoItem:result,
         })
     }
 
 
+    setCurrentTodoList(currentlistID){
+        this.setState({
+            currentTodoListID:currentlistID,
+        })
+    }
     async handleEditTodoitem(item){
 
         await this.setState({
@@ -266,7 +205,7 @@ class MainPage extends Component {
             currentTodoItem:item,
         })
 
-
+       // console.log(this.state.currentTodoItem);
     }
 
     closeEditItem(){
@@ -276,6 +215,17 @@ class MainPage extends Component {
 
     }
 
+    showAddButton(){
+        this.setState({
+            addButtonIsOpen:true
+        })
+    }
+
+    closeAddButton(){
+        this.setState({
+            addButtonIsOpen:false
+        })
+    }
     
 
     handleAddTodoitem(){
@@ -292,18 +242,19 @@ class MainPage extends Component {
 
 
     async deleteItem(itemID){
+        //console.log("delete");
+        //console.log(tok);
+        //console.log(itemID);
         try {
-            let response = await fetch('http://localhost:5000/api/deleteItem',{
+            let response = await fetch('http://localhost:5000/api/removeTask',{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
                         'Content-Type':'application/json'
                     },
                     body: JSON.stringify({
-                        userID:this.state.userID,
-                        jwtToken:this.state.tok,
-                        listID:this.state.currentTodoList.listID,
-                        itemID:itemID
+                        jwtToken:tok,
+                        taskId:itemID,
                     })
                     
             });
@@ -312,13 +263,13 @@ class MainPage extends Component {
             {
                return;       
             }else{               
-                this.showItems(res.result);
+               // this.showItems(res.result);
             }
 
         }
 
         catch(e){
-            console.log(e);
+          //  console.log(e);
             return;
         }
 
