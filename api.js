@@ -335,10 +335,10 @@ exports.setApp = function(app, client)
 		catch(e)
 		{
 			error = e.message;
-			console.log(e.message);
+		//	console.log(e.message);
 		}
 		
-		var ret = {error:''};
+		var ret = {error:error};
 		res.status(200).json(ret);
     });
 
