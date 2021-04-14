@@ -9,6 +9,7 @@ const task = require("./models/task.js");
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const crypto = require('crypto');
+const Collections = require("./models/collection.js");
 
 var ObjectId = require('mongodb').ObjectId;
 
@@ -146,7 +147,7 @@ exports.setApp = function(app, client)
 
                     <h1>Welcome to B-DREAMY!!</h1>
 					
-					<h4>Please confirm e-mail : <a href ="http://s21l-g25.herokuapp.com/main"> CONFIRM </a> </h4>
+					<h4>Please confirm e-mail : <a href ="http://s21l-g25.herokuapp.com/"> CONFIRM </a> </h4>
                     `
                   })
 

@@ -298,9 +298,9 @@ class MainNav extends Component {
     }
 
     async addNewTodoList(){
-       // console.log(this.state.newTodoList);
-       // console.log(this.state.userId);
-       // console.log(tok);
+        console.log(this.state.newTodoList);
+        console.log(this.state.userId);
+        console.log(tok);
 
         try {
             if(!this.state.newTodoList){
@@ -323,7 +323,7 @@ class MainNav extends Component {
             });
 
             var res = JSON.parse(await response.text());
-           // console.log(res);
+            console.log(res);
             if( res.error)
             {
                return;
@@ -340,7 +340,7 @@ class MainNav extends Component {
         }
 
         catch(e){
-         //   console.log(e);
+            console.log(e);
             return;
         }
 
