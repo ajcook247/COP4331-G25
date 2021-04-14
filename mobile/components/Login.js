@@ -160,8 +160,8 @@ class LoginPage extends Component
                 // Stores token on storage
                 Storage.storeToken(res);
 
-                navigate('Home', { username: this.state.username}); //When navigating home, pass username
-                // navigate("Home");
+                // navigate('Home', { username: this.state.username}); //When navigating home, pass username
+                navigate("Home");
             }
         }
         catch(e)

@@ -9,7 +9,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginPage from './components/Login';
 import HomePage from './components/Home';
-import HomeTest from './components/HomeTest'
+import HomeTest from './components/HomeTest';
+import TaskList from './components/Task';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name = "Login" component = {LoginPage} options = {{headerShown: false}}/>
         {<Stack.Screen name = "Home" component = {HomeTest} options = {{headerShown: false, gestureEnabled: false}} />}
+        {<Stack.Screen name = "Task" component = {TaskList} />}
       </Stack.Navigator>
     </NavigationContainer>
   );

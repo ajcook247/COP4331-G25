@@ -20,7 +20,7 @@ var tok;
 var ud;
 
 
-class HomeTest extends Component {
+class TaskList extends Component {
 
     constructor(props){
         super(props);
@@ -64,10 +64,6 @@ class HomeTest extends Component {
     }
 
     render(){
-
-        const {navigate} = this.props.navigation;
-
-
         return (
 
             <View style = {{flexDirection:"column", flex:1}}>
@@ -113,10 +109,6 @@ class HomeTest extends Component {
                                             color='black'
                                             style={{paddingRight: 10}}
                                         />
-                                        
-                                    }
-                                    onPress={() =>
-                                        navigate('Task')
                                     }
 
                                 >
@@ -136,9 +128,6 @@ class HomeTest extends Component {
                                             style={{paddingRight: 10}}
                                         />
                                     }
-                                    onPress={() =>
-                                        navigate('Task')
-                                    }
                                 >
                                 </Button>
                             </View>
@@ -155,9 +144,6 @@ class HomeTest extends Component {
                                             color='black'
                                             style={{paddingRight: 10}}
                                         />
-                                    }
-                                    onPress={() =>
-                                        navigate('Task')
                                     }
                                 >
                                 </Button>
@@ -233,14 +219,11 @@ class HomeTest extends Component {
                                 <Button 
                                     title={list.Name} 
                                     key={list._id} 
-                                    type="clear"
-                                    onPress={() =>
-                                            navigate('Task')
-                                    }
-
-                                > 
+                                    type="clear"> 
                             
                                 </Button>
+
+                                
 
                             </View>
                               
@@ -397,4 +380,4 @@ class HomeTest extends Component {
 
 }
 
-export default HomeTest;
+export default TaskList;
