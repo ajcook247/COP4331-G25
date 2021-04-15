@@ -9,8 +9,23 @@ const task = require("./models/task.js");
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const crypto = require('crypto');
+const Collections = require("./models/collection.js");
 
 var ObjectId = require('mongodb').ObjectId;
+
+const app_name = 's21l-g25';
+
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production') 
+    {
+        return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }   
+    else
+    {        
+        return 'http://localhost:5000/' + route;
+    }
+}
 
 //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
 
@@ -42,7 +57,7 @@ exports.setApp = function(app, client)
                 subject: "B_DREAMY : passwrod reset",
                 html:`
                 <h1>Password reset</h1>
-                <h4>To reset password : <a href ="http://localhost:3000/resetpassword/"> reset </a></h4>
+                <h4>To reset password : <a href ="http://s21l-g25.herokuapp.com/resetpassword"> reset </a> </h4>
                `
               })
       
@@ -131,8 +146,8 @@ exports.setApp = function(app, client)
                     html:`
 
                     <h1>Welcome to B-DREAMY!!</h1>
-                    <h4>Please confirm e-mail :< a onclick = href ="http://localhost:3000/main/" > CONFIRM </a></h4>
-
+					
+					<h4>Please confirm e-mail : <a href ="http://s21l-g25.herokuapp.com/"> CONFIRM </a> </h4>
                     `
                   })
 
@@ -335,10 +350,10 @@ exports.setApp = function(app, client)
 		catch(e)
 		{
 			error = e.message;
-			console.log(e.message);
+		//	console.log(e.message);
 		}
 		
-		var ret = {error:''};
+		var ret = {error:error};
 		res.status(200).json(ret);
     });
 
@@ -545,35 +560,5 @@ exports.setApp = function(app, client)
     });
 
 	
-
-
-    app.post('/api/getList', async (req, res, next) =>
-    {
-		var error = '';
-
-		const {id,jwtToken} = req.body;
-		var list = [];
-		
-		if( jwt.isExpired(jwtToken))
-		{
-			var r = {error:'The JWT is no longer valid'};
-			res.status(200).json(r);
-			return;
-		}
-		
-
-        try{
-            list = await db.collection('Collections').find({ID:id}).toArray();
-        }
-        catch(e){
-            error = e.message;
-        };
-        
-            
-        var ret ={list:list,
-                  error:error,
-                };
-		res.status(200).json(ret);
-    });
 
 }
