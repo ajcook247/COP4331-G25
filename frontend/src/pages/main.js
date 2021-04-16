@@ -12,6 +12,7 @@ import storage from '../tokenStorage';
 const jwt = require("jsonwebtoken");
 var tok = storage.retrieveToken();
 var ud = jwt.decode(tok,{complete:true});
+
 const app_name = 's21l-g25';
 
 function buildPath(route)
@@ -116,7 +117,7 @@ class MainPage extends Component {
        // console.log("asdsss");
       //  console.log(itemID);
         try {
-            let response = await fetch('http://localhost:5000/api/markTask',{
+            let response = await fetch(buildPath('api/markTask'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -153,7 +154,7 @@ class MainPage extends Component {
         //console.log(tok);
         //console.log(itemID);
         try {
-            let response = await fetch('http://localhost:5000/api/flagTask',{
+            let response = await fetch(buildPath('api/flagTask'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
@@ -246,7 +247,7 @@ class MainPage extends Component {
         //console.log(tok);
         //console.log(itemID);
         try {
-            let response = await fetch('http://localhost:5000/api/removeTask',{
+            let response = await fetch(buildPath('api/removeTask'),{
                     method:'POST',
                     headers:{
                         'Accept': 'application/json',
