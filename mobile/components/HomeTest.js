@@ -9,6 +9,7 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 import Storage from '../tokenStorage';
+import IdStorage from '../ListIdStorage';
 
 import jwtDecode from 'jwt-decode';
 
@@ -116,7 +117,7 @@ class HomeTest extends Component {
                                         
                                     }
                                     onPress={() =>
-                                        navigate('Task')
+                                        navigate('All Tasks')
                                     }
 
                                 >
@@ -137,7 +138,7 @@ class HomeTest extends Component {
                                         />
                                     }
                                     onPress={() =>
-                                        navigate('Task')
+                                        navigate('Important Tasks')
                                     }
                                 >
                                 </Button>
@@ -157,7 +158,7 @@ class HomeTest extends Component {
                                         />
                                     }
                                     onPress={() =>
-                                        navigate('Task')
+                                        navigate('Completed Tasks')
                                     }
                                 >
                                 </Button>
@@ -234,9 +235,10 @@ class HomeTest extends Component {
                                     title={list.Name} 
                                     key={list._id} 
                                     type="clear"
-                                    onPress={() =>
-                                            navigate('Task')
-                                    }
+                                    onPress={() => {
+                                        IdStorage.storeId(list);
+                                        navigate('Custom Task');
+                                      }}
 
                                 > 
                             
