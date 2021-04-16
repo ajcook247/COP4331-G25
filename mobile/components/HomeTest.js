@@ -187,6 +187,8 @@ class HomeTest extends Component {
                             textAlign="left"
                             style={{fontSize: 20}}
                             containerStyle={{width: 210}}
+                            value={this.state.newTodoList} 
+                            onChangeText={(text) => this.setState({newTodoList: text})}
                             />
 
                             <Button
@@ -200,9 +202,10 @@ class HomeTest extends Component {
                                 />  
                                 }   
                                 title="Add List"
-                                
-
                                 type="clear"
+                                onPress={() => {
+                                    this.addNewTodoList();
+                                }}
                             > 
                             </Button>
                         </View> 
@@ -298,7 +301,8 @@ class HomeTest extends Component {
                 
             }else{
                 this.setState({
-                  errorMsg:"new todo list has been added!"  
+                  errorMsg:"new todo list has been added!",
+                  newTodoList:'',
                 })
                 this.getTodoList();
                 return;
