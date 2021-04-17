@@ -219,7 +219,7 @@ class CustomTaskList extends Component {
                                 
                             </ScrollView>
                         </SafeAreaView>
-                        <AddTask></AddTask>
+                        <AddTask handleShowCustomizedTodoItem={this.handleShowCustomizedTodoItem} ></AddTask>
                     </View>
                 </View>                
             </View>

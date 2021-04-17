@@ -175,6 +175,7 @@ class AddTask extends Component {
             }else{               
                 //this.props.showItems(res.result);
                 this.setState({modalVisible: false});
+                this.props.handleShowCustomizedTodoItem(listId);
             }
     
         }
