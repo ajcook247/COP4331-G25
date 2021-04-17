@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Text, View, Image, TouchableOpacity, SafeAreaView, ScrollView, TouchableHighlight, Alert } from 'react-native';
+import { Text, View, Image, TouchableOpacity, SafeAreaView, ScrollView, TouchableHighlight, Alert, Modal } from 'react-native';
 import { Navigation_Container, Welcome_Message } from './style';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
@@ -8,7 +8,7 @@ import IconIon from 'react-native-vector-icons/Ionicons';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRoute } from '@react-navigation/native';
 
-
+import AddTask from '../components/AddTask';
 
 import Storage from '../tokenStorage';
 import IdStorage from '../ListIdStorage';
@@ -94,7 +94,7 @@ class CustomTaskList extends Component {
                                 flexDirection: "row"
                                 }}>
 
-                            {!list.Done && <Button
+                            {!list.Done && <Button style = {{flex: 1}}
                                     icon={
                                         <IconIon 
                                             raised 
@@ -110,7 +110,7 @@ class CustomTaskList extends Component {
                                 > 
                                 </Button>
                             }
-                            {list.Done && <Button
+                            {list.Done && <Button style = {{flex: 1}}
                                     icon={
                                         <IconIon 
                                         raised 
@@ -126,7 +126,7 @@ class CustomTaskList extends Component {
                                 > 
                                 </Button>
                             }
-                            {!list.Urgent && <Button
+                            {!list.Urgent && <Button style = {{flex: 1}}
                                     icon={
                                         <IconIon 
                                             raised 
@@ -142,7 +142,7 @@ class CustomTaskList extends Component {
                                 > 
                                 </Button>
                             }
-                            {list.Urgent && <Button
+                            {list.Urgent && <Button style = {{flex: 1}}
                                     icon={
                                         <IconIon 
                                         raised 
@@ -160,16 +160,16 @@ class CustomTaskList extends Component {
                             }
                             
 
-                            {!list.Urgent && !list.Done && <Text style={{fontSize:20, marginTop:7}}> {list.Name}  </Text> }
-                            {list.Urgent && !list.Done && <Text style={{fontWeight:"bold", fontSize:20, marginTop:7}}> {list.Name} </Text> }
-                            {!list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, textDecorationLine: 'line-through', textDecorationStyle: 'solid'}}> {list.Name}  </Text> }
-                            {list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, fontWeight:"bold", textDecorationLine: 'line-through', textDecorationStyle: 'solid'}}> {list.Name} </Text> }
+                            {!list.Urgent && !list.Done && <Text style={{fontSize:20, marginTop:7, flex: 10}}> {list.Name}  </Text> }
+                            {list.Urgent && !list.Done && <Text style={{fontWeight:"bold", fontSize:20, marginTop:7, flex: 10}}> {list.Name} </Text> }
+                            {!list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, textDecorationLine: 'line-through', textDecorationStyle: 'solid', flex: 10}}> {list.Name}  </Text> }
+                            {list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, fontWeight:"bold", textDecorationLine: 'line-through', textDecorationStyle: 'solid', flex: 10}}> {list.Name} </Text> }
 
                                 
                                 
 
                                 <Button
-                                    style={{alignSelf: 'flex-end'}}
+                                    style={{alignSelf: 'flex-end', flex: 1}}
                                     icon={
                                         <IconIon 
                                         raised 
@@ -187,7 +187,7 @@ class CustomTaskList extends Component {
                                 </Button>
 
                                 <Button
-                                    style={{alignSelf: 'flex-end'}}
+                                    style={{alignSelf: 'flex-end', flex:1}}
                                     icon={
                                         <IconMCI 
                                         raised 
@@ -210,26 +210,9 @@ class CustomTaskList extends Component {
                                 
                             </ScrollView>
                         </SafeAreaView>
-                        <Button
-                                titleStyle={{fontSize: 20}}
-                                containerStyle={{marginTop:30, alignSelf:"center"}}
-                                icon={
-                                <IconIon 
-                                    raised 
-                                    name = "add-outline"
-                                    size={32}
-                                    color='black'
-                                />  
-                                }   
-                                title="Add Task"
-                                type="clear"
-                                // onPress={() => {
-                                //     this.addNewTodoList();
-                                // }}
-                            > 
-                            </Button>
+                        <AddTask></AddTask>
                     </View>
-                </View>
+                </View>                
             </View>
 
         )
