@@ -72,7 +72,7 @@ class ImportantTaskList extends Component {
                 }}/>
 
                 <View style={{ flex: 1.3, backgroundColor: "#96CAF7" , paddingBottom:75}}>
-                   <View>
+                   <View style={{marginTop:40}}>
                         <SafeAreaView>
                             <ScrollView>
 
@@ -81,28 +81,115 @@ class ImportantTaskList extends Component {
                             <View style = {{
                                 flexDirection: "row"
                                 }}>
+
+                            {!list.Done && <Button style = {{flex: 1}}
+                                    icon={
+                                        <IconIon 
+                                            raised 
+                                            name = "checkmark-circle-outline"
+                                            size={25}
+                                        />
+                                        }   
+                                        title=""
+                                        onPress={() => {
+                                            this.markTask(list._id);
+                                        }}
+                                        type="clear"
+                                > 
+                                </Button>
+                            }
+                            {list.Done && <Button style = {{flex: 1}}
+                                    icon={
+                                        <IconIon 
+                                        raised 
+                                        name = "checkmark-circle"
+                                        size={25}
+                                        />
+                                        }   
+                                        title=""
+                                        onPress={() => {
+                                            this.markTask(list._id);
+                                        }}
+                                        type="clear"
+                                > 
+                                </Button>
+                            }
+                            {!list.Urgent && <Button style = {{flex: 1}}
+                                    icon={
+                                        <IconIon 
+                                            raised 
+                                            name = "star-outline"
+                                            size={25}
+                                        />
+                                        }   
+                                        title=""
+                                        onPress={() => {
+                                            this.flagTask(list._id);
+                                        }}
+                                        type="clear"
+                                > 
+                                </Button>
+                            }
+                            {list.Urgent && <Button style = {{flex: 1}}
+                                    icon={
+                                        <IconIon 
+                                        raised 
+                                        name = "star"
+                                        size={25}
+                                        />
+                                        }   
+                                        title=""
+                                        onPress={() => {
+                                            this.flagTask(list._id);
+                                        }}
+                                        type="clear"
+                                > 
+                                </Button>
+                            }
+                            
+
+                            {!list.Urgent && !list.Done && <Text style={{fontSize:20, marginTop:7, flex: 10}}> {list.Name}  </Text> }
+                            {list.Urgent && !list.Done && <Text style={{fontWeight:"bold", fontSize:20, marginTop:7, flex: 10}}> {list.Name} </Text> }
+                            {!list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, textDecorationLine: 'line-through', textDecorationStyle: 'solid', flex: 10}}> {list.Name}  </Text> }
+                            {list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, fontWeight:"bold", textDecorationLine: 'line-through', textDecorationStyle: 'solid', flex: 10}}> {list.Name} </Text> }
+
+                                
+                                
+
                                 <Button
+                                    style={{alignSelf: 'flex-end', flex: 1}}
+                                    icon={
+                                        <IconIon 
+                                        raised 
+                                        name = "ios-cog"
+                                        size={25}
+                                        color='black'
+                                        />
+                                        }   
+                                        title=""
+                                        // onPress = {() => {
+                                        //     this.deleteTodoList(list._id);
+                                        // }}
+                                        type="clear"
+                                > 
+                                </Button>
+
+                                <Button
+                                    style={{alignSelf: 'flex-end', flex:1}}
                                     icon={
                                         <IconMCI 
                                         raised 
                                         name = "trash-can"
-                                        size={30}
+                                        size={25}
                                         color='black'
                                         />
                                         }   
                                         title=""
                                         onPress = {() => {
-                                            this.deleteTodoList(list._id);
+                                            this.deleteItem(list._id);
                                         }}
                                         type="clear"
                                 > 
-                                </Button>
-                                
-                                <Button 
-                                    title={list.Name} 
-                                    key={list._id} 
-                                    type="clear"> 
-                            
                                 </Button>
 
                                 
@@ -118,6 +205,108 @@ class ImportantTaskList extends Component {
             </View>
 
         )
+    }
+
+    async markTask(itemID){
+        // console.log("asdsss");
+       //  console.log(itemID);
+         try {
+             let response = await fetch('http://s21l-g25.herokuapp.com/api/markTask',{
+                     method:'POST',
+                     headers:{
+                         'Accept': 'application/json',
+                         'Content-Type':'application/json'
+                     },
+                     body: JSON.stringify({                        
+                         jwtToken:tok,
+                         taskId:itemID
+                     })
+                     
+             });
+             var res = JSON.parse(await response.text());
+             console.log(res);
+             if( res.error)
+             {
+                return;       
+             }else{               
+               //  this.showItems(res.result);
+               //  console.log(listId);
+               this.handleShowStarItems();
+             }
+ 
+         }
+ 
+         catch(e){
+             console.log(e);
+             return;
+         }
+     }
+
+     async flagTask(itemID){
+        //console.log("asddddd");
+        //console.log(tok);
+        //console.log(itemID);
+        try {
+            let response = await fetch('http://s21l-g25.herokuapp.com/api/flagTask',{
+                    method:'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        jwtToken:tok,
+                        taskId:itemID
+                    })
+                    
+            });
+            var res = JSON.parse(await response.text());
+            if( res.error)
+            {
+               return;       
+            }else{               
+                this.handleShowStarItems();
+            }
+
+        }
+
+        catch(e){
+          //  console.log(e);
+            return;
+        }
+    }
+
+    async deleteItem(itemID){
+        //console.log("delete");
+        //console.log(tok);
+        //console.log(itemID);
+        try {
+            let response = await fetch('http://s21l-g25.herokuapp.com/api/removeTask',{
+                    method:'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        jwtToken:tok,
+                        taskId:itemID,
+                    })
+                    
+            });
+            var res = JSON.parse(await response.text());
+            if( res.error)
+            {
+               return;       
+            }else{               
+                this.handleShowStarItems();
+            }
+
+        }
+
+        catch(e){
+          //  console.log(e);
+            return;
+        }
+
     }
 
     async handleShowStarItems(){

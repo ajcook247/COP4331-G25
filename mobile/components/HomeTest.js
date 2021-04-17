@@ -10,6 +10,7 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Storage from '../tokenStorage';
 import IdStorage from '../ListIdStorage';
+import NameStorage from '../ListNameStorage';
 
 import jwtDecode from 'jwt-decode';
 
@@ -78,7 +79,7 @@ class HomeTest extends Component {
                             flexDirection: 'row',
                             justifyContent: "space-between"
                             }}>
-                            <Text style = {{alignSelf: "center", marginLeft: 75}}>
+                            <Text style = {{alignSelf: "center", fontSize:18, fontWeight: "bold", marginTop:30, marginLeft:15}}>
                             Welcome, {this.state.username}
                             </Text>
                             <View style = {{
@@ -96,6 +97,7 @@ class HomeTest extends Component {
                                     {/* onclick = props.setIsLoggedIn(false) */}
                                     {/* style =  */}
                                 </Button>
+                                
                             </View>
                         </View>
                         <View style = {{
@@ -104,7 +106,7 @@ class HomeTest extends Component {
                             <View style = {{flexDirection: 'row', alignItems: 'center'}}>
                                 <Button
                                     title="All Tasks"
-                                    titleStyle={{fontSize: 20}}
+                                    titleStyle={{fontSize: 20, color:"black"}}
                                     containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
                                     type="clear"
                                     icon={
@@ -126,7 +128,7 @@ class HomeTest extends Component {
                             <View style = {{flexDirection: 'row', alignItems: 'center'}}>
                             <Button
                                     title="Important"
-                                    titleStyle={{fontSize: 20}}
+                                    titleStyle={{fontSize: 20, color:"black"}}
                                     containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
                                     type="clear"
                                     icon={
@@ -146,7 +148,7 @@ class HomeTest extends Component {
                             <View style = {{flexDirection: 'row', alignItems: 'center'}}>
                                 <Button
                                     title="Completed"
-                                    titleStyle={{fontSize: 20}}
+                                    titleStyle={{fontSize: 20, color:"black"}}
                                     containerStyle={{width: 200, marginTop: 20, borderRadius:30}}
                                     type="clear"
                                     icon={
@@ -236,10 +238,13 @@ class HomeTest extends Component {
                                 
                                 <Button 
                                     title={list.Name} 
+                                    titleStyle={{fontSize: 20, color:"black"}}
+                                    containerStyle={{}}
                                     key={list._id} 
                                     type="clear"
                                     onPress={() => {
                                         IdStorage.storeId(list);
+                                        NameStorage.storeName(list);
                                         navigate('Custom Task');
                                       }}
 
@@ -269,9 +274,9 @@ class HomeTest extends Component {
     }
 
     async addNewTodoList(){
-        console.log(this.state.newTodoList);
-        console.log(this.state.userId);
-        console.log(tok);
+        // console.log(this.state.newTodoList);
+        // console.log(this.state.userId);
+        // console.log(tok);
 
         try {
             if(!this.state.newTodoList){

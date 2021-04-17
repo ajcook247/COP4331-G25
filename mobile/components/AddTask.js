@@ -174,7 +174,7 @@ class AddTask extends Component {
                return;       
             }else{               
                 //this.props.showItems(res.result);
-                this.setState({modalVisible: false})
+                this.setState({modalVisible: false});
             }
     
         }

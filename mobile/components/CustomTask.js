@@ -12,6 +12,7 @@ import AddTask from '../components/AddTask';
 
 import Storage from '../tokenStorage';
 import IdStorage from '../ListIdStorage';
+import NameStorage from '../ListNameStorage';
 
 import jwtDecode from 'jwt-decode';
 
@@ -23,6 +24,8 @@ var tok;
 var ud;
 
 var listId;
+
+var listName;
 
 class CustomTaskList extends Component {
 
@@ -42,6 +45,7 @@ class CustomTaskList extends Component {
     this.handleShowCustomizedTodoItem = this.handleShowCustomizedTodoItem.bind(this);
     this.markTask = this.markTask.bind(this);
     this.flagTask = this.flagTask.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
 
     }
 
@@ -62,6 +66,8 @@ class CustomTaskList extends Component {
         this.setState({userId: ud.userId});
 
         listId = await IdStorage.retrieveId();
+
+        listName = await NameStorage.retrieveName();
 
         
         // Loads Todo lists
@@ -85,6 +91,7 @@ class CustomTaskList extends Component {
                 }}/>
                 <View style={{ flex: 1.3, backgroundColor: "#96CAF7" , paddingBottom:75}}>
                    <View>
+                       <Text style = {{alignSelf: "center", fontSize:35, fontWeight: "bold", marginTop:30, marginBottom:30}}>{listName}</Text>
                         <SafeAreaView>
                             <ScrollView>
 
@@ -93,6 +100,8 @@ class CustomTaskList extends Component {
                             <View style = {{
                                 flexDirection: "row"
                                 }}>
+
+                                    
 
                             {!list.Done && <Button style = {{flex: 1}}
                                     icon={
@@ -197,9 +206,9 @@ class CustomTaskList extends Component {
                                         />
                                         }   
                                         title=""
-                                        // onPress = {() => {
-                                        //     this.deleteTodoList(list._id);
-                                        // }}
+                                        onPress = {() => {
+                                            this.deleteItem(list._id);
+                                        }}
                                         type="clear"
                                 > 
                                 </Button>
@@ -216,6 +225,40 @@ class CustomTaskList extends Component {
             </View>
 
         )
+    }
+
+    async deleteItem(itemID){
+        //console.log("delete");
+        //console.log(tok);
+        //console.log(itemID);
+        try {
+            let response = await fetch('http://s21l-g25.herokuapp.com/api/removeTask',{
+                    method:'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        jwtToken:tok,
+                        taskId:itemID,
+                    })
+                    
+            });
+            var res = JSON.parse(await response.text());
+            if( res.error)
+            {
+               return;       
+            }else{               
+                this.handleShowCustomizedTodoItem(listId);
+            }
+
+        }
+
+        catch(e){
+          //  console.log(e);
+            return;
+        }
+
     }
 
     async flagTask(itemID){
