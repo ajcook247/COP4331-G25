@@ -33,6 +33,7 @@ class AddTask extends Component {
             modalVisible:false,
         }
         this.handleAddTaskSubmit = this.handleAddTaskSubmit.bind(this);
+        this.resetForm = this.resetForm.bind(this);
     }
 
     async componentDidMount(){
@@ -123,6 +124,7 @@ class AddTask extends Component {
                         type="clear"
                         onPress={() => {
                             this.closeModal();
+                            this.resetForm();
                         }}
                         />
                     </Register_Container>
@@ -174,6 +176,7 @@ class AddTask extends Component {
                return;       
             }else{               
                 //this.props.showItems(res.result);
+                this.resetForm();
                 this.setState({modalVisible: false});
                 this.props.handleShowCustomizedTodoItem(listId);
             }
@@ -197,6 +200,13 @@ class AddTask extends Component {
     closeModal(){
         this.setState({
             modalVisible:false
+        })
+    }
+
+    resetForm(){
+        this.setState({
+          des:'',
+          due:'',
         })
     }
 

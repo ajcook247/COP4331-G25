@@ -80,7 +80,11 @@ class AllTaskList extends Component {
                             {this.state.allList.map(
                             (list)=>
                             <View style = {{
-                                flexDirection: "row"
+                                flexDirection: "row",
+                                backgroundColor:"white",
+                                borderWidth:2,
+                                marginTop:8,
+                                borderRadius:50,
                                 }}>
 
                             {!list.Done && <Button style = {{flex: 1}}

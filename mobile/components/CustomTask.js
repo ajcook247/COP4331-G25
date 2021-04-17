@@ -93,12 +93,16 @@ class CustomTaskList extends Component {
                    <View>
                        <Text style = {{alignSelf: "center", fontSize:35, fontWeight: "bold", marginTop:30, marginBottom:30}}>{listName}</Text>
                         <SafeAreaView>
-                            <ScrollView>
+                            <ScrollView style={{height:450}}>
 
                             {this.state.customList.map(
                             (list)=>
                             <View style = {{
-                                flexDirection: "row"
+                                flexDirection: "row",
+                                backgroundColor:"white",
+                                borderWidth:2,
+                                marginTop:8,
+                                borderRadius:50,
                                 }}>
 
                                     

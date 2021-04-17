@@ -26,6 +26,7 @@ class LoginPage extends Component
         
         this.handleLoginClick = this.handleLoginClick.bind(this);
         this.handleKeypress = this.handleKeypress.bind(this);
+        this.resetForm = this.resetForm.bind(this);
     }
 
     // fontFamily:'sans-serif-light'
@@ -162,6 +163,8 @@ class LoginPage extends Component
 
                 // navigate('Home', { username: this.state.username}); //When navigating home, pass username
                 navigate("Home");
+
+                this.resetForm();
             }
         }
         catch(e)
@@ -176,6 +179,15 @@ class LoginPage extends Component
             this.handleLoginClick();
         }
     }
+
+    resetForm(){
+        this.setState({
+            username:'',
+            password:'',
+        })
+    }
+
+    
 
     
 }

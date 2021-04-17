@@ -79,7 +79,11 @@ class CompletedTaskList extends Component {
                             {this.state.completedList.map(
                             (list)=>
                             <View style = {{
-                                flexDirection: "row"
+                                flexDirection: "row",
+                                backgroundColor:"white",
+                                borderWidth:2,
+                                marginTop:8,
+                                borderRadius:50,
                                 }}>
 
                             {!list.Done && <Button style = {{flex: 1}}
