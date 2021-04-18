@@ -7,6 +7,8 @@ import { Icon, Button, Input } from 'react-native-elements';
 import IconIon from 'react-native-vector-icons/Ionicons';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import EditCompletedTask from '../components/EditCompleted';
+
 
 import Storage from '../tokenStorage';
 
@@ -160,23 +162,8 @@ class CompletedTaskList extends Component {
                                 
                                 
 
-                                <Button
-                                    style={{alignSelf: 'flex-end', flex: 1}}
-                                    icon={
-                                        <IconIon 
-                                        raised 
-                                        name = "ios-cog"
-                                        size={25}
-                                        color='black'
-                                        />
-                                        }   
-                                        title=""
-                                        // onPress = {() => {
-                                        //     this.deleteTodoList(list._id);
-                                        // }}
-                                        type="clear"
-                                > 
-                                </Button>
+                            <EditCompletedTask taskName={list.Name} taskDate={list.Deadline} taskID={list._id} handleShowCompletedItems={this.handleShowCompletedItems}> </EditCompletedTask>
+
 
                                 <Button
                                     style={{alignSelf: 'flex-end', flex:1}}

@@ -9,6 +9,7 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRoute } from '@react-navigation/native';
 
 import AddTask from '../components/AddTask';
+import EditCustomTask from './EditCustomTask';
 
 import Storage from '../tokenStorage';
 import IdStorage from '../ListIdStorage';
@@ -181,23 +182,7 @@ class CustomTaskList extends Component {
                                 
                                 
 
-                                <Button
-                                    style={{alignSelf: 'flex-end', flex: 1}}
-                                    icon={
-                                        <IconIon 
-                                        raised 
-                                        name = "ios-cog"
-                                        size={25}
-                                        color='black'
-                                        />
-                                        }   
-                                        title=""
-                                        // onPress = {() => {
-                                        //     this.deleteTodoList(list._id);
-                                        // }}
-                                        type="clear"
-                                > 
-                                </Button>
+                                <EditCustomTask taskName={list.Name} taskDate={list.Deadline} taskID={list._id} handleShowCustomizedTodoItem={this.handleShowCustomizedTodoItem}> </EditCustomTask>
 
                                 <Button
                                     style={{alignSelf: 'flex-end', flex:1}}

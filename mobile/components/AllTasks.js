@@ -7,6 +7,8 @@ import { Icon, Button, Input } from 'react-native-elements';
 import IconIon from 'react-native-vector-icons/Ionicons';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import EditAllTask from '../components/EditAll';
+
 
 import Storage from '../tokenStorage';
 
@@ -161,23 +163,7 @@ class AllTaskList extends Component {
                                 
                                 
 
-                                <Button
-                                    style={{alignSelf: 'flex-end', flex: 1}}
-                                    icon={
-                                        <IconIon 
-                                        raised 
-                                        name = "ios-cog"
-                                        size={25}
-                                        color='black'
-                                        />
-                                        }   
-                                        title=""
-                                        // onPress = {() => {
-                                        //     this.deleteTodoList(list._id);
-                                        // }}
-                                        type="clear"
-                                > 
-                                </Button>
+                                <EditAllTask taskName={list.Name} taskDate={list.Deadline} taskID={list._id} handleShowAllItems={this.handleShowAllItems}> </EditAllTask>
 
                                 <Button
                                     style={{alignSelf: 'flex-end', flex:1}}
