@@ -39,8 +39,8 @@ class ForgetPassword extends Component {
                     <br/><br/><br/><br/>
                     <br/><br/>
                     <h4>Send Verification to Your Email:</h4>
-                    <Input placeholder='Email' onChange={this.handleEmailChange} onKeyPress={this.handleKeypress}/>  
-                    <Button onClick={this.sendPasswordRequestLink}>Send</Button>  
+                    <Input style={{borderColor:"black", color:"black"}} placeholder='Email' onChange={this.handleEmailChange} onKeyPress={this.handleKeypress}/>  
+                    <Button style={{marginTop: 40, borderRadius:30}} onClick={this.sendPasswordRequestLink}>Send</Button>  
                 
                 </ForgetPasswordWrapper>
                 
