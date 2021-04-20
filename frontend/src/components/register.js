@@ -41,13 +41,13 @@ class Register extends Component{
       return <RegisterWrapper>
                 <RegisterCloseButton onClick={this.props.closeRegisterButton}>X</RegisterCloseButton>
                 <RegisterInputGroup>
-                    <Input placeholder='Email' onChange={this.handleEmailChange} />
-                    <Input placeholder='Fullname' onChange={this.handleFullnameChange} />
-                    <Input placeholder='Username' onChange={this.handleUsernameChange} />  
-                    <Input placeholder='Password' onChange={this.handlePasswordChange} />
-                    <Input placeholder='Confirm Password' onChange={this.handleConfirmedChange} />  
+                    <Input style={{borderColor:"black", color:"black", marginTop:0}} placeholder='Email' onChange={this.handleEmailChange} />
+                    <Input style={{borderColor:"black", color:"black", marginTop:20}} placeholder='Fullname' onChange={this.handleFullnameChange} />
+                    <Input style={{borderColor:"black", color:"black", marginTop:20}} placeholder='Username' onChange={this.handleUsernameChange} />  
+                    <Input style={{borderColor:"black", color:"black", marginTop:20}} placeholder='Password' onChange={this.handlePasswordChange} />
+                    <Input style={{borderColor:"black", color:"black", marginTop:20}} placeholder='Confirm Password' onChange={this.handleConfirmedChange} />  
                     {!this.state.passwordMatch && <h4> Two password needs to be same! please enter again.</h4>}
-                    <Button onClick={this.handleRegisterSubmit}>Register</Button> 
+                    <Button style={{marginTop: 20, borderRadius:30}} onClick={this.handleRegisterSubmit}>Register</Button> 
                 </RegisterInputGroup>
               </RegisterWrapper>;
        

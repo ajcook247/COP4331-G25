@@ -47,11 +47,11 @@ class AddTodoItem extends Component{
             <AddItemCloseButton onClick={this.closeAddItem}>X</AddItemCloseButton>
 
             <AddItemHeader>New Task</AddItemHeader>
-            <Input placeholder="What to do..." onChange={this.handleDesChange} />
-            <Input placeholder="Due by..." onChange={this.handleDueChange} />  
+            <Input style={{borderColor:"black", color:"black", marginTop:40}} placeholder="What to do..." onChange={this.handleDesChange} />
+            <Input style={{borderColor:"black", color:"black", marginTop:40}} placeholder="Due by..." onChange={this.handleDueChange} />  
 
 
-            <AddTodoItemSubmitButton onClick={this.handleAddSubmit}>Submit</AddTodoItemSubmitButton>
+            <AddTodoItemSubmitButton style={{marginTop:50}} onClick={this.handleAddSubmit}>Submit</AddTodoItemSubmitButton>
 
 
         </AddTodoItemWrapper>

@@ -218,7 +218,9 @@ class HomeTest extends Component {
                             (list)=>
                             <View style = {{
                                 flexDirection: "row"
-                                }}>
+                                }}
+                                key={list._id}
+                                >
                                 <Button
                                     icon={
                                         <IconMCI 

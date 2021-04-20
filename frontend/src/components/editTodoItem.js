@@ -43,8 +43,8 @@ class EditTodoItem extends Component{
                 <EditItemCloseButton onClick={this.closeEditItem}>X</EditItemCloseButton>
 
                 <EditItemHeader>EDIT</EditItemHeader>
-                <Input placeholder={this.props.currentItem.Description} onChange={this.handleDesChange} />
-                <Input placeholder={this.props.currentItem.Deadline} onChange={this.handleDueChange} />  
+                <Input style={{borderColor:"black", color:"black"}} placeholder={this.props.currentItem.Description} onChange={this.handleDesChange} />
+                <Input style={{borderColor:"black", color:"black"}} placeholder={this.props.currentItem.Deadline} onChange={this.handleDueChange} />  
                 
                 
                 <EditTodoItemButton onClick={this.handleEditSubmit}>Submit</EditTodoItemButton>

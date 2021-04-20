@@ -104,7 +104,9 @@ class CustomTaskList extends Component {
                                 borderWidth:2,
                                 marginTop:8,
                                 borderRadius:50,
-                                }}>
+                                }}
+                                key={list._id}
+                                >
 
                                     
 

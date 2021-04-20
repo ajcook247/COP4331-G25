@@ -50,21 +50,21 @@ class Login extends Component{
         return (
             <div>
                 <LoginHeader><h1>B-DREAMY!</h1></LoginHeader>
-                <LoginWrapper>
+                <LoginWrapper >
                     
                 <Register showRegister={this.state.showRegister} closeRegisterButton={this.CloseRegisterButton} registerSucceed={this.handleLoginClick} newRegisterLogin={this.newRegisterLogin}/>
                 <ForgetPassword showForgetPassword={this.state.showForgetPassword} closeForgetPasswordButton={this.closeForgetPasswordButton} />
                     <LoginInputGroup>
-                    <Input placeholder='Username' onChange={this.handleUsernameChange} onKeyPress={this.handleKeypress} />
-                    <PasswordInput placeholder='Password' onChange={this.handlePasswordChange} onKeyPress={this.handleKeypress} />  
+                    <Input style={{borderColor:"black", color:"black", marginTop:20}} placeholder='Username' onChange={this.handleUsernameChange} onKeyPress={this.handleKeypress} />
+                    <PasswordInput style={{borderColor:"black", color:"black", marginTop:40}} placeholder='Password' onChange={this.handlePasswordChange} onKeyPress={this.handleKeypress} />  
                     </LoginInputGroup>     
                     <ButtonGroup>
-                    <Button onClick={this.handleLoginClick}>Login</Button>
-                    <Button onClick={this.handleRegisterClick}>Register</Button>     
+                    <Button style={{marginTop: 20, borderRadius:30}} onClick={this.handleLoginClick}>Login</Button>
+                    <Button style={{marginTop: 20, borderRadius:30}} onClick={this.handleRegisterClick}>Register</Button>     
                     </ButtonGroup  >    
                     {this.state.wrongCombination && <WrongPasswordMsg><h4> Check your credential please!</h4></WrongPasswordMsg>}
                 
-                    <ForgetPasswordButton onClick={this.handleForgetPassword}>Forget Password?</ForgetPasswordButton>
+                    <ForgetPasswordButton onClick={this.handleForgetPassword}>Forgot Password?</ForgetPasswordButton>
                 </LoginWrapper>
               
                 <LoginFooter><h2>Best To-do App in the MARKET!</h2></LoginFooter>

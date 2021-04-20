@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const LoginHeader = styled.div`
   margin-left:520px;
   margin-top:1 0px;
-  color: #c9d0d4; 
+  color: #000; 
   font-size: 26px; 
   font-weight: 100; 
   line-height: 50px; 
@@ -19,7 +19,7 @@ export const LoginWrapper = styled.div`
   background:#C4C4C4;
   box-shadow:0 0 8px rgba(0,0,0 .1);
   border-radius:20px;
-  background-image: linear-gradient(#C4C4C4, #9198e5);
+  background-image: linear-gradient(#FFE6EE, #FFF);
 
   
 
@@ -27,7 +27,7 @@ export const LoginWrapper = styled.div`
 
 export const LoginFooter = styled.div`
   margin-left:380px;
-  color: #f2f2f2; 
+  color: #000; 
   font-size: 25px; 
   line-height: 74px; 
   
@@ -38,6 +38,7 @@ export const LoginFooter = styled.div`
 
 export const LoginInputGroup = styled.div`
       padding-top:150px;
+
   
 `;
 
@@ -119,15 +120,15 @@ export const RegisterWrapper = styled.div`
     background:white;
     box-shadow:0 0 8px rgba(0,0,0 .1);
     padding-bottom:130px;
-    border-radius:15px;
-    background-image: linear-gradient(#C4C4C4, white);
+    border-radius: 15px;
+    background-image: linear-gradient(#FFF, #96CAF7);
 
   
 `;
 
 export const RegisterCloseButton = styled.div`
-      width:10px;
-      height:10px;
+      width:15px;
+      height:20px;
       position: relative;
       padding:3px;
       background: red;
@@ -151,15 +152,15 @@ text-align:center;
     box-shadow:0 0 8px rgba(0,0,0 .1);
     padding-bottom:130px;
     border-radius:10px;
-    background-image: linear-gradient(#C4C4C4, white);
+    background-image: linear-gradient(#FFF, #96CAF7);
 
 
 
 
 `
 export const ForgetPasswordCloseButton = styled.div`
-      width:10px;
-      height:10px;
+      width:15px;
+      height:20px;
       position: relative;
       padding:3px;
       background: red;
@@ -177,7 +178,7 @@ export const BackgroundBody = styled.div`
     
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(black, #9198e5);
+    background-image: linear-gradient(white, #96CAF7);
 
 `
 
@@ -197,17 +198,22 @@ export const MainPageNavWrapper = styled.div`
       top: 0px;
       border-color:#C4C4C4;
       border-style: solid;
-      background-image: linear-gradient(#C4C4C4, #9198e5);
+      background-image: linear-gradient(#FFF, #96CAF7);
       
 `
 
 
 export const LogoutButton = styled.button`   
       float:right;
-      background: #C4C4C4;
+      background: #f93555;
       border-color:red;
       border-style: solid;
-      color:red;
+      border-radius:20px;
+      color:black;
+      height: 30px;
+      width: 90px;
+      margin-top:10px;
+      margin-right: 10px;
       
 `
 
@@ -225,11 +231,11 @@ export const TodoListOrder = styled.div`
 export const TodoItemWrapper = styled.div`   
 
       position: absolute;
-      width: 995px;
+      width: 1320px;
       height: 100%;
       right: 0px;
       top:  0px;
-      background-image: linear-gradient(#C4C4C4, #9198e5);
+      background-image: linear-gradient(#FFF, #96CAF7);
 
       
       
@@ -241,12 +247,12 @@ export const TodoListOrderMainPage = styled.div`
       height:100px;
       list-style-type: none;
       padding: 0px;
-      margin-left: 175px;
+      margin-left: 300px;
       font-size:25px;
       background:#C4C4C4;
       border:solid;
       border-radius:10px;
-      background-image: linear-gradient(#C4C4C4, white);
+      background-image: linear-gradient(#FFF, white);
       
 `
 
@@ -256,9 +262,14 @@ export const TodoListOrderMainPage = styled.div`
 export const TodoItem = styled.p`   
    padding:10px;
    position:relative;
-      
+
       
 `
+
+export const DoneTodoItem = styled.p`   
+   text-decoration: line-through; 
+`
+
 
 
 
@@ -297,7 +308,7 @@ export const EditTodoItemWrapper = styled.div`
     box-shadow:0 0 8px rgba(0,0,0 .1);
     padding-bottom:130px;
     border-radius:15px;
-    background-image: linear-gradient(white,gray);
+    background-image: linear-gradient(#FFE6EE, #FFE6EE);
     position:absolute;
     top:10px;
     left:300px;
@@ -311,7 +322,7 @@ export const EditTodoItemButton = styled.button`
   font-weight: 400;
   text-transform: uppercase;
   background: white;
-  border-radius: 3px;
+  border-radius: 30px;
   margin-top: 30px;
   margin-left:115px;
 
@@ -323,8 +334,8 @@ export const EditItemHeader = styled.h1`
 
 
 export const EditItemCloseButton = styled.div`
-      width:20px;
-      height:20px;
+      width:15px;
+      height:25px;
       position: relative;
       padding:3px;
       background: red;
@@ -332,6 +343,7 @@ export const EditItemCloseButton = styled.div`
       float:right;
       cursor:pointer;
       text-align:center;
+      border-radius:5px;
 
         
 `;
@@ -357,7 +369,7 @@ export const AddTodoItemWrapper = styled.div`
     box-shadow:0 0 8px rgba(0,0,0 .1);
     padding-bottom:130px;
     border-radius:15px;
-    background-image: linear-gradient(white,gray);
+    background-image: linear-gradient(#FFE6EE, #FFE6EE);
     position:absolute;
     top:10px;
     left:300px;
@@ -390,7 +402,7 @@ export const AddTodoItemSubmitButton = styled.button`
   font-weight: 400;
   text-transform: uppercase;
   background: white;
-  border-radius: 3px;
+  border-radius: 30px;
   margin-top: 30px;
   margin-left:115px;
 
