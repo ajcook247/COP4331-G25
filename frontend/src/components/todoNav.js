@@ -61,22 +61,22 @@ class MainNav extends Component {
         return (
            
         
-            <MainPageNavWrapper> 
+            <MainPageNavWrapper style={{overflowY:'scroll'}} > 
                 
-                           <h1><SmileOutlined /> Welcome {this.state.username}!<br/><br/></h1>
+                           <h1><SmileOutlined style={{marginLeft: 80}} /> Welcome <br/></h1> <h1 style={{marginLeft:60}} > {this.state.username}!<br/><br/></h1>
                             <br/>
                             
-                            <TodoListOrder onClick={this.handleShowAllItems}><h2><ReadOutlined />All Tasks</h2></TodoListOrder>
-                            <TodoListOrder onClick={this.handleShowStarItems}><h2><StarOutlined />Important</h2></TodoListOrder>
-                            <TodoListOrder onClick={this.handleShowCompletedItems}><h2><CheckOutlined />Completed</h2></TodoListOrder>
-                            <br/> <hr />
-                            <h2><NewTodoListEnter onChange={this.handleAddNewTodoListChange} /><PlusOutlined onClick={this.addNewTodoList} /> </h2><br/>
+                            <TodoListOrder onClick={this.handleShowAllItems}><h2><ReadOutlined style={{marginRight:15}} />All Tasks</h2></TodoListOrder>
+                            <TodoListOrder onClick={this.handleShowStarItems}><h2><StarOutlined style={{marginRight:15}} />Important</h2></TodoListOrder>
+                            <TodoListOrder onClick={this.handleShowCompletedItems}><h2><CheckOutlined style={{marginRight:15}} />Completed</h2></TodoListOrder>
+                            <br/> <hr style={{backgroundColor:"black", borderWidth:4, color:"black"}} />
+                            <h2><NewTodoListEnter style={{height:30, borderRadius:20, marginLeft:10, marginTop:10}} onChange={this.handleAddNewTodoListChange} /><PlusOutlined style={{marginLeft:10}} onClick={this.addNewTodoList} /> </h2><br/>
                              {!this.state.hasTodoList && <p>You don't have a Todo-List yet, It's time to schedule your own!</p>}
                             
                                 
                            {this.state.todoList.map(
-                            (list)=><span><TodoListOrder key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}><RightSquareOutlined />{list.Name}</TodoListOrder>
-                             <VscTrash onClick={()=>this.deleteTodoList(list._id)}/> </span>
+                            (list)=><span> <TodoListOrder style={{paddingBottom:12}} key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}> <VscTrash size={26} style={{marginRight:10, marginTop:12}} onClick={()=>this.deleteTodoList(list._id)}/> {list.Name} </TodoListOrder>
+                              </span>
                             )}
                            
                           
