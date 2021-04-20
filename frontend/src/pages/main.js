@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import MainNav from '../components/todoNav';
-import {LogoutButton,TodoItemWrapper,TodoListOrderMainPage,TodoItem,DeleteItemIcon,CurrentTodoListHeader, AddTodoItemButton} from '../components/style'
+import {LogoutButton,TodoItemWrapper,TodoListOrderMainPage,TodoItem,DeleteItemIcon,CurrentTodoListHeader, AddTodoItemButton, DoneTodoItem} from '../components/style'
 import { FiSettings } from "react-icons/fi";
 import { VscTrash } from "react-icons/vsc";
 
@@ -65,18 +65,19 @@ class MainPage extends Component {
         return (
            
            <div> <MainNav username={this.props.username}  showItems={this.showItems} showAddButton={this.showAddButton} closeAddButton={this.closeAddButton} setCurrentTodoList={this.setCurrentTodoList}/>               
-                        <TodoItemWrapper>  <LogoutButton onClick={this.props.doLogout}>Logout</LogoutButton>         
-                         <CurrentTodoListHeader>Tasks</CurrentTodoListHeader>                     
+                        <TodoItemWrapper style={{overflowY:'scroll'}} >  <LogoutButton onClick={this.props.doLogout}>Logout</LogoutButton>         
+                         <CurrentTodoListHeader>Your Tasks</CurrentTodoListHeader>                     
                                 {this.state.todoItem.map(
-                                (item)=><TodoListOrderMainPage key={item._id}>      
+                                (item)=><TodoListOrderMainPage style={{marginTop:10, marginBottom:10}} key={item._id}>      
                                 <TodoItem>
-                                 {item.Done && <RiBookmark2Fill onClick={()=>this.markTask(item._id)} />} 
-                                {!item.Done && <RiBookmark2Line onClick={()=>this.markTask(item._id)} />}
+                                
+                                 {item.Done && <RiBookmark2Fill style={{marginRight:5}} onClick={()=>this.markTask(item._id)} />} 
+                                {!item.Done && <RiBookmark2Line style={{marginRight:5}} onClick={()=>this.markTask(item._id)} />}
 
-                                {item.Urgent && <RiBookmark3Fill onClick={()=>this.flagTask(item._id)} />}
-                                 {!item.Urgent && <RiBookmark3Line onClick={()=>this.flagTask(item._id)} />} 
+                                {item.Urgent && <RiBookmark3Fill style={{marginRight:15}}  onClick={()=>this.flagTask(item._id)} />}
+                                 {!item.Urgent && <RiBookmark3Line style={{marginRight:15}}  onClick={()=>this.flagTask(item._id)} />} 
 
-                                 { item.Description} Due {item.Deadline}   
+                                 { item.Description } Due {item.Deadline}   
                                 <DeleteItemIcon> <FiSettings onClick={()=>this.handleEditTodoitem(item)} /> 
                                 <VscTrash onClick={()=>this.deleteItem(item._id)} />
                                 </DeleteItemIcon>
@@ -94,7 +95,7 @@ class MainPage extends Component {
                                 {this.state.addIsOpen && <AddTodoItem currentTodoListID={this.state.currentTodoListID} 
                                userID={this.state.userId} tok={tok} 
                                showItems={this.showItems} closeAddItem={this.closeAddTodoItem}/>} 
-                          {this.state.addButtonIsOpen && <AddTodoItemButton onClick={this.handleAddTodoitem}>Add</AddTodoItemButton>}
+                          {this.state.addButtonIsOpen && <AddTodoItemButton style={{borderRadius:30, borderWidth:3, marginBottom:20}} onClick={this.handleAddTodoitem}>Add</AddTodoItemButton>}
                         </TodoItemWrapper>
 
             </div>
