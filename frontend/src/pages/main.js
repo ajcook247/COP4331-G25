@@ -84,7 +84,22 @@ class MainPage extends Component {
                                 {item.Urgent && <RiBookmark3Fill style={{marginRight:15}}  onClick={()=>this.flagTask(item._id)} />}
                                  {!item.Urgent && <RiBookmark3Line style={{marginRight:15}}  onClick={()=>this.flagTask(item._id)} />} 
 
-                                 { item.Description } Due {item.Deadline}   
+                                {item.Urgent && item.Done && <b><s>{item.Description}</s></b>} 
+                                {!item.Urgent && item.Done && <s>{item.Description}</s>}
+                                {item.Urgent && !item.Done && <b>{item.Description}</b>}
+                                {!item.Urgent && !item.Done && item.Description}
+                                 
+
+                                Due 
+                                {item.Urgent && item.Done && <b><s>{item.Deadline}</s></b>} 
+                                {!item.Urgent && item.Done && <s>{item.Deadline}</s>}
+                                {item.Urgent && !item.Done && <b>{item.Deadline}</b>}
+                                {!item.Urgent && !item.Done && item.Deadline}
+                                 
+
+
+
+
                                 <DeleteItemIcon> <FiSettings onClick={()=>this.handleEditTodoitem(item)} /> 
                                 <VscTrash onClick={()=>this.deleteItem(item._id)} />
                                 </DeleteItemIcon>
