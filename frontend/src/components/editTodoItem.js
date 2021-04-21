@@ -103,7 +103,7 @@ class EditTodoItem extends Component{
             {
                return;       
             }else{               
-               // this.props.showItems(res.result);
+                this.props.RefreshCustomizedTodoItem(this.props.currentTodoListID);
                 this.closeEditItem();
             }
 
