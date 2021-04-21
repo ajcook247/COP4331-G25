@@ -385,3 +385,11 @@ export const AddTodoItemSubmitButton = styled.button`
   margin-top: 30px;
   margin-left:115px;
 `;
+
+
+export const DatePickerWrapper = styled.div`
+
+margin-left:90px;
+
+      
+`;
