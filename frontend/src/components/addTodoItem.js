@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {AddTodoItemWrapper,Input,AddItemCloseButton,AddItemHeader,AddTodoItemSubmitButton} from './style';
+import { DatePicker, Space } from 'antd';
 
 
 const app_name = 's21l-g25';
@@ -48,6 +49,11 @@ class AddTodoItem extends Component{
 
             <AddItemHeader>New Task</AddItemHeader>
             <Input style={{borderColor:"black", color:"black", marginTop:40}} placeholder="What to do..." onChange={this.handleDesChange} />
+           
+                     <div> <DatePicker /></div>
+
+               
+  
             <Input style={{borderColor:"black", color:"black", marginTop:40}} placeholder="Due by..." onChange={this.handleDueChange} />  
 
 
@@ -108,6 +114,7 @@ class AddTodoItem extends Component{
            return;       
         }else{               
             //this.props.showItems(res.result);
+            this.props.RefreshCustomizedTodoItem(this.props.currentTodoListID);
             this.props.closeAddItem();
         }
 
