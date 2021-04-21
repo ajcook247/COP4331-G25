@@ -3,7 +3,7 @@ import MainNav from '../components/todoNav';
 import {LogoutButton,TodoItemWrapper,TodoListOrderMainPage,TodoItem,DeleteItemIcon,CurrentTodoListHeader, AddTodoItemButton, DoneTodoItem} from '../components/style'
 import { FiSettings } from "react-icons/fi";
 import { VscTrash } from "react-icons/vsc";
-
+import { DatePicker, Space } from 'antd';
 import { RiBookmark3Fill,RiBookmark3Line,RiBookmark2Fill,RiBookmark2Line } from "react-icons/ri";
 import AddTodoItem from '../components/addTodoItem';
 import EditTodoItem from '../components/editTodoItem';
@@ -54,6 +54,7 @@ class MainPage extends Component {
             this.closeAddButton = this.closeAddButton.bind(this);
             this.setCurrentTodoList = this.setCurrentTodoList.bind(this);
             this.markTask = this.markTask.bind(this);
+            this.RefreshCustomizedTodoItem = this.RefreshCustomizedTodoItem.bind(this);
 
 
     }
@@ -84,9 +85,9 @@ class MainPage extends Component {
             
                                 </TodoItem> 
                                {this.state.editIsOpen && <EditTodoItem currentItem={this.state.currentTodoItem} 
-                               currentTodoList={this.state.CurrentTodoList} 
+                               currentTodoListID={this.state.currentTodoListID} 
                                userID={this.state.userID} tok={tok} 
-                               showItems={this.showItems} closeEditItem={this.closeEditItem}/>} 
+                               showItems={this.showItems} closeEditItem={this.closeEditItem} RefreshCustomizedTodoItem={this.RefreshCustomizedTodoItem}/>} 
 
                                
 
@@ -94,7 +95,7 @@ class MainPage extends Component {
                                 </TodoListOrderMainPage>)}    
                                 {this.state.addIsOpen && <AddTodoItem currentTodoListID={this.state.currentTodoListID} 
                                userID={this.state.userId} tok={tok} 
-                               showItems={this.showItems} closeAddItem={this.closeAddTodoItem}/>} 
+                               showItems={this.showItems} closeAddItem={this.closeAddTodoItem} RefreshCustomizedTodoItem={this.RefreshCustomizedTodoItem}/>} 
                           {this.state.addButtonIsOpen && <AddTodoItemButton style={{borderRadius:30, borderWidth:3, marginBottom:20}} onClick={this.handleAddTodoitem}>Add</AddTodoItemButton>}
                         </TodoItemWrapper>
 
@@ -136,7 +137,7 @@ class MainPage extends Component {
             {
                return;       
             }else{               
-              //  this.showItems(res.result);
+                this.RefreshCustomizedTodoItem(this.state.currentTodoListID);
             }
 
         }
@@ -172,7 +173,7 @@ class MainPage extends Component {
             {
                return;       
             }else{               
-            //    this.showItems(res.result);
+                this.RefreshCustomizedTodoItem(this.state.currentTodoListID);
             }
 
         }
@@ -193,6 +194,46 @@ class MainPage extends Component {
             todoItem:result,
         })
     }
+
+
+    async RefreshCustomizedTodoItem(listID){
+        try {
+            this.showAddButton();
+            let response = await fetch(buildPath('api/showCustomizedItem'),{
+                    method:'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        CollectionId:listID,
+                        jwtToken:tok,
+                    })
+                    
+            });
+            var res = JSON.parse(await response.text());
+            
+            if( res.error)
+            {
+               return;
+                
+            }else{
+                this.showItems(res.result);
+                
+                
+            }
+
+        }
+
+        catch(e){
+            console.log(e);
+            return;
+        }
+
+
+    }
+
+
 
 
     setCurrentTodoList(currentlistID){
@@ -265,7 +306,8 @@ class MainPage extends Component {
             {
                return;       
             }else{               
-               // this.showItems(res.result);
+                this.RefreshCustomizedTodoItem(this.state.currentTodoListID);
+
             }
 
         }
