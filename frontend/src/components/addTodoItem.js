@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {AddTodoItemWrapper,Input,AddItemCloseButton,AddItemHeader,AddTodoItemSubmitButton} from './style';
-import { DatePicker, Space } from 'antd';
 
 
 const app_name = 's21l-g25';
