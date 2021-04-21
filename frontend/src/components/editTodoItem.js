@@ -77,14 +77,20 @@ class EditTodoItem extends Component{
       // console.log(this.state.currentItem);
     }
 
-    
+
 
     
     async handleDueChange(date){
         await this.setState(prevState=>({
             currentItem:{...prevState.currentItem,
-                Deadline:date}}
+                Deadline:date
+            
+            },
+            startDate:date,
+        }
+            
            ))
+
           // console.log(this.state.currentItem);
     }
 
