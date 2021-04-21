@@ -82,7 +82,8 @@ class AddTodoItem extends Component{
 
     handleChange(date){
         this.setState({
-          due: date.toString()
+          due: date.toString(),
+          startDate:date,
         });
       };
 
