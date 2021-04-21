@@ -33,6 +33,8 @@ class MainPage extends Component {
         super(props);
         this.state={
             todoItem:[],
+            showItem:[],
+            show:true,
             editIsOpen:false,
             addIsOpen:false,
             addButtonIsOpen:false,
@@ -55,6 +57,9 @@ class MainPage extends Component {
             this.setCurrentTodoList = this.setCurrentTodoList.bind(this);
             this.markTask = this.markTask.bind(this);
             this.RefreshCustomizedTodoItem = this.RefreshCustomizedTodoItem.bind(this);
+            this.onlyShowItems = this.onlyShowItems.bind(this);
+            this.setToEditMode = this.setToEditMode.bind(this);
+            this.setToShowMode = this.setToShowMode.bind(this);
 
 
     }
@@ -65,10 +70,11 @@ class MainPage extends Component {
     render(){
         return (
            
-           <div> <MainNav username={this.props.username}  showItems={this.showItems} showAddButton={this.showAddButton} closeAddButton={this.closeAddButton} setCurrentTodoList={this.setCurrentTodoList}/>               
+           <div> <MainNav setToShowMode={this.setToShowMode} setToEditMode={this.setToEditMode} username={this.props.username}  showItems={this.showItems} showAddButton={this.showAddButton} closeAddButton={this.closeAddButton} setCurrentTodoList={this.setCurrentTodoList}/>               
                         <TodoItemWrapper style={{overflowY:'scroll'}} >  <LogoutButton onClick={this.props.doLogout}>Logout</LogoutButton>         
                          <CurrentTodoListHeader>Your Tasks</CurrentTodoListHeader>                     
-                                {this.state.todoItem.map(
+                           
+                            {this.state.todoItem.map(
                                 (item)=><TodoListOrderMainPage style={{marginTop:10, marginBottom:10}} key={item._id}>      
                                 <TodoItem>
                                 
@@ -84,6 +90,7 @@ class MainPage extends Component {
                                 </DeleteItemIcon>
             
                                 </TodoItem> 
+
                                {this.state.editIsOpen && <EditTodoItem currentItem={this.state.currentTodoItem} 
                                currentTodoListID={this.state.currentTodoListID} 
                                userID={this.state.userID} tok={tok} 
@@ -92,7 +99,9 @@ class MainPage extends Component {
                                
 
 
-                                </TodoListOrderMainPage>)}    
+                                </TodoListOrderMainPage>) }
+                           
+                                  
                                 {this.state.addIsOpen && <AddTodoItem currentTodoListID={this.state.currentTodoListID} 
                                userID={this.state.userId} tok={tok} 
                                showItems={this.showItems} closeAddItem={this.closeAddTodoItem} RefreshCustomizedTodoItem={this.RefreshCustomizedTodoItem}/>} 
@@ -115,7 +124,22 @@ class MainPage extends Component {
 
 
 
+    setToEditMode(){
+        this.setState({
+            show:false,
+        })
+    }
+    setToShowMode(){
+        this.setState({
+            show:true,
+        })
+    }
+
+
     async markTask(itemID){
+        if(this.state.show){
+            return;
+        }
        // console.log("asdsss");
       //  console.log(itemID);
         try {
@@ -152,6 +176,9 @@ class MainPage extends Component {
     
 
     async flagTask(itemID){
+        if(this.state.show){
+            return;
+        }
         //console.log("asddddd");
         //console.log(tok);
         //console.log(itemID);
@@ -184,7 +211,13 @@ class MainPage extends Component {
         }
     }
 
-    
+    onlyShowItems(result){
+        // console.log(result);
+         this.setState({
+         //    currentTodoListID:result[0].CollectionId,
+             showItem:result,
+         })
+     }
 
 
     showItems(result){
@@ -242,7 +275,9 @@ class MainPage extends Component {
         })
     }
     async handleEditTodoitem(item){
-
+        if(this.state.show){
+            return;
+        }
         await this.setState({
             editIsOpen:true,
             currentTodoItem:item,
@@ -272,6 +307,9 @@ class MainPage extends Component {
     
 
     handleAddTodoitem(){
+        if(this.state.show){
+            return;
+        }
         this.setState({
             addIsOpen:true
         })
@@ -285,6 +323,9 @@ class MainPage extends Component {
 
 
     async deleteItem(itemID){
+        if(this.state.show){
+            return;
+        }
         //console.log("delete");
         //console.log(tok);
         //console.log(itemID);
