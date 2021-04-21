@@ -50,8 +50,7 @@ class AddTodoItem extends Component{
             <AddItemHeader>New Task</AddItemHeader>
             <Input style={{borderColor:"black", color:"black", marginTop:40}} placeholder="What to do..." onChange={this.handleDesChange} />
            
-                     <div> <DatePicker /></div>
-
+                 
                
   
             <Input style={{borderColor:"black", color:"black", marginTop:40}} placeholder="Due by..." onChange={this.handleDueChange} />  
