@@ -97,6 +97,7 @@ class MainNav extends Component {
     async handleShowAllItems(){
         
         try {
+            this.props.setToShowMode();
             this.props.closeAddButton();
 
             let response = await fetch(buildPath('api/showAll'),{
@@ -139,6 +140,7 @@ class MainNav extends Component {
 
         try {
             this.props.closeAddButton();
+            this.props.setToShowMode();
 
             let response = await fetch(buildPath('api/showCompleted'),{
                     method:'POST',
@@ -173,8 +175,8 @@ class MainNav extends Component {
     async handleShowStarItems(){
 
         try {
-            this.props.closeAddButton()
-
+            this.props.closeAddButton();
+            this.props.setToShowMode();
             let response = await fetch(buildPath('api/showUrgent'),{
                     method:'POST',
                     headers:{
@@ -255,6 +257,7 @@ class MainNav extends Component {
     async handleShowCustomizedTodoItem(listID){
         try {
             this.props.showAddButton();
+            this.props.setToEditMode();
             let response = await fetch(buildPath('api/showCustomizedItem'),{
                     method:'POST',
                     headers:{
