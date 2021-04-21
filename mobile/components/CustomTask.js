@@ -47,6 +47,7 @@ class CustomTaskList extends Component {
     this.markTask = this.markTask.bind(this);
     this.flagTask = this.flagTask.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.handleDateFormat = this.handleDateFormat.bind(this);
 
     }
 
@@ -176,10 +177,10 @@ class CustomTaskList extends Component {
                             }
                             
 
-                            {!list.Urgent && !list.Done && <Text style={{fontSize:20, marginTop:7, flex: 10}}> {list.Name}  </Text> }
-                            {list.Urgent && !list.Done && <Text style={{fontWeight:"bold", fontSize:20, marginTop:7, flex: 10}}> {list.Name} </Text> }
-                            {!list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, textDecorationLine: 'line-through', textDecorationStyle: 'solid', flex: 10}}> {list.Name}  </Text> }
-                            {list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, fontWeight:"bold", textDecorationLine: 'line-through', textDecorationStyle: 'solid', flex: 10}}> {list.Name} </Text> }
+                            {!list.Urgent && !list.Done && <Text style={{fontSize:20, marginTop:7, flex: 10}}> {list.Name} {"\n"} Due: {this.handleDateFormat(list.Deadline)}  </Text> }
+                            {list.Urgent && !list.Done && <Text style={{fontWeight:"bold", fontSize:20, marginTop:7, flex: 10}}> {list.Name} {"\n"} Due: {this.handleDateFormat(list.Deadline)} </Text> }
+                            {!list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, textDecorationLine: 'line-through', textDecorationStyle: 'solid', flex: 10}}> {list.Name} {"\n"} Due: {this.handleDateFormat(list.Deadline)}  </Text> }
+                            {list.Urgent && list.Done && <Text style={{marginTop:7, fontSize:20, fontWeight:"bold", textDecorationLine: 'line-through', textDecorationStyle: 'solid', flex: 10}}> {list.Name} {"\n"} Due: {this.handleDateFormat(list.Deadline)} </Text> }
 
                                 
                                 
@@ -216,6 +217,31 @@ class CustomTaskList extends Component {
             </View>
 
         )
+    }
+
+    handleDateFormat(date)
+    {
+        var dateOne;
+        var dateTwo;
+
+        var finalDate;
+
+        date = date.toString();
+
+        if (date.includes("T"))
+        {
+            dateOne = date.substring(0,10);
+        }
+        else
+        {
+            dateOne = date.substring(0,11);
+        }
+
+        dateTwo = date.substring(11,19); // Gives Hour
+
+        finalDate = dateOne.concat(dateTwo); // Concats with no space
+
+        return dateOne;
     }
 
     async deleteItem(itemID){

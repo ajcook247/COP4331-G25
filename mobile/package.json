@@ -23,6 +23,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
+    "react-native-date-picker": "^3.2.10",
     "react-native-elements": "^3.3.2",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-pure-jwt": "^2.2.2",
@@ -30,7 +31,8 @@
     "react-native-web": "~0.13.12",
     "stream": "0.0.2",
     "styled-components": "^5.2.1",
-    "util": "^0.12.3"
+    "util": "^0.12.3",
+    "@react-native-community/datetimepicker": "3.0.4"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

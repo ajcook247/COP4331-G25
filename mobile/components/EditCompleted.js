@@ -9,7 +9,7 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRoute } from '@react-navigation/native';
 import { Register_Container } from './style'
 
-
+import ChooseTime from '../components/ChooseTime';
 
 import Storage from '../tokenStorage';
 import IdStorage from '../ListIdStorage';
@@ -33,6 +33,9 @@ class EditCompletedTask extends Component {
             newTaskDate:'',
         }
         this.handleEditSubmit = this.handleEditSubmit.bind(this);
+        this.handleDateFormat = this.handleDateFormat.bind(this);
+        this.handleSetDate = this.handleSetDate.bind(this);
+
     }
 
     async componentDidMount(){
@@ -52,7 +55,8 @@ class EditCompletedTask extends Component {
         listId = await IdStorage.retrieveId();
 
         this.setState({newTaskName: this.props.taskName});
-        this.setState({newTaskDate: this.props.taskDate});
+        this.handleDateFormat(this.props.taskDate);
+        // this.setState({newTaskDate: this.props.taskDate});
         
         // Loads Todo lists
         //this.handleShowCustomizedTodoItem(listId);
@@ -109,6 +113,9 @@ class EditCompletedTask extends Component {
                         }
                         containerStyle={{width: 300}}
                         /> 
+
+                        <ChooseTime handleSetDate={this.handleSetDate}></ChooseTime>
+
                         
                         <Button
                         title="Change Task"
@@ -149,6 +156,29 @@ class EditCompletedTask extends Component {
             </Button>
         </View>
         )
+    }
+
+    async handleDateFormat(date)
+    {
+        date = date.toString();
+
+        if (date.includes("T"))
+        {
+            date = date.substring(0,10);
+        }
+        else
+        {
+            date = date.substring(0,11);
+        }
+        
+        this.setState({newTaskDate: date});
+    }
+
+    async handleSetDate(date)
+    {
+        date = date.toString();
+        date = date.substring(4,15);
+        await this.setState({newTaskDate:date});
     }
 
     async handleEditSubmit(){

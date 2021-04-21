@@ -7,7 +7,11 @@ import { Icon, Button, Input } from 'react-native-elements';
 import IconIon from 'react-native-vector-icons/Ionicons';
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRoute } from '@react-navigation/native';
-import { Register_Container } from '../components/style'
+import { Register_Container } from '../components/style';
+
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+import ChooseTime from '../components/ChooseTime';
 
 
 
@@ -31,9 +35,11 @@ class AddTask extends Component {
             due:'',
             userId:'',
             modalVisible:false,
+            date:'2000-10-09'
         }
         this.handleAddTaskSubmit = this.handleAddTaskSubmit.bind(this);
         this.resetForm = this.resetForm.bind(this);
+        this.handleSetDate = this.handleSetDate.bind(this);
     }
 
     async componentDidMount(){
@@ -110,6 +116,8 @@ class AddTask extends Component {
                         }
                         containerStyle={{width: 300}}
                         /> 
+
+                        <ChooseTime handleSetDate={this.handleSetDate} > </ChooseTime>
                         
                         <Button
                         title="Submit"
@@ -151,6 +159,14 @@ class AddTask extends Component {
             </Button>
         </View>
         )
+    }
+
+    async handleSetDate(date)
+    {
+        date = date.toString();
+        date = date.substring(4,15);
+        await this.setState({due:date});
+        console.log(this.state.due);
     }
 
     async handleAddTaskSubmit(){

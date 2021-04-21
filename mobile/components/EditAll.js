@@ -9,6 +9,7 @@ import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useRoute } from '@react-navigation/native';
 import { Register_Container } from './style'
 
+import ChooseTime from '../components/ChooseTime';
 
 
 import Storage from '../tokenStorage';
@@ -33,6 +34,9 @@ class EditAllTask extends Component {
             newTaskDate:'',
         }
         this.handleEditSubmit = this.handleEditSubmit.bind(this);
+        this.handleSetDate = this.handleSetDate.bind(this);
+        this.handleDateFormat = this.handleDateFormat.bind(this);
+
     }
 
     async componentDidMount(){
@@ -51,8 +55,9 @@ class EditAllTask extends Component {
 
         listId = await IdStorage.retrieveId();
 
+        this.handleDateFormat(this.props.taskDate);
         this.setState({newTaskName: this.props.taskName});
-        this.setState({newTaskDate: this.props.taskDate});
+        // this.setState({newTaskDate: this.props.taskDate});
         
         // Loads Todo lists
         //this.handleShowCustomizedTodoItem(listId);
@@ -109,6 +114,8 @@ class EditAllTask extends Component {
                         }
                         containerStyle={{width: 300}}
                         /> 
+
+                        <ChooseTime handleSetDate={this.handleSetDate}></ChooseTime>
                         
                         <Button
                         title="Change Task"
@@ -149,6 +156,29 @@ class EditAllTask extends Component {
             </Button>
         </View>
         )
+    }
+
+    async handleDateFormat(date)
+    {
+        date = date.toString();
+        
+        if (date.includes("T"))
+        {
+            date = date.substring(0,10);
+        }
+        else
+        {
+            date = date.substring(0,11);
+        }
+
+        this.setState({newTaskDate: date});
+    }
+
+    async handleSetDate(date)
+    {
+        date = date.toString();
+        date = date.substring(4,15);
+        await this.setState({newTaskDate:date});
     }
 
     async handleEditSubmit(){
