@@ -43,9 +43,6 @@ class EditTodoItem extends Component{
 
                 <EditItemHeader>EDIT</EditItemHeader>
                 <Input style={{borderColor:"black", color:"black"}} placeholder={this.props.currentItem.Description} onChange={this.handleDesChange} />
-<<<<<<< HEAD
-                <Input style={{borderColor:"black", color:"black"}} placeholder={this.props.currentItem.Deadline} onChange={this.handleDueChange} />  
-=======
 
         <DatePickerWrapper>
                 <DatePicker
@@ -56,7 +53,6 @@ class EditTodoItem extends Component{
             </DatePickerWrapper>
 
                {/* <Input style={{borderColor:"black", color:"black"}} placeholder={this.props.currentItem.Deadline} onChange={this.handleDueChange} />  */}
->>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
                 
                 
                 <EditTodoItemButton onClick={this.handleEditSubmit}>Submit</EditTodoItemButton>

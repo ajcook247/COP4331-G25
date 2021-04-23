@@ -75,11 +75,7 @@ class MainNav extends Component {
                             
                                 
                            {this.state.todoList.map(
-<<<<<<< HEAD
-                            (list)=><span> <TodoListOrder style={{paddingBottom:12}} key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}> <VscTrash size={26} style={{marginRight:10, marginTop:12}} onClick={()=>this.deleteTodoList(list._id)}/> {list.Name} </TodoListOrder>
-=======
                             (list)=><span key={list._id}> <TodoListOrder style={{paddingBottom:12}} key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}> <VscTrash size={26} style={{marginRight:10, marginTop:12}} onClick={()=>this.deleteTodoList(list._id)}/> {list.Name} </TodoListOrder>
->>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
                               </span>
                             )}
                            
