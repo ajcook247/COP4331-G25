@@ -748,9 +748,5 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 	
 
-<<<<<<< HEAD
-}
-=======
 }
 
->>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
