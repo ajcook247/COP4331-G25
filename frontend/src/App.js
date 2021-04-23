@@ -3,6 +3,9 @@ import Login from './components/login';
 import MainPage from './pages/main'
 import {BackgroundBody} from './components/style'
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import Reset from './components/reset'
+import {useParams} from "react-router-dom";
+//import GetId from './components/function';
 
 
 const app_name = 's21l-g25';
@@ -17,6 +20,18 @@ function buildPath(route)
     {        
         return 'http://localhost:5000/' + route;
     }
+}
+
+function GetId()
+{
+    const {token2} = useParams();
+
+    return(
+        <div>
+            <Reset ID={token2}/>
+        </div>
+    )
+
 }
 
 
@@ -96,12 +111,19 @@ class App extends Component {
                 <MainPage  username={this.state.username} doLogout={this.doLogout}/> 
               </div>  
             </Route>
+
+            <Route path= "/resetpassword/:token2"  exact>
+              <div> 
+                <Reset  username={this.state.username}/> 
+              </div>  
+            </Route>
+
           </ Switch>
         </ Router>
       )
    
   }
-wnjk
+
  
 };
 
