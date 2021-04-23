@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {EditTodoItemWrapper,Input,EditTodoItemButton,EditItemHeader,EditItemCloseButton} from './style';
-
+import {EditTodoItemWrapper,Input,EditTodoItemButton,EditItemHeader,EditItemCloseButton,DatePickerWrapper} from './style';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const app_name = 's21l-g25';
@@ -22,9 +23,7 @@ class EditTodoItem extends Component{
         super(props);
         this.state={
             currentItem:this.props.currentItem,
-                     
-
-
+            startDate: new Date(),
         }
 
         this.closeEditItem = this.closeEditItem.bind(this);
@@ -44,7 +43,20 @@ class EditTodoItem extends Component{
 
                 <EditItemHeader>EDIT</EditItemHeader>
                 <Input style={{borderColor:"black", color:"black"}} placeholder={this.props.currentItem.Description} onChange={this.handleDesChange} />
+<<<<<<< HEAD
                 <Input style={{borderColor:"black", color:"black"}} placeholder={this.props.currentItem.Deadline} onChange={this.handleDueChange} />  
+=======
+
+        <DatePickerWrapper>
+                <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleDueChange}
+                
+            />
+            </DatePickerWrapper>
+
+               {/* <Input style={{borderColor:"black", color:"black"}} placeholder={this.props.currentItem.Deadline} onChange={this.handleDueChange} />  */}
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
                 
                 
                 <EditTodoItemButton onClick={this.handleEditSubmit}>Submit</EditTodoItemButton>
@@ -69,11 +81,20 @@ class EditTodoItem extends Component{
       // console.log(this.state.currentItem);
     }
 
-    async handleDueChange(e){
+
+
+    
+    async handleDueChange(date){
         await this.setState(prevState=>({
             currentItem:{...prevState.currentItem,
-                Deadline:e.target.value,}}
+                Deadline:date
+            
+            },
+            startDate:date,
+        }
+            
            ))
+
           // console.log(this.state.currentItem);
     }
 
@@ -103,7 +124,7 @@ class EditTodoItem extends Component{
             {
                return;       
             }else{               
-               // this.props.showItems(res.result);
+                this.props.RefreshCustomizedTodoItem(this.props.currentTodoListID);
                 this.closeEditItem();
             }
 

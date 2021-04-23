@@ -75,7 +75,11 @@ class MainNav extends Component {
                             
                                 
                            {this.state.todoList.map(
+<<<<<<< HEAD
                             (list)=><span> <TodoListOrder style={{paddingBottom:12}} key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}> <VscTrash size={26} style={{marginRight:10, marginTop:12}} onClick={()=>this.deleteTodoList(list._id)}/> {list.Name} </TodoListOrder>
+=======
+                            (list)=><span key={list._id}> <TodoListOrder style={{paddingBottom:12}} key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}> <VscTrash size={26} style={{marginRight:10, marginTop:12}} onClick={()=>this.deleteTodoList(list._id)}/> {list.Name} </TodoListOrder>
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
                               </span>
                             )}
                            
@@ -97,6 +101,7 @@ class MainNav extends Component {
     async handleShowAllItems(){
         
         try {
+            this.props.setToShowMode();
             this.props.closeAddButton();
 
             let response = await fetch(buildPath('api/showAll'),{
@@ -139,6 +144,7 @@ class MainNav extends Component {
 
         try {
             this.props.closeAddButton();
+            this.props.setToShowMode();
 
             let response = await fetch(buildPath('api/showCompleted'),{
                     method:'POST',
@@ -173,8 +179,8 @@ class MainNav extends Component {
     async handleShowStarItems(){
 
         try {
-            this.props.closeAddButton()
-
+            this.props.closeAddButton();
+            this.props.setToShowMode();
             let response = await fetch(buildPath('api/showUrgent'),{
                     method:'POST',
                     headers:{
@@ -255,6 +261,7 @@ class MainNav extends Component {
     async handleShowCustomizedTodoItem(listID){
         try {
             this.props.showAddButton();
+            this.props.setToEditMode();
             let response = await fetch(buildPath('api/showCustomizedItem'),{
                     method:'POST',
                     headers:{

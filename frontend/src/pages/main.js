@@ -3,7 +3,7 @@ import MainNav from '../components/todoNav';
 import {LogoutButton,TodoItemWrapper,TodoListOrderMainPage,TodoItem,DeleteItemIcon,CurrentTodoListHeader, AddTodoItemButton, DoneTodoItem} from '../components/style'
 import { FiSettings } from "react-icons/fi";
 import { VscTrash } from "react-icons/vsc";
-
+import { DatePicker, Space } from 'antd';
 import { RiBookmark3Fill,RiBookmark3Line,RiBookmark2Fill,RiBookmark2Line } from "react-icons/ri";
 import AddTodoItem from '../components/addTodoItem';
 import EditTodoItem from '../components/editTodoItem';
@@ -33,6 +33,8 @@ class MainPage extends Component {
         super(props);
         this.state={
             todoItem:[],
+            showItem:[],
+            show:true,
             editIsOpen:false,
             addIsOpen:false,
             addButtonIsOpen:false,
@@ -54,6 +56,10 @@ class MainPage extends Component {
             this.closeAddButton = this.closeAddButton.bind(this);
             this.setCurrentTodoList = this.setCurrentTodoList.bind(this);
             this.markTask = this.markTask.bind(this);
+            this.RefreshCustomizedTodoItem = this.RefreshCustomizedTodoItem.bind(this);
+            this.onlyShowItems = this.onlyShowItems.bind(this);
+            this.setToEditMode = this.setToEditMode.bind(this);
+            this.setToShowMode = this.setToShowMode.bind(this);
 
 
     }
@@ -64,37 +70,75 @@ class MainPage extends Component {
     render(){
         return (
            
+<<<<<<< HEAD
            <div> <MainNav username={this.props.username}  showItems={this.showItems} showAddButton={this.showAddButton} closeAddButton={this.closeAddButton} setCurrentTodoList={this.setCurrentTodoList}/>               
                         <TodoItemWrapper style={{overflowY:'scroll'}} >  <LogoutButton onClick={this.props.doLogout}>Logout</LogoutButton>         
                          <CurrentTodoListHeader>Your Tasks</CurrentTodoListHeader>                     
                                 {this.state.todoItem.map(
+=======
+           <div> <MainNav setToShowMode={this.setToShowMode} setToEditMode={this.setToEditMode} username={this.props.username}  showItems={this.showItems} showAddButton={this.showAddButton} closeAddButton={this.closeAddButton} setCurrentTodoList={this.setCurrentTodoList}/>               
+                        <TodoItemWrapper style={{overflowY:'scroll'}} >  <LogoutButton onClick={this.props.doLogout}>Logout</LogoutButton>         
+                         <CurrentTodoListHeader>Your Tasks</CurrentTodoListHeader>                     
+                           
+                            {this.state.todoItem.map(
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
                                 (item)=><TodoListOrderMainPage style={{marginTop:10, marginBottom:10}} key={item._id}>      
                                 <TodoItem>
                                 
                                  {item.Done && <RiBookmark2Fill style={{marginRight:5}} onClick={()=>this.markTask(item._id)} />} 
                                 {!item.Done && <RiBookmark2Line style={{marginRight:5}} onClick={()=>this.markTask(item._id)} />}
+<<<<<<< HEAD
 
                                 {item.Urgent && <RiBookmark3Fill style={{marginRight:15}}  onClick={()=>this.flagTask(item._id)} />}
                                  {!item.Urgent && <RiBookmark3Line style={{marginRight:15}}  onClick={()=>this.flagTask(item._id)} />} 
 
                                  { item.Description } Due {item.Deadline}   
+=======
+
+                                {item.Urgent && <RiBookmark3Fill style={{marginRight:15}}  onClick={()=>this.flagTask(item._id)} />}
+                                 {!item.Urgent && <RiBookmark3Line style={{marginRight:15}}  onClick={()=>this.flagTask(item._id)} />} 
+
+                                {item.Urgent && item.Done && <b><s>{item.Description}</s></b>} 
+                                {!item.Urgent && item.Done && <s>{item.Description}</s>}
+                                {item.Urgent && !item.Done && <b>{item.Description}</b>}
+                                {!item.Urgent && !item.Done && item.Description}
+                                 
+
+                                Due 
+                                {item.Urgent && item.Done && <b><s>{item.Deadline}</s></b>} 
+                                {!item.Urgent && item.Done && <s>{item.Deadline}</s>}
+                                {item.Urgent && !item.Done && <b>{item.Deadline}</b>}
+                                {!item.Urgent && !item.Done && item.Deadline}
+                                 
+
+
+
+
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
                                 <DeleteItemIcon> <FiSettings onClick={()=>this.handleEditTodoitem(item)} /> 
                                 <VscTrash onClick={()=>this.deleteItem(item._id)} />
                                 </DeleteItemIcon>
             
                                 </TodoItem> 
+
                                {this.state.editIsOpen && <EditTodoItem currentItem={this.state.currentTodoItem} 
-                               currentTodoList={this.state.CurrentTodoList} 
+                               currentTodoListID={this.state.currentTodoListID} 
                                userID={this.state.userID} tok={tok} 
-                               showItems={this.showItems} closeEditItem={this.closeEditItem}/>} 
+                               showItems={this.showItems} closeEditItem={this.closeEditItem} RefreshCustomizedTodoItem={this.RefreshCustomizedTodoItem}/>} 
 
                                
 
 
-                                </TodoListOrderMainPage>)}    
+                                </TodoListOrderMainPage>) }
+                           
+                                  
                                 {this.state.addIsOpen && <AddTodoItem currentTodoListID={this.state.currentTodoListID} 
                                userID={this.state.userId} tok={tok} 
+<<<<<<< HEAD
                                showItems={this.showItems} closeAddItem={this.closeAddTodoItem}/>} 
+=======
+                               showItems={this.showItems} closeAddItem={this.closeAddTodoItem} RefreshCustomizedTodoItem={this.RefreshCustomizedTodoItem}/>} 
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
                           {this.state.addButtonIsOpen && <AddTodoItemButton style={{borderRadius:30, borderWidth:3, marginBottom:20}} onClick={this.handleAddTodoitem}>Add</AddTodoItemButton>}
                         </TodoItemWrapper>
 
@@ -114,7 +158,22 @@ class MainPage extends Component {
 
 
 
+    setToEditMode(){
+        this.setState({
+            show:false,
+        })
+    }
+    setToShowMode(){
+        this.setState({
+            show:true,
+        })
+    }
+
+
     async markTask(itemID){
+        if(this.state.show){
+            return;
+        }
        // console.log("asdsss");
       //  console.log(itemID);
         try {
@@ -136,7 +195,7 @@ class MainPage extends Component {
             {
                return;       
             }else{               
-              //  this.showItems(res.result);
+                this.RefreshCustomizedTodoItem(this.state.currentTodoListID);
             }
 
         }
@@ -151,6 +210,9 @@ class MainPage extends Component {
     
 
     async flagTask(itemID){
+        if(this.state.show){
+            return;
+        }
         //console.log("asddddd");
         //console.log(tok);
         //console.log(itemID);
@@ -172,7 +234,7 @@ class MainPage extends Component {
             {
                return;       
             }else{               
-            //    this.showItems(res.result);
+                this.RefreshCustomizedTodoItem(this.state.currentTodoListID);
             }
 
         }
@@ -183,7 +245,13 @@ class MainPage extends Component {
         }
     }
 
-    
+    onlyShowItems(result){
+        // console.log(result);
+         this.setState({
+         //    currentTodoListID:result[0].CollectionId,
+             showItem:result,
+         })
+     }
 
 
     showItems(result){
@@ -195,13 +263,55 @@ class MainPage extends Component {
     }
 
 
+    async RefreshCustomizedTodoItem(listID){
+        try {
+            this.showAddButton();
+            let response = await fetch(buildPath('api/showCustomizedItem'),{
+                    method:'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        CollectionId:listID,
+                        jwtToken:tok,
+                    })
+                    
+            });
+            var res = JSON.parse(await response.text());
+            
+            if( res.error)
+            {
+               return;
+                
+            }else{
+                this.showItems(res.result);
+                
+                
+            }
+
+        }
+
+        catch(e){
+            console.log(e);
+            return;
+        }
+
+
+    }
+
+
+
+
     setCurrentTodoList(currentlistID){
         this.setState({
             currentTodoListID:currentlistID,
         })
     }
     async handleEditTodoitem(item){
-
+        if(this.state.show){
+            return;
+        }
         await this.setState({
             editIsOpen:true,
             currentTodoItem:item,
@@ -231,6 +341,9 @@ class MainPage extends Component {
     
 
     handleAddTodoitem(){
+        if(this.state.show){
+            return;
+        }
         this.setState({
             addIsOpen:true
         })
@@ -244,6 +357,9 @@ class MainPage extends Component {
 
 
     async deleteItem(itemID){
+        if(this.state.show){
+            return;
+        }
         //console.log("delete");
         //console.log(tok);
         //console.log(itemID);
@@ -265,7 +381,8 @@ class MainPage extends Component {
             {
                return;       
             }else{               
-               // this.showItems(res.result);
+                this.RefreshCustomizedTodoItem(this.state.currentTodoListID);
+
             }
 
         }

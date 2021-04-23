@@ -27,6 +27,9 @@ const UserSchema = new Schema({
     Verified: {
         type: Boolean,
         required: true
+    },
+    EmailToken:{
+        type: String,
     }
 });
 

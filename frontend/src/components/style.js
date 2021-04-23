@@ -20,9 +20,11 @@ export const LoginWrapper = styled.div`
   box-shadow:0 0 8px rgba(0,0,0 .1);
   border-radius:20px;
   background-image: linear-gradient(#FFE6EE, #FFF);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
   
-
 `;
 
 export const LoginFooter = styled.div`
@@ -99,7 +101,6 @@ export const Button = styled.button`
   border-radius: 3px;
   margin-top: 30px;
   margin-left:10px;
-
 `;
 
 export const ForgetPasswordButton = styled.div`
@@ -122,7 +123,10 @@ export const RegisterWrapper = styled.div`
     padding-bottom:130px;
     border-radius: 15px;
     background-image: linear-gradient(#FFF, #96CAF7);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
   
 `;
 
@@ -153,10 +157,13 @@ text-align:center;
     padding-bottom:130px;
     border-radius:10px;
     background-image: linear-gradient(#FFF, #96CAF7);
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
 `
 export const ForgetPasswordCloseButton = styled.div`
       width:15px;
@@ -179,7 +186,10 @@ export const BackgroundBody = styled.div`
     width: 100%;
     height: 100%;
     background-image: linear-gradient(white, #96CAF7);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
 `
 
 
@@ -229,14 +239,20 @@ export const TodoListOrder = styled.div`
 
 
 export const TodoItemWrapper = styled.div`   
-
       position: absolute;
+<<<<<<< HEAD
       width: 1320px;
+=======
+      width: 980px;
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
       height: 100%;
       right: 0px;
       top:  0px;
       background-image: linear-gradient(#FFF, #96CAF7);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
       
       
 `
@@ -247,7 +263,11 @@ export const TodoListOrderMainPage = styled.div`
       height:100px;
       list-style-type: none;
       padding: 0px;
+<<<<<<< HEAD
       margin-left: 300px;
+=======
+      margin-left: 160px;
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
       font-size:25px;
       background:#C4C4C4;
       border:solid;
@@ -262,8 +282,16 @@ export const TodoListOrderMainPage = styled.div`
 export const TodoItem = styled.p`   
    padding:10px;
    position:relative;
+<<<<<<< HEAD
 
       
+=======
+      
+`
+
+export const DoneTodoItem = styled.p`   
+   text-decoration: line-through; 
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
 `
 
 export const DoneTodoItem = styled.p`   
@@ -273,12 +301,11 @@ export const DoneTodoItem = styled.p`
 
 
 
-export const DeleteItemIcon = styled.span`   
 
+export const DeleteItemIcon = styled.span`   
       position:absolute;
       right:0;
       cursor:pointer;
-
       
 `
 
@@ -291,8 +318,6 @@ export const NewTodoListEnter = styled.input.attrs({
          height:40px;
          background:white;  
          border-radius:10px; 
-
-
 `
 
 
@@ -325,7 +350,6 @@ export const EditTodoItemButton = styled.button`
   border-radius: 30px;
   margin-top: 30px;
   margin-left:115px;
-
 `;
 
 export const EditItemHeader = styled.h1`
@@ -344,7 +368,10 @@ export const EditItemCloseButton = styled.div`
       cursor:pointer;
       text-align:center;
       border-radius:5px;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
         
 `;
 
@@ -358,7 +385,6 @@ export const AddTodoItemButton = styled.button`
   border-radius: 3px;
   margin-top: 30px;
   margin-left:765px;
-
 `;
 
 export const AddTodoItemWrapper = styled.div`
@@ -386,7 +412,6 @@ export const AddItemCloseButton = styled.div`
       float:right;
       cursor:pointer;
       text-align:center;
-
         
 `;
 
@@ -405,5 +430,12 @@ export const AddTodoItemSubmitButton = styled.button`
   border-radius: 30px;
   margin-top: 30px;
   margin-left:115px;
+`;
 
+
+export const DatePickerWrapper = styled.div`
+
+margin-left:90px;
+
+      
 `;

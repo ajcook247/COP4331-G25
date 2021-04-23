@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {AddTodoItemWrapper,Input,AddItemCloseButton,AddItemHeader,AddTodoItemSubmitButton} from './style';
-
+import {AddTodoItemWrapper,Input,AddItemCloseButton,AddItemHeader,AddTodoItemSubmitButton,DatePickerWrapper} from './style';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const app_name = 's21l-g25';
 
@@ -24,6 +25,7 @@ class AddTodoItem extends Component{
         this.state={
             des:'',
             due:'',
+            startDate: new Date(),
         }
 
 
@@ -32,6 +34,7 @@ class AddTodoItem extends Component{
         this.handleDesChange = this.handleDesChange.bind(this);
         this.handleDueChange = this.handleDueChange.bind(this);
         this.handleAddSubmit = this.handleAddSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         }
 
         
@@ -48,7 +51,27 @@ class AddTodoItem extends Component{
 
             <AddItemHeader>New Task</AddItemHeader>
             <Input style={{borderColor:"black", color:"black", marginTop:40}} placeholder="What to do..." onChange={this.handleDesChange} />
+<<<<<<< HEAD
             <Input style={{borderColor:"black", color:"black", marginTop:40}} placeholder="Due by..." onChange={this.handleDueChange} />  
+=======
+           
+
+
+            <DatePickerWrapper>
+            <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+            />
+  
+            </ DatePickerWrapper>
+
+
+                
+  
+           {/*<Input style={{borderColor:"black", color:"black", marginTop:40}} placeholder="Due by..." onChange={this.handleDueChange} />  
+*/} 
+
+>>>>>>> 249cbc63de8c4f056a16702bf4f5673e92d7ba4b
 
 
             <AddTodoItemSubmitButton style={{marginTop:50}} onClick={this.handleAddSubmit}>Submit</AddTodoItemSubmitButton>
@@ -59,6 +82,14 @@ class AddTodoItem extends Component{
 
 
     }
+
+
+    handleChange(date){
+        this.setState({
+          due: date.toString(),
+          startDate:date,
+        });
+      };
 
 
     closeAddItem(){
@@ -79,9 +110,9 @@ class AddTodoItem extends Component{
    }
 
    async handleAddSubmit(){
-       console.log(this.props.userID);
-       console.log(this.props.tok);
-       console.log(this.props.currentTodoListID);
+     //  console.log(this.props.userID);
+     //  console.log(this.props.tok);
+     //  console.log(this.props.currentTodoListID);
        console.log(this.state.des);
        console.log(this.state.due);
 
@@ -108,6 +139,7 @@ class AddTodoItem extends Component{
            return;       
         }else{               
             //this.props.showItems(res.result);
+            this.props.RefreshCustomizedTodoItem(this.props.currentTodoListID);
             this.props.closeAddItem();
         }
 
