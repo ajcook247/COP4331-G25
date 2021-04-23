@@ -220,7 +220,7 @@ class ImportantTaskList extends Component {
             dateOne = date.substring(0,11);
         }
 
-        dateOne = date.substring(0,11);
+        // dateOne = date.substring(0,11);
 
         dateTwo = date.substring(11,19); // Gives Hour
 

@@ -120,7 +120,6 @@ class RegisterPage extends Component {
                             <Input
                             value={this.state.name} 
                             onChangeText={(text) => this.setState({name: text})}
-                            secureTextEntry={true}
                             placeholder='Enter your name'
                             placeholderTextColor='#000'
                             textAlign="left"

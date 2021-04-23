@@ -19,6 +19,7 @@ class ResetPage extends Component {
         }
 
         this.sendPasswordRequestLink = this.sendPasswordRequestLink.bind(this);
+        this.resetForm = this.resetForm.bind(this);
     }
 
     render() {
@@ -79,6 +80,7 @@ class ResetPage extends Component {
                             type="clear"
                             onPress={() => {
                                 this.closeModal();
+                                this.resetForm();
                             }}
                             />
                         </Reset_Container>
@@ -116,6 +118,7 @@ class ResetPage extends Component {
 
     async sendPasswordRequestLink(){
 
+
         if(!this.state.email){
             return;
         }
@@ -123,29 +126,45 @@ class ResetPage extends Component {
         var obj = {email: this.state.email}
         var js = JSON.stringify(obj);
 
+
         try {
-            let response = await fetch('https://s21l-g25.herokuapp.com/reset-password',{
+
+            let response = await fetch('https://s21l-g25.herokuapp.com/api/reset-password',{
                     method:'POST',
-                    body: js,
+                    body : js,
                     headers:{
                         'Content-Type':'application/json'
                     }        
             });
+
+        
             var res = JSON.parse(await response.text());
+            console.log(res);
 
            if( res.error )
             {
-                Alert.alert('something went wrong' );
+                
+            }else{
+
+                this.closeModal();
+                this.resetForm();
+
             }
-            else
-            {
-                Alert.alert('succeeded');
-            }
+
         }
+
         catch(e){
+            
+            console.log(e);
             return;
         }
     
+    }
+
+    resetForm(){
+        this.setState({
+          email:'',
+        })
     }
 
 }

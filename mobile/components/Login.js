@@ -150,6 +150,8 @@ class LoginPage extends Component
             });
             var res = JSON.parse(await response.text());
 
+            console.log(res);
+
             if( res.error )
             {
                 this.setState({
