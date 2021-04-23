@@ -12,6 +12,7 @@
     "express": "^4.17.1",
     "mongodb": "^3.6.6",
     "react": "^17.0.1",
+    "react-datepicker": "^3.8.0",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "react-jwt": "^1.1.2",

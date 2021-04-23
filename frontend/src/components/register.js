@@ -85,6 +85,8 @@ class Register extends Component{
         })   }
 
     async handleRegisterSubmit(){
+
+      
       if(!this.state.username){
           return;
       }
@@ -109,6 +111,7 @@ class Register extends Component{
         var js = JSON.stringify(obj);
 
         try {
+   
           //https://s21l-g25.herokuapp.com/
           let response = await fetch(buildPath('api/register'),{
                   method:'POST',
@@ -126,6 +129,7 @@ class Register extends Component{
           }else{
           //  this.props.newRegisterLogin(this.state.username,this.state.password);
           //console.log(res);
+      
             this.resetForm();
             this.props.closeRegisterButton();
             console.log(res);
@@ -135,6 +139,7 @@ class Register extends Component{
       }
 
       catch(e){
+ 
           console.log(e);
           return;
       }

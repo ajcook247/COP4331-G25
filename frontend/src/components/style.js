@@ -1,7 +1,19 @@
 import styled from 'styled-components';
 
 export const LoginHeader = styled.div`
-  margin-left:520px;
+  margin-left:590px;
+  margin-top:1 0px;
+  color: #000; 
+  font-size: 26px; 
+  font-weight: 100; 
+  line-height: 50px; 
+  letter-spacing: 1px; 
+  padding: 0 0 10px; 
+`;
+
+export const LoginHeader2 = styled.div`
+  margin-left:460px;
+  margin-right:400px;
   margin-top:1 0px;
   color: #000; 
   font-size: 26px; 
@@ -23,8 +35,13 @@ export const LoginWrapper = styled.div`
   
 `;
 
+export const BackGround = styled.div`
+  background-image: linear-gradient(white, #96CAF7); 
+       
+`;
+
 export const LoginFooter = styled.div`
-  margin-left:380px;
+  margin-left:480px;
   color: #000; 
   font-size: 25px; 
   line-height: 74px; 
@@ -37,6 +54,19 @@ export const LoginFooter = styled.div`
 export const LoginInputGroup = styled.div`
       padding-top:150px;
   
+`;
+
+export const Button2 = styled.button`
+  width:200px;
+  padding: 20px 20px;
+  color: black;
+  font-weight: 400;
+  text-transform: uppercase;
+  background: white;
+  border-radius: 3px;
+  margin-top: 30px;
+  margin-left:37px;
+
 `;
 
 
@@ -220,7 +250,7 @@ export const TodoListOrder = styled.div`
 
 export const TodoItemWrapper = styled.div`   
       position: absolute;
-      width: 980px;
+      width: 1160px;
       height: 100%;
       right: 0px;
       top:  0px;

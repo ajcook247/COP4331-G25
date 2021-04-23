@@ -25,6 +25,8 @@ class ForgetPassword extends Component {
         this.sendPasswordRequestLink = this.sendPasswordRequestLink.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handleKeypress = this.handleKeypress.bind(this);
+  
+    
 
       }
 
@@ -62,9 +64,10 @@ class ForgetPassword extends Component {
         }
     }
 
+ 
+
     async sendPasswordRequestLink(){
 
-        alert('doIt() ' + this.state.email );
 
         if(!this.state.email){
             return;
@@ -75,7 +78,7 @@ class ForgetPassword extends Component {
 
 
         try {
-            alert('hulk' );
+
             let response = await fetch(buildPath('api/reset-password'),{
                     method:'POST',
                     body : js,
@@ -84,25 +87,24 @@ class ForgetPassword extends Component {
                     }        
             });
 
-            alert(response);
+        
             var res = JSON.parse(await response.text());
-
-            alert('mal');
+            console.log(res);
 
            if( res.error )
             {
-                alert('wrong' );
+               this.props.closeForgetPasswordButton();   
                 
             }else{
-                alert('hu' );
 
+                this.props.closeForgetPasswordButton();   
 
             }
 
         }
 
         catch(e){
-            alert(e);
+            
             console.log(e);
             return;
         }

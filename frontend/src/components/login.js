@@ -53,7 +53,7 @@ class Login extends Component{
                 <LoginWrapper >
                     
                 <Register showRegister={this.state.showRegister} closeRegisterButton={this.CloseRegisterButton} registerSucceed={this.handleLoginClick} newRegisterLogin={this.newRegisterLogin}/>
-                <ForgetPassword showForgetPassword={this.state.showForgetPassword} closeForgetPasswordButton={this.closeForgetPasswordButton} />
+                {this.state.showForgetPassword  && <ForgetPassword showForgetPassword={this.state.showForgetPassword} closeForgetPasswordButton={this.closeForgetPasswordButton} />}
                     <LoginInputGroup>
                     <Input style={{borderColor:"black", color:"black", marginTop:20}} placeholder='Username' onChange={this.handleUsernameChange} onKeyPress={this.handleKeypress} />
                     <PasswordInput style={{borderColor:"black", color:"black", marginTop:40}} placeholder='Password' onChange={this.handlePasswordChange} onKeyPress={this.handleKeypress} />  

@@ -41,10 +41,10 @@ function buildPath2(route)
 
 
 
-	function doVerified(emailToken) {
-			console.log("aaaa");
-			db.collection('Users').updateOne({EmailToken:emailToken}, {$set: {Verified:true}});
-		}
+function doVerified(emailToken) {
+		console.log("aaaa");
+		db.collection('Users').updateOne({EmailToken:emailToken}, {$set: {Verified:true}});
+	}
 	
 
 
@@ -64,26 +64,24 @@ async function handlePasswordReset(username, password){
 				}   
 				
 		});
-		alert(response);
+		
 		
 
 		var res = JSON.parse(await response.text());
 		console.log(res);
-		alert(res);
-		alert("res");
-		
+	
 		if(res.error)
 		{
-			alert('hulk2' );
+			
 			console.log(res.error);       
 		}else{
-			alert('hulk' );
+			
 
 			storage.storeToken(res);
 			var tok = storage.retrieveToken();
 			var ud = jwt.decode(tok,{complete:true});
 			console.log(ud.payload);
-			window.location.href = '/';
+		
 			this.props.changeToLoggedIn(this.state.username);
 		}
 
@@ -109,84 +107,77 @@ exports.setApp = function(app, client)
       
     }))
 
-    app.post('/api/reset-password',(req, res)=>{
-        crypto.randomBytes(32,(err,buffer)=>{
-          if(err){
-            console.log(err);
-          }
-          const token = buffer.toString("hex");
+	const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+    app.post('/api/reset-password', async (req, res)=>{
+
+		  var error = '';
+      
           const { login, password, email, Verified} = req.body;
-          try
-          {
-              console.log("lis");
 
-			  const results =  db.collection('Users').findOne({Email:email}).then(user=>{
-				if(!user){
-					return res.statis(422).json({error:"User with that email does not exist"})
+		  const resultss = await db.collection('Users').find({Email:email}).toArray(); 
 
-				}
-				ret = jwt.createToken(user.Name, user._id);
-			  })
-      
-              transporter.sendMail({
-                to: email,
-                from: "bdreamywebsite@hotmail.com",
-                subject: "B_DREAMY : passwrod reset",
-                html:`
-                <h1>Password reset</h1>
-                <h4>To reset password : <a href =${buildPath2('resetpassword')}> reset </a> </h4>
-               `
-              }, function (err, data) {
-				if (err) {
-				  console.log("error", err);
-				} else {
-				  console.log("email sent!");
-				}
-			  })
-      
-              res.json({message: "check your email"})
-      
-              console.log("lis");
-      
-              // newUser.save();
-          }
-          catch(e)
-          {
-      
-            console.log("what");
-        
-              error = e.message;
-              console.log(e.message);
-          }
-         // var ret = {error:email};
-          //res.status(200).json(ret);
+		  var token2 = resultss[0].EmailToken;
+
+		  if(!(resultss.length > 0)){
+            ret = {error:'User does not exist!'};
+
+        }else{
+			console.log("yes");
+			let link=`${buildPath2('resetpassword')}/${token2}`;
+			const msg = {
+				to: email,
+				from: 'yuboli0403@gmail.com',
+				subject: 'B-DREAMY : Password Reset',
+				html:`
+				<h1>Password Reset </h1>
+				<p>Please click the link to reset Password:</p>
+				<a href="${link}">Reset Password</a>
+				`,
+			};
+
+            try
+            {
+ 
+				await sgMail.send(msg);
+				//ret = jwt.createToken(name, id);
+
+			//	db.collection('Users').updateOne({EmailToken:token.toString()}, {$set: {Verified:true}});
+			
+            }
+            catch(e)
+            {
+                error = e.message;
+            }
+         }
           
-        })
+        var ret = {error: error};
+        res.status(200).json(ret);
+
       })
 
 	  app.post('/api/PasswordReset', async (req, res, next) =>
 	  {
-		var error = '';
+		var ret = '';
 
-        const {login, password} = req.body;
+        const {sentToken, password} = req.body;
+
+		console.log(sentToken);
+
+		console.log(password);
         // db = client.db();
         // const results = await User.find({ Login: login, Password: password });
-        const results = await db.collection('Users').find({Login:login}).toArray(); 
-		
-		var email = results[0].Email;
-
-        var id = -1;
-        var name = '';
+        const results = await db.collection('Users').find({EmailToken:sentToken}).toArray();
+	
 
         if(results.length > 0)
         {
-            id = results[0]._id;
-            name = results[0].Name;
             try
             {
-				const result = db.collection('Users').findOneAndUpdate({Email : email}, {$set: {Password: password}});
+				const result = db.collection('Users').findOneAndUpdate({EmailToken : sentToken}, {$set: {Password: password}});
                 // ret = {"id":id, "name":name};
-                ret = jwt.createToken(name, id);
+     
             }
             catch(e)
             {
@@ -200,7 +191,8 @@ exports.setApp = function(app, client)
        
 
         res.status(200).json(ret);
-	  });//end login
+    });//end login
+
 
     app.post('/api/login', async (req, res, next) =>
     {
@@ -245,8 +237,7 @@ exports.setApp = function(app, client)
     });//end login
 
 	
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 
     app.post('/api/register', async (req, res, next) =>
     { 	
@@ -269,28 +260,28 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 				from: 'yuboli0403@gmail.com',
 				subject: 'B-DREAMY : Confirm Email',
 				html:`
-				<h1>Hello, thanks for registering on our site.</h1>
-				<p>lease click the link to verify:</p>
+				<h1>Hello, thanks for registering on our site. ${newUser.Name}</h1>
+				<p>Please click the link to verify:</p>
 				<a href="${link}">Verify your account</a>
-				
-
 				`,
 			};
-
-
 
             try
             {
                 const result = await db.collection('Users').insertOne(newUser);
+				console.log("hulkkkkkdsau");
 			//	db.collection('Users').updateOne({EmailToken:token.toString()}, {$set: {Verified:true}});
 
 				try{
+					console.log("hulkkkkk");
 					await sgMail.send(msg);
 				//ret = jwt.createToken(name, id);
+				console.log("hulk");
                
 				}
 				catch(e){
-				error = e.message;   
+				error = e.message; 
+				console.log(e);  
 				}
 	
 			
@@ -313,9 +304,6 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 		//const result = await db.collection('Users').insertOne(newUser);
 
 
-
-
-
 		db.collection('Users').updateOne({EmailToken:req.params.token.toString()}, {$set: {Verified:true}});
 		//res.redirect(buildPath(''));
         try
@@ -329,6 +317,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
             else 
             {
 				db.collection('Users').updateOne({EmailToken:req.params.token}, {$set: {Verified:true}});
+				res.redirect(buildPath2(''));
 
                 var ret = { error: err };      
                 res.status(200).json(ret);
