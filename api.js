@@ -736,6 +736,45 @@ exports.setApp = function(app, client)
     });
 
 	
+	
+	app.post('/api/searchTasks', async (req, res, next) =>
+    {
+		
+		var error = '';
+		var tasks = [];
+        const {jwtToken,userId,words} = req.body;
+
+       // const newList = new Collections({Name:name, UserId:userId});     
+	   var ObjectId = require('mongodb').ObjectID;
+	   var new_id = new ObjectId(userId);
+
+        if( jwt.isExpired(jwtToken))
+		{
+			var r = {error:'The JWT is no longer valid'};
+			res.status(200).json(r);
+			return;
+		}
+		
+		try
+		{
+			tasks = await db.collection('Tasks').find({UserId:new_id,Description:{ $regex: words, $options: 'i' }}).toArray();
+		}
+		catch(e)
+		{
+			error = e.message;
+			//console.log(e.message);
+		}
+		
+		var ret ={result:tasks,
+			error:error,
+		  };
+		res.status(200).json(ret);
+
+    });
+	
+	
+	
+	
 
 }
 
