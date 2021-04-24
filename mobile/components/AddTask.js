@@ -80,6 +80,7 @@ class AddTask extends Component {
             
             <View>
                 <View>
+                    <LinearGradient colors={['pink', '#FFF']}>
                     <Register_Container > 
                         
                         <Text>Add a Task</Text>
@@ -136,6 +137,7 @@ class AddTask extends Component {
                         }}
                         />
                     </Register_Container>
+                    </LinearGradient>
                 </View>
             </View>
             </Modal>
