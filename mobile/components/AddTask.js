@@ -166,13 +166,23 @@ class AddTask extends Component {
 
     async handleSetDate(date)
     {
-        date = date.toString();
-        date = date.substring(4,15);
-        await this.setState({due:date});
-        console.log(this.state.due);
+        if (!date)
+        {
+            await this.setState({due:'N/A'});
+        }
+        else
+        {
+            date = date.toString();
+            date = date.substring(4,15);
+            await this.setState({due:date});
+            console.log(this.state.due);
+        }
+
+    
     }
 
     async handleAddTaskSubmit(){
+
         try {
             let response = await fetch('http://s21l-g25.herokuapp.com/api/addTask',{
                     method:'POST',

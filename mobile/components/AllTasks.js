@@ -281,6 +281,12 @@ class AllTaskList extends Component {
 
     handleDateFormat(date)
     {
+        if (!date)
+        {
+            var noDate = 'N/A';
+            return noDate;
+        }
+        
         var dateOne;
         var dateTwo;
 

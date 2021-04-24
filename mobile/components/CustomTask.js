@@ -232,19 +232,27 @@ class CustomTaskList extends Component {
 
     handleDateFormat(date)
     {
+        if (!date)
+        {
+            var noDate = 'N/A';
+            return noDate;
+        }
+
         var dateOne;
         var dateTwo;
 
         var finalDate;
 
-        date = date.toString();
+        
 
         if (date.includes("T"))
         {
+            date = date.toString();
             dateOne = date.substring(0,10);
         }
         else
         {
+            date = date.toString();
             dateOne = date.substring(0,11);
         }
 

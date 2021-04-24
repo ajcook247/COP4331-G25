@@ -163,18 +163,26 @@ class EditCompletedTask extends Component {
 
     async handleDateFormat(date)
     {
-        date = date.toString();
-
-        if (date.includes("T"))
+        if (!date)
         {
-            date = date.substring(0,10);
+            this.setState({newTaskDate: 'N/A'});
         }
         else
         {
-            date = date.substring(0,11);
-        }
+            date = date.toString();
         
-        this.setState({newTaskDate: date});
+            if (date.includes("T"))
+            {
+                date = date.substring(0,10);
+            }
+            else
+            {
+                date = date.substring(0,11);
+            }
+
+            this.setState({newTaskDate: date});
+
+        }
     }
 
     async handleSetDate(date)
