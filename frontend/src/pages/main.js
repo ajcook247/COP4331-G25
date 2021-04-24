@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import MainNav from '../components/todoNav';
-import {LogoutButton,TodoItemWrapper,TodoListOrderMainPage,TodoItem,DeleteItemIcon,CurrentTodoListHeader, AddTodoItemButton, DoneTodoItem} from '../components/style'
+import {LogoutButton,TodoItemWrapper,TodoListOrderMainPage,TodoItem,DeleteItemIcon,CurrentTodoListHeader, AddTodoItemButton, SearchFromAll} from '../components/style'
 import { FiSettings } from "react-icons/fi";
 import { VscTrash } from "react-icons/vsc";
 import { DatePicker, Space } from 'antd';
@@ -37,6 +37,7 @@ class MainPage extends Component {
             show:true,
             editIsOpen:false,
             addIsOpen:false,
+            searchIsOpen:false,
             addButtonIsOpen:false,
             currentTodoListID:'',
             currentTodoItem:'',
@@ -60,6 +61,9 @@ class MainPage extends Component {
             this.onlyShowItems = this.onlyShowItems.bind(this);
             this.setToEditMode = this.setToEditMode.bind(this);
             this.setToShowMode = this.setToShowMode.bind(this);
+            this.handleSearchChange = this.handleSearchChange.bind(this);
+            this.openSearch = this.openSearch.bind(this);
+            this.closeSearch = this.closeSearch.bind(this);
 
 
     }
@@ -70,9 +74,20 @@ class MainPage extends Component {
     render(){
         return (
            
-           <div> <MainNav setToShowMode={this.setToShowMode} setToEditMode={this.setToEditMode} username={this.props.username}  showItems={this.showItems} showAddButton={this.showAddButton} closeAddButton={this.closeAddButton} setCurrentTodoList={this.setCurrentTodoList}/>               
+           <div> <MainNav setToShowMode={this.setToShowMode} setToEditMode={this.setToEditMode} username={this.props.username}  showItems={this.showItems} showAddButton={this.showAddButton} closeAddButton={this.closeAddButton} setCurrentTodoList={this.setCurrentTodoList} openSearch={this.openSearch} closeSearch={this.closeSearch} />               
                         <TodoItemWrapper style={{overflowY:'scroll'}} >  <LogoutButton onClick={this.props.doLogout}>Logout</LogoutButton>         
-                         <CurrentTodoListHeader>Your Tasks</CurrentTodoListHeader>                     
+                         <CurrentTodoListHeader>
+                         TASKS
+                        
+                        {this.state.searchIsOpen && <SearchFromAll style={{borderColor:"black", color:"black"}} placeholder="search..." onChange={this.handleSearchChange} /> }         
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             </CurrentTodoListHeader>                     
                            
                             {this.state.todoItem.map(
                                 (item)=><TodoListOrderMainPage style={{marginTop:10, marginBottom:10}} key={item._id}>      
@@ -89,19 +104,21 @@ class MainPage extends Component {
                                 {item.Urgent && !item.Done && <b>{item.Description}</b>}
                                 {!item.Urgent && !item.Done && item.Description}
                                  
-
-                                Due 
-                                {item.Urgent && item.Done && <b><s>{item.Deadline}</s></b>} 
-                                {!item.Urgent && item.Done && <s>{item.Deadline}</s>}
-                                {item.Urgent && !item.Done && <b>{item.Deadline}</b>}
-                                {!item.Urgent && !item.Done && item.Deadline}
+                                <br/> 
+                                Due:
+                                {item.Urgent && item.Done && <b><s>{item.Deadline.substring(0,10)}</s></b>} 
+                                {!item.Urgent && item.Done && <s>{item.Deadline.substring(0,10)}</s>}
+                                {item.Urgent && !item.Done && <b>{item.Deadline.substring(0,10)}</b>}
+                                {!item.Urgent && !item.Done && item.Deadline.substring(0,10)}
                                  
 
 
 
 
-                                <DeleteItemIcon> <FiSettings onClick={()=>this.handleEditTodoitem(item)} /> 
-                                <VscTrash onClick={()=>this.deleteItem(item._id)} />
+                                <DeleteItemIcon> 
+                                    
+                              {!this.state.show &&  <FiSettings onClick={()=>this.handleEditTodoitem(item)} />  }     
+                     {!this.state.show && <VscTrash onClick={()=>this.deleteItem(item._id)} />}          
                                 </DeleteItemIcon>
             
                                 </TodoItem> 
@@ -134,6 +151,20 @@ class MainPage extends Component {
 
 
         )
+    }
+
+
+
+    openSearch(){
+        this.setState({
+            searchIsOpen:true,
+        })
+    }
+
+    closeSearch(){
+        this.setState({
+            searchIsOpen:false,
+        })
     }
 
 
@@ -280,6 +311,48 @@ class MainPage extends Component {
 
 
     }
+
+    async handleSearchChange(e){
+        
+        try {
+            let response = await fetch(buildPath('api/searchTasks'),{
+                    method:'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        jwtToken:tok,
+                        userId:this.state.userId,
+                        words:e.target.value,
+                    })
+                    
+            });
+            var res = JSON.parse(await response.text());
+            var result = res.result;
+            console.log(result);
+            if( res.error)
+            {
+               return;       
+            }else{               
+                this.setState({
+                    todoItem:result,
+                })
+            }
+
+        }
+
+        catch(e){
+          //  console.log(e);
+            return;
+        }
+
+    
+
+    }
+
+
+
 
 
 

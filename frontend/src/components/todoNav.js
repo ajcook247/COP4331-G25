@@ -99,6 +99,7 @@ class MainNav extends Component {
         try {
             this.props.setToShowMode();
             this.props.closeAddButton();
+            this.props.openSearch();
 
             let response = await fetch(buildPath('api/showAll'),{
                     method:'POST',
@@ -141,6 +142,8 @@ class MainNav extends Component {
         try {
             this.props.closeAddButton();
             this.props.setToShowMode();
+            this.props.closeSearch();
+
 
             let response = await fetch(buildPath('api/showCompleted'),{
                     method:'POST',
@@ -177,6 +180,8 @@ class MainNav extends Component {
         try {
             this.props.closeAddButton();
             this.props.setToShowMode();
+            this.props.closeSearch();
+
             let response = await fetch(buildPath('api/showUrgent'),{
                     method:'POST',
                     headers:{
@@ -258,6 +263,8 @@ class MainNav extends Component {
         try {
             this.props.showAddButton();
             this.props.setToEditMode();
+            this.props.closeSearch();
+
             let response = await fetch(buildPath('api/showCustomizedItem'),{
                     method:'POST',
                     headers:{

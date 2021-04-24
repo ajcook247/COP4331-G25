@@ -423,3 +423,20 @@ margin-left:90px;
 
       
 `;
+
+
+export const SearchFromAll = styled.input`
+      font-size:15px;
+      display:block;
+      width: 250px;
+      height:30px;
+      background-color: white;
+      
+      line-height:30px;
+      padding:0 10px;
+      color:#777;
+      margin:10px auto;
+      
+`;
+
+
