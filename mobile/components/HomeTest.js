@@ -232,7 +232,19 @@ class HomeTest extends Component {
                                         }   
                                         title=""
                                         onPress = {() => {
-                                            this.deleteTodoList(list._id);
+                                            Alert.alert(
+                                                "Are you sure you want to delete",
+                                                "Confirm or cancel below",
+                                                [
+                                                  {
+                                                    text: "Cancel",
+                                                    onPress: () => console.log("Cancel Pressed"),
+                                                    style: "cancel"
+                                                  },
+                                                  { text: "OK", onPress: () => this.deleteTodoList(list._id) }
+                                                ]
+                                              );
+                                            
                                         }}
                                         type="clear"
                                 > 

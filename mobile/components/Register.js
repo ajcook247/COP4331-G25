@@ -207,7 +207,7 @@ class RegisterPage extends Component {
         if(this.state.confirmed != this.state.password)
         {
         
-            Alert.alert('Please make sure your passwords are the same');
+            // Alert.alert('Please make sure your passwords are the same');
 
         //Alert.alert(this.state.email, this.state.username) // If all are filled, show email and username
         
@@ -239,7 +239,7 @@ class RegisterPage extends Component {
                 var res = JSON.parse(await response.text());
                 if( res.error )
                 {
-                    Alert.alert('Username Already exists, please try a new one'); //email duplicate??
+                    // Alert.alert('Username Already exists, please try a new one'); //email duplicate??
                     return;
                 }
                 else

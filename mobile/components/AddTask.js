@@ -123,7 +123,7 @@ class AddTask extends Component {
                         <Button
                         title="Submit"
                         titleStyle={{fontSize: 20}}
-                        containerStyle={{width: 200, marginTop:30, borderRadius: 20}}
+                        containerStyle={{width: 200, marginTop:80, borderRadius: 20}}
                         onPress={this.handleAddTaskSubmit}
                         />
                         <Button
@@ -131,6 +131,7 @@ class AddTask extends Component {
                         titleStyle={{fontSize: 20}}
                         containerStyle={{width: 150}}
                         type="clear"
+                        style={{marginTop:50}}
                         onPress={() => {
                             this.closeModal();
                             this.resetForm();

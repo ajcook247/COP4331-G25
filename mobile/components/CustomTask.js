@@ -199,7 +199,18 @@ class CustomTaskList extends Component {
                                         }   
                                         title=""
                                         onPress = {() => {
-                                            this.deleteItem(list._id);
+                                            Alert.alert(
+                                                "Are you sure you want to delete",
+                                                "Confirm or cancel below",
+                                                [
+                                                  {
+                                                    text: "Cancel",
+                                                    onPress: () => console.log("Cancel Pressed"),
+                                                    style: "cancel"
+                                                  },
+                                                  { text: "OK", onPress: () => this.deleteItem(list._id) }
+                                                ]
+                                              );
                                         }}
                                         type="clear"
                                 > 
