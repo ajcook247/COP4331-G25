@@ -95,14 +95,17 @@ export default class App extends Component {
     return (
       <View>
         <View>
-          <Button onPress={this.datepicker} title="Show date picker!" />
+          <Button onPress={this.datepicker} title="Choose your due date" />
         </View>
         { show && <DateTimePicker 
                     value={date}
                     mode={mode}
                     is24Hour={true}
                     display="default"
-                    onChange={this.setDate} />
+                    onChange={this.setDate} 
+                    style={{marginTop:30, marginLeft:30, marginBottom:40}}
+                    
+                    />
         }
       </View>
     );

@@ -81,6 +81,7 @@ class EditImportantTask extends Component {
             
             <View>
                 <View>
+                    <LinearGradient colors={['pink', '#FFF']}>
                     <Register_Container > 
                         
                         <Text>Edit Task</Text>
@@ -121,7 +122,7 @@ class EditImportantTask extends Component {
                         <Button
                         title="Change Task"
                         titleStyle={{fontSize: 20}}
-                        containerStyle={{width: 200, marginTop:30, borderRadius: 20}}
+                        containerStyle={{width: 200, marginTop:80, borderRadius: 20}}
                         onPress={this.handleEditSubmit}
                         />
                         <Button
@@ -129,12 +130,14 @@ class EditImportantTask extends Component {
                         titleStyle={{fontSize: 20}}
                         containerStyle={{width: 150}}
                         type="clear"
+                        style={{marginTop:50}}
                         onPress={() => {
                             this.resetForm();
                             this.closeModal();
                         }}
                         />
                     </Register_Container>
+                    </LinearGradient>
                 </View>
             </View>
             </Modal>
