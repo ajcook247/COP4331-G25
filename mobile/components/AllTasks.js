@@ -33,11 +33,13 @@ class AllTaskList extends Component {
             errorMsg:'',
             username:'',
             userId:'',
+            value:'',
         }
 
     this.logout = this.logout.bind(this);
     this.handleShowAllItems = this.handleShowAllItems.bind(this);
     this.handleDateFormat = this.handleDateFormat.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
 
 
     }
@@ -76,6 +78,17 @@ class AllTaskList extends Component {
                 }}/>
 
                 <View style={{ flex: 1.3, backgroundColor: "#96CAF7" , paddingBottom:75}}>
+
+                <Input 
+                    onChangeText={this.handleSearchChange}
+                    // onChange={this.handleSearchChange}
+                    placeholder='Search for task'
+                    placeholderTextColor='#000'
+                    textAlign="center"
+                    style={{fontSize: 20}}
+                    containerStyle={{width: 300, marginLeft:50, marginTop:30}}
+                />
+
                    <View style={{marginTop:40}}>
                         <SafeAreaView>
                             <ScrollView>
@@ -199,6 +212,60 @@ class AllTaskList extends Component {
             </View>
 
         )
+    }
+
+    
+
+    
+
+    async handleSearchChange(text){
+
+        console.log(text);
+
+        await this.setState({
+            value:text,
+        })
+
+        
+        try {
+            let response = await fetch('http://s21l-g25.herokuapp.com/api/searchTasks',{
+                    method:'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        jwtToken:tok,
+                        userId:this.state.userId,
+                        words:this.state.value,
+                    })
+                    
+            });
+            var res = JSON.parse(await response.text());
+            // console.log(res);
+            var result = res.result;
+            // console.log(result);
+
+            if( res.error)
+            {
+               return;       
+            }else{               
+                await this.setState({
+                    allList:result,
+                })
+            }
+
+        }
+
+        catch(e){
+          //  console.log(e);
+            return;
+        }
+
+        
+
+    
+
     }
 
     handleDateFormat(date)
