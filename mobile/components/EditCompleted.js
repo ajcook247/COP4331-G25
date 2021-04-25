@@ -187,9 +187,143 @@ class EditCompletedTask extends Component {
 
     async handleSetDate(date)
     {
-        date = date.toString();
-        date = date.substring(4,15);
-        await this.setState({newTaskDate:date});
+        var year;
+        var month;
+        var day;
+        var final;
+        
+        if (date.includes("Jan"))
+        {
+            month = "01"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Feb"))
+        {
+            month = "02"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Mar"))
+        {
+            month = "03"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Apr"))
+        {
+            month = "04"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("May"))
+        {
+            month = "05"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Jun"))
+        {
+            month = "06"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Jul"))
+        {
+            month = "07"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Aug"))
+        {
+            month = "08"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Sep"))
+        {
+            month = "09"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Oct"))
+        {
+            month = "10"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Nov"))
+        {
+            month = "11"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
+        if (date.includes("Dec"))
+        {
+            month = "12"
+            year = date.substring(11,15);
+            day = date.substring(8,10);
+
+            final = year + '-' + month + '-' + day;
+
+            await this.setState({newTaskDate:final});
+            return;
+        }
     }
 
     async handleEditSubmit(){

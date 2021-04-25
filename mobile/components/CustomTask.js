@@ -237,6 +237,7 @@ class CustomTaskList extends Component {
             var noDate = 'N/A';
             return noDate;
         }
+        
 
         var dateOne;
         var dateTwo;
