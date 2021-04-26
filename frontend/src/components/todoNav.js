@@ -4,6 +4,7 @@ import { StarOutlined, CheckOutlined, ReadOutlined, SmileOutlined,PlusOutlined,R
 import { VscTrash } from "react-icons/vsc";
 import storage from '../tokenStorage';
 
+
 const jwt = require("jsonwebtoken");
 var tok = storage.retrieveToken();
 var ud = jwt.decode(tok,{complete:true});
@@ -40,7 +41,7 @@ class MainNav extends Component {
             currentTodoList:'',
             userId:ud.payload.userId,
             username:ud.payload.fullName,
-            
+            showWarning: true
         }
         this.handleShowAllItems = this.handleShowAllItems.bind(this);
         this.handleShowStarItems = this.handleShowStarItems.bind(this);
@@ -60,8 +61,8 @@ class MainNav extends Component {
     render(){
         return (
            
-        
             <MainPageNavWrapper style={{overflowY:'scroll'}} > 
+            
                 
                            <h1><SmileOutlined style={{marginLeft: 80}} /> Welcome <br/></h1> <h1 style={{marginLeft:60}} > {this.state.username}!<br/><br/></h1>
                             <br/>
@@ -75,12 +76,10 @@ class MainNav extends Component {
                             
                                 
                            {this.state.todoList.map(
-                            (list)=><span key={list._id}> <TodoListOrder style={{paddingBottom:12}} key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}> <VscTrash size={26} style={{marginRight:10, marginTop:12}} onClick={()=>this.deleteTodoList(list._id)}/> {list.Name} </TodoListOrder>
+                            (list)=><span key={list._id}> <TodoListOrder style={{paddingBottom:12}} key={list._id} onClick={()=>this.handleShowCustomizedTodoItem(list._id)}> <VscTrash size={26} style={{marginRight:10, marginTop:12}} onClick={()=>{if(window.confirm('Are you sure you want to delete?')){this.deleteTodoList(list._id)};}}/> {list.Name} </TodoListOrder>
                               </span>
                             )}
-                           
-                          
-                            
+                                                 
             
             
             </MainPageNavWrapper>
