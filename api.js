@@ -94,18 +94,10 @@ async function handlePasswordReset(username, password){
 
 }
 
-//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
-
 
 exports.setApp = function(app, client)
 {
-    const transporter = nodemailer.createTransport(sendgridTransport({
-
-        auth:{
-          api_key:"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"
-        }
-      
-    }))
+    
 
 	const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -128,7 +120,7 @@ exports.setApp = function(app, client)
 			let link=`${buildPath2('resetpassword')}/${token2}`;
 			const msg = {
 				to: email,
-				from: 'yuboli0403@gmail.com',
+				from: 'bdreamywebsite@hotmail.com',
 				subject: 'B-DREAMY : Password Reset',
 				html:`
 				<h1>Password Reset </h1>
@@ -141,6 +133,7 @@ exports.setApp = function(app, client)
             {
  
 				await sgMail.send(msg);
+				console.log("why");
 				//ret = jwt.createToken(name, id);
 
 			//	db.collection('Users').updateOne({EmailToken:token.toString()}, {$set: {Verified:true}});
@@ -149,6 +142,7 @@ exports.setApp = function(app, client)
             catch(e)
             {
                 error = e.message;
+				console.log(error);
             }
          }
           
@@ -257,7 +251,7 @@ exports.setApp = function(app, client)
 			let link=`${buildPath('')}verify/${token}`;
 			const msg = {
 				to: newUser.Email,
-				from: 'yuboli0403@gmail.com',
+				from: 'bdreamywebsite@hotmail.com',
 				subject: 'B-DREAMY : Confirm Email',
 				html:`
 				<h1>Hello, thanks for registering on our site. ${newUser.Name}</h1>
